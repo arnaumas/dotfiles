@@ -26,6 +26,9 @@ set cmdheight=2
 " Give a statusbar to every window to make sure lightline is active
 set laststatus=2
 
+" Don't show --- INSERT --- prompt; unnecessary because of lightline
+set noshowmode
+
 " Make sure there are always 10 lines between the cursor and the end of the screen
 set scrolloff=10
 
@@ -46,6 +49,30 @@ call plug#end()
 "Appearance
 set background=dark
 colorscheme solarized
+
+" Lightline configuration
+let g:lightline = {
+		\ 'colorscheme': 'solarized',
+		\ 'component': {
+		\   'lineinfo': ' %3l:%-2v',
+		\ },
+		\ 'component_function': {
+		\   'readonly': 'LightlineReadonly',
+		\   'fugitive': 'LightlineFugitive'
+		\ },
+		\ 'separator': { 'left': '', 'right': '' },
+		\ 'subseparator': { 'left': '', 'right': '' }
+		\ }
+	function! LightlineReadonly()
+		return &readonly ? '' : ''
+	endfunction
+	function! LightlineFugitive()
+		if exists('*fugitive#head')
+			let branch = fugitive#head()
+			return branch !=# '' ? ''.branch : ''
+		endif
+		return ''
+	endfunction
 
 "Keymaps
 let g:easyescape_chars = { "j": 1, "k": 1 }
