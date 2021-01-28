@@ -44,6 +44,7 @@ Plug 'lervag/vimtex'
 Plug 'jupyter-vim/jupyter-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 call plug#end()
 
