@@ -43,6 +43,7 @@ Plug 'SirVer/ultisnips'
 Plug 'lervag/vimtex'
 Plug 'jupyter-vim/jupyter-vim'
 Plug 'itchyny/lightline.vim'
+Plug 'jungegunn/goyo.vim'
 
 call plug#end()
 
@@ -103,3 +104,6 @@ map <C-x> <C-w>x
 " Comment strings
 autocmd FileType gnuplot setlocal commentstring=#\ %s
 autocmd FileType c setlocal commentstring=//\ %s
+
+" Cleaner folds
+set fillchars=fold:\ 
