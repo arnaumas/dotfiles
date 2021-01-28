@@ -43,7 +43,7 @@ Plug 'SirVer/ultisnips'
 Plug 'lervag/vimtex'
 Plug 'jupyter-vim/jupyter-vim'
 Plug 'itchyny/lightline.vim'
-Plug 'jungegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
