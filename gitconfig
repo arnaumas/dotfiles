@@ -1,0 +1,8 @@
+[user]
+	name = Arnau Mas
+	email = arnau.mas@outlook.com
+[color]
+	ui = true
+[core]
+	excludesfile = /Users/arnau/.gitignore_global
+	editor = nvim
