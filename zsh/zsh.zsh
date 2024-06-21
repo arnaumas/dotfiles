@@ -6,3 +6,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # Install pure
 mkdir ~/.zsh
 git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
+
+# Create symlinks
+ln -s "$HOME/dotfiles/zsh/zshrc" "$HOME/.zshrc"
