@@ -4,5 +4,5 @@
 [color]
 	ui = true
 [core]
-	excludesfile = "$HOME/.gitignore_global"
+	excludesfile = ~/.gitignore_global
 	editor = nvim
