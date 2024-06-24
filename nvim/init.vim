@@ -1,6 +1,7 @@
 call plug#begin()
-"nord colorscheme
-Plug 'shaunsingh/nord.nvim' 
+Plug 'shaunsingh/nord.nvim' 		" nord colorscheme
+Plug 'L3MON4D3/LuaSnip',		" snippets plugin
+			\ {'tag': 'v2.*', 'do': 'make install_jsregexp'} 
 Plug 'lervag/vimtex'
 call plug#end()
 
