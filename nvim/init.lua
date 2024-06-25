@@ -10,10 +10,28 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	spec = {
 		"L3MON4D3/LuaSnip",
-		"shaunsingh/nord.nvim"
+		"shaunsingh/nord.nvim",
+		"lervag/vimtex"
 	},
 
-	install = { colorscheme = { "nord"} }
+	install = { colorscheme = { "nord"} },
+	ui = {
+		icons = {
+			cmd = "⌘",
+			config = "🛠",
+			event = "📅",
+			ft = "📂",
+			init = "⚙",
+			keys = "🗝",
+			plugin = "🔌",
+			runtime = "💻",
+			require = "🌙",
+			source = "📄",
+			start = "🚀",
+			task = "📌",
+			lazy = "💤 ",
+		},
+	},
 })
 
 -- configure nord colorscheme
