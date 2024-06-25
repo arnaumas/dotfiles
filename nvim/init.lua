@@ -34,6 +34,8 @@ require("lazy").setup({
 	},
 })
 
+vim.opt.number = true
+
 -- configure nord colorscheme
 vim.api.nvim_create_autocmd("ColorScheme", {
 	pattern = "nord",
@@ -42,6 +44,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		vim.cmd.highlight({ "CurSearch", "guifg=#2e3440", "guibg=#Ebcb8b" })
 		vim.cmd.highlight({ "IncSearch", "guifg=#2e3440", "guibg=#Ebcb8b" })
 		vim.cmd.highlight({ "Comment", "guifg=#b8bec7" })
+		vim.cmd.highlight({ "LineNr", "guifg=#b8bec7" })
 	end,
 	desc = "override highlight colors for search hits and comments",
 })
@@ -50,9 +53,23 @@ require('nord').set()
 
 -- configure luasnip
 local ls = require("luasnip")
-vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+vim.keymap.set({"i"}, "<Tab>", function()
+	if ls.expand_or_jumpable() then
+		ls.expand_or_jump()
+	end
+end, {silent = true})
+
+vim.keymap.set({"s"}, "<Tab>", function()
+	if ls.jumpable(1) then
+		ls.jump(1)
+	end
+end, {silent = true})
+
+vim.keymap.set({"i", "s"}, "<S-Tab>", function()
+	if ls. jumpable(-1) then
+		ls.jump(-1)
+	end
+end, {silent = true})
 
 vim.keymap.set({"i", "s"}, "<C-E>", function()
 	if ls.choice_active() then
@@ -61,3 +78,5 @@ vim.keymap.set({"i", "s"}, "<C-E>", function()
 end, {silent = true})
 
 require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/luasnip/"})
+
+
