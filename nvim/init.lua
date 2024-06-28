@@ -52,31 +52,42 @@ vim.g.nord_disable_background = true
 require('nord').set()
 
 -- configure luasnip
-local ls = require("luasnip")
-vim.keymap.set({"i"}, "<Tab>", function()
-	if ls.expand_or_jumpable() then
-		ls.expand_or_jump()
-	end
-end, {silent = true})
+vim.cmd[[
+" Use Tab to expand and jump through snippets
+imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>' 
+smap <silent><expr> <Tab> luasnip#jumpable(1) ? '<Plug>luasnip-jump-next' : '<Tab>'
 
-vim.keymap.set({"s"}, "<Tab>", function()
-	if ls.jumpable(1) then
-		ls.jump(1)
-	end
-end, {silent = true})
+" Use Shift-Tab to jump backwards through snippets
+imap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
+smap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
+]]
 
-vim.keymap.set({"i", "s"}, "<S-Tab>", function()
-	if ls. jumpable(-1) then
-		ls.jump(-1)
-	end
-end, {silent = true})
+-- lua version of the previous key remaps
+-- local ls = require("luasnip")
+-- vim.keymap.set({"i"}, "<Tab>", function()
+	-- if ls.expand_or_jumpable() then
+		-- ls.expand_or_jump()
+	-- else 
+		-- return vim.api.nvim_replace_termcodes('<TAB>', true, false, true)
+	-- end
+-- end, {silent = true})
+--
+-- vim.keymap.set({"s"}, "<Tab>", function()
+-- 	if ls.jumpable(1) then
+-- 		ls.jump(1)
+-- 	end
+-- end, {silent = true})
+--
+-- vim.keymap.set({"i", "s"}, "<S-Tab>", function()
+-- 	if ls. jumpable(-1) then
+-- 		ls.jump(-1)
+-- 	end
+-- end, {silent = true})
+--
+-- vim.keymap.set({"i", "s"}, "<C-E>", function()
+-- 	if ls.choice_active() then
+-- 		ls.change_choice(1)
+-- 	end
+-- end, {silent = true})
 
-vim.keymap.set({"i", "s"}, "<C-E>", function()
-	if ls.choice_active() then
-		ls.change_choice(1)
-	end
-end, {silent = true})
-
-require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/luasnip/"})
-
-
+require("luasnip.loaders.from_lua").lazy_load({paths = "~/.config/nvim/luasnip/"})
