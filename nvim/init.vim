@@ -12,7 +12,7 @@ call plug#end()
 
 " -------- MAPPINGS
 let mapleader = ","
-let localmapleader = ","
+let maplocalleader = ","
 
 
 " -------- COLORSCHEME
