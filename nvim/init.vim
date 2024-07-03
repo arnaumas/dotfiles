@@ -10,6 +10,11 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'lervag/vimtex'
 call plug#end()
 
+" -------- MAPPINGS
+let mapleader = ","
+let localmapleader = ","
+
+
 " -------- COLORSCHEME
 let g:nord_disable_background = v:true
 colorscheme nord
