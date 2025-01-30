@@ -1,2 +1,2 @@
 require('arnau.remap')
-require('arnau.packer')
+require('arnau.lazy_init')
