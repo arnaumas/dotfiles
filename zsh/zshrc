@@ -18,3 +18,5 @@ PURE_PROMPT_VICMD_SYMBOL="<"
 bindkey -v
 
 clear
+
+alias vim="nvim"
