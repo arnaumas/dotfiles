@@ -1,4 +1,4 @@
-require "config.options"
-require "config.keymaps"
-require "config.autocmds"
-require "config.lazy"
+require "core.options"
+require "core.keymaps"
+require "core.autocmds"
+require "core.lazy"
