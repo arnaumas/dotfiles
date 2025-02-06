@@ -28,7 +28,7 @@ return {
 		"sainnhe/edge",
 		config = function()
 			vim.cmd.colorscheme('edge')
-			vim.g.edge_transparent_background = 2
+			vim.g.edge_transparent_background = 1
 		end
 	}
 }
