@@ -14,3 +14,6 @@ set.smoothscroll = true --enable smoothscrolling
 
 vim.g.have_nerd_font = true
 
+vim.schedule(function()
+	set.clipboard = 'unnamedplus' --sync neovim and system clipboards
+end)
