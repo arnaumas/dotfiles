@@ -20,3 +20,5 @@ bindkey -v
 clear
 
 alias vim="nvim"
+
+alias ll='ls -lhA'
