@@ -21,4 +21,4 @@ clear
 
 alias vim="nvim"
 
-alias ll='ls -lhA'
+alias ll='ls -oa'
