@@ -13,6 +13,11 @@ set.cursorline = true -- highlight the line the cursor is one
 set.scrolloff = 20 -- maintain 20 lines above and below the cursor
 set.smoothscroll = true -- enable smoothscrolling
 
+-- tab settings (use tabs, indent by 4 spaces)
+set.expandtab = false
+set.shiftwidth = 2
+set.tabstop = 2
+
 vim.g.have_nerd_font = true
 
 vim.schedule(function()
