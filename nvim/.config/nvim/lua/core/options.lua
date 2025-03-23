@@ -19,7 +19,14 @@ set.shiftwidth = 2
 set.tabstop = 2
 
 vim.g.have_nerd_font = true
+set.showmode = false -- don't show insert mode (already in the status line)
+set.laststatus = 2
+set.showcmd = false -- don't show operator pending prompt
+
+set.swapfile = falde -- don't create swapfiles
 
 vim.schedule(function()
 	set.clipboard = 'unnamedplus' -- sync neovim and system clipboards
 end)
+
+-- set.fillchars = 'fold:\\' -- cleaner folds

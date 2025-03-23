@@ -33,7 +33,8 @@
 						group = vim.api.nvim_create_augroup('custom_highlights_edge', {}),
 						pattern = 'edge',
 						callback = function()
-										vim.api.nvim_set_hl(0, 'Visual', { link = 'IncSearch' })
+							vim.api.nvim_set_hl(0, 'Visual', { link = 'IncSearch' })
+							vim.api.nvim_set_hl(0, 'Folded', { fg = '#8790a0', bg = '#dde2e7' , bold = true })
 						end
 					})
 					vim.cmd.colorscheme('edge')
