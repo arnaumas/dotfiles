@@ -15,7 +15,19 @@ map('n', '<leader>pv', vim.cmd.Ex, { desc = '[p]roject [v]iew'})
 -- luasnip expand snippet keymaps
 local luasnip = require 'luasnip'
 
-map('i', '<C-e>', function() luasnip.expand() end, { silent = true })
-map({'i','s'}, '<C-l>', function() luasnip.jump(1) end, { silent = true })
-map({'i','s'}, '<C-h>', function() luasnip.jump(-1) end, { silent = true })
+map({'i','s'}, '<C-l>', function()
+  if luasnip.expand_or_locally_jumpable() then
+    luasnip.expand_or_jump()
+  end
+end, { silent = true })
 
+map({'i','s'}, '<C-h>', function()
+  if luasnip.locally_jumpable(-1) then
+    luasnip.jump(-1)
+  end
+end, { silent = true })
+
+luasnip.config.setup({
+  enable_autosnippets = true,
+  store_selection_keys = '<C-l>'
+})
