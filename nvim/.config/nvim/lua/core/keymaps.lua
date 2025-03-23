@@ -28,6 +28,6 @@ map({'i','s'}, '<C-h>', function()
 end, { silent = true })
 
 luasnip.config.setup({
-  enable_autosnippets = true,
-  store_selection_keys = '<C-l>'
+  store_selection_keys = '<C-l>',
+  update_events = 'TextChanged, TextChangedI'
 })
