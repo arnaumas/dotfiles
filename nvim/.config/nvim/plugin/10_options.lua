@@ -5,6 +5,7 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 -- general ->
 vim.g.mapleader      = ' '
 vim.g.maplocalleader = ' '
+set.swapfile         = false
 vim.schedule(function()
 	set.clipboard = 'unnamedplus' -- sync neovim and system clipboards
 end)
@@ -21,7 +22,8 @@ set.splitright        = true          -- vsplit new buffers to the right of exis
 set.smoothscroll      = true          -- enable smoothscrolling
 set.fillchars         = { eob = ' '}  -- eliminate tildes after end of buffer
 global.have_nerd_font = true
--- set.cmdheight         = 0             -- hide comandline when not in use
+set.cmdheight         = 0             -- hide comandline when not in use
+set.cmdwinheight      = 4
 set.showmode          = false         -- don't show mode prompt (already in status line)
 -- <-
 

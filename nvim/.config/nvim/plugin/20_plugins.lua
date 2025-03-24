@@ -49,12 +49,20 @@ later(function() require('mini.ai').setup() end)
 
 -- mini.surround ->
 add({ source = 'echasnovski/mini.surround', checkout = 'stable' })
-later(function() require('mini.surround').setup() end)
+later(function() require('mini.surround').setup({silent = true}) end)
 -- <-
 
 -- mini.pick ->
 add({ source = 'echasnovski/mini.pick', checkout = 'stable' })
-later(function() require('mini.pick').setup() end)
+later(function()
+	require('mini.pick').setup()
+	vim.ui.select = MiniPick.ui_select
+end)
+-- <-
+
+-- mini.snippets ->
+add({ source = 'echasnovski/mini.snippets', checkout = 'stable' })
+later(function() require('mini.snippets').setup() end)
 -- <-
 
 -- noice ->
