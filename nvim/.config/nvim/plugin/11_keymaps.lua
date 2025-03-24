@@ -21,17 +21,18 @@ map('n', '<leader>bn', vim.cmd.bn, { desc = '[b]uffer [n]ext' })
 map('n', '<leader>bp', vim.cmd.bp, { desc = '[b]uffer [p]revious' })
 
 map('n', ':', 'q:i')
-map('n', '/', 'q/i')
+-- map('n', '/', 'q/i')
 
 -- mini.pick bindings ->
 later(function()
 	local pick = require('mini.pick')
+	local extra = require('mini.extra')
 	map('n', '<leader>ff', pick.builtin.files, { desc = '[f]ind in [f]iles' })
 	map('n', '<leader>fb', pick.builtin.buffers, { desc = '[f]ind in open [b]uffers' })
 	map('n', '<leader>fg', pick.builtin.grep_live, { desc = '[f]ind in [g]rep file' })
 	map('n', '<leader>fh', pick.builtin.help, { desc = '[f]ind in [h]elp' })
-	-- map('n', '<leader>fH', pick.builtin.hl_groups, { desc = '[f]ind in [H]ighlight groups' })
-	-- map('n', '<leader>fl', pick.builtin.buf_lines, { desc = '[f]ind in buffer [l]ines' })
+	map('n', '<leader>fH', extra.pickers.hl_groups, { desc = '[f]ind in [H]ighlight groups' })
+	map('n', '<leader>fl', extra.pickers.buf_lines, { desc = '[f]ind in buffer [l]ines' })
 end)
 -- <- 
 

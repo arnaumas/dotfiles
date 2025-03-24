@@ -64,12 +64,12 @@ later(function()
 end)
 -- <-
 
--- mini.snippets ->
-add({ source = 'echasnovski/mini.snippets', checkout = 'stable' })
-later(function() require('mini.snippets').setup() end)
+-- mini.extra ->
+add({ source = 'echasnovski/mini.extra', checkout = 'stable' })
+later(function() require('mini.extra').setup() end)
 -- <-
 
--- noice ->
+-- noice (disabled) ->
 -- add({
 	-- source = 'folke/noice.nvim',
 	-- depends = { 'MunifTanjim/nui.nvim' }
