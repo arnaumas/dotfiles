@@ -53,7 +53,11 @@ later(function() require('mini.surround').setup({silent = true}) end)
 -- <-
 
 -- mini.pick ->
-add({ source = 'echasnovski/mini.pick', checkout = 'stable' })
+add({ 
+	source = 'echasnovski/mini.pick',
+	checkout = 'stable',
+	-- depends = { 'echanovski/mini.extra' } 
+})
 later(function()
 	require('mini.pick').setup()
 	vim.ui.select = MiniPick.ui_select
