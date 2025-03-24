@@ -69,6 +69,18 @@ add({ source = 'echasnovski/mini.extra', checkout = 'stable' })
 later(function() require('mini.extra').setup() end)
 -- <-
 
+-- LuaSnip ->
+add({ source = 'L3MON4D3/LuaSnip', checkout = 'stable' })
+later(function()
+	require('luasnip.loaders.from_lua').lazy_load({paths = '~/.config/nvim/snippets/'})
+	require('luasnip').setup({
+		cut_selection_keys = '<C-l>',
+		enable_autosnippets = true,
+		update_events = 'TextChanged, TextChangedI'
+	})
+end)
+-- <-
+
 -- noice (disabled) ->
 -- add({
 	-- source = 'folke/noice.nvim',

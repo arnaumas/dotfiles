@@ -36,22 +36,20 @@ later(function()
 end)
 -- <- 
 
--- luasnip expand snippet keymaps
--- local luasnip = require 'luasnip'
---
--- map({'i','s'}, '<C-l>', function()
---   if luasnip.expand_or_locally_jumpable() then
---     luasnip.expand_or_jump()
---   end
--- end, { silent = true })
---
--- map({'i','s'}, '<C-h>', function()
---   if luasnip.locally_jumpable(-1) then
---     luasnip.jump(-1)
---   end
--- end, { silent = true })
---
--- luasnip.config.setup({
---   store_selection_keys = '<C-l>',
---   update_events = 'TextChanged, TextChangedI'
--- })
+-- luasnip expand snippet keymaps ->
+later(function()
+	local luasnip = require 'luasnip'
+
+	map({'i','s'}, '<C-l>', function()
+		if luasnip.expand_or_locally_jumpable() then
+			luasnip.expand_or_jump()
+		end
+	end, { silent = true })
+
+	map({'i','s'}, '<C-h>', function()
+		if luasnip.locally_jumpable(-1) then
+			luasnip.jump(-1)
+		end
+	end, { silent = true })
+end)
+-- <-
