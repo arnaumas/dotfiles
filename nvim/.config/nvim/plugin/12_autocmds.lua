@@ -32,13 +32,13 @@ autocmd('ColorScheme', {
 -- <-
 
 -- enable incsearch for cmd-window ->
-autocmd('CmdwinEnter', {
-	group = vim.api.nvim_create_augroup('cmdwin_highlight', {}),
-	pattern = {'/', '?'},
-	callback = function()
-		vim.cmd [[ let @/ = getline('.') |
-		\ autocmd TextChanged,TextChangedI,TextChangedP
-		\ <buffer> let @/ = getline('.') ]]
-	end
-})
+-- autocmd('CmdwinEnter', {
+-- 	group = vim.api.nvim_create_augroup('cmdwin_highlight', {}),
+-- 	pattern = {'/', '?'},
+-- 	callback = function()
+-- 		vim.cmd [[ let @/ = getline('.') |
+-- 		\ autocmd TextChangedI,TextChangedP
+-- 		\ <buffer> let @/ = getline('.') ]]
+-- 	end
+-- })
 -- <-

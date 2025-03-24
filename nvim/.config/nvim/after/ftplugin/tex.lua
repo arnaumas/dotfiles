@@ -19,10 +19,5 @@ map('o', '_', 'g_', { silent = true , buffer = true })
 
 map('n', 'A', '$a', { silent = true , buffer = true }) -- append to end of screen line
 
--- toggles and settings
-vim.g.vimtex_imaps_leader = '.'
-vim.g.vimtex_view_method = 'skim'
-vim.g.vimtex_view_skim_sync = 1
-vim.g.vimtex_view_skim_activate = 1
-vim.g.vimtex_quickfix_open_on_warning = 0
+set.cmdheight = 1 -- don't hide the cmd line to avoid getting the press Enter prompt when compiling
 
