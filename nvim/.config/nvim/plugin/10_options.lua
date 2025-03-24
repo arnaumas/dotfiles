@@ -23,7 +23,7 @@ set.smoothscroll      = true          -- enable smoothscrolling
 set.fillchars         = { eob = ' '}  -- eliminate tildes after end of buffer
 global.have_nerd_font = true
 set.cmdheight         = 0             -- hide comandline when not in use
-set.cmdwinheight      = 4
+set.cmdwinheight      = 2
 set.showmode          = false         -- don't show mode prompt (already in status line)
 -- <-
 

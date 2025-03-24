@@ -32,7 +32,12 @@ later(function() require('mini.icons').setup() end)
 add({ source = 'echasnovski/mini.notify', checkout = 'stable' })
 later(function()
 	local notify = require('mini.notify')
-	notify.setup()
+	local win_config = function()
+    local has_statusline = vim.o.laststatus > 0
+    local pad = vim.o.cmdheight + (has_statusline and 1 or 0)
+    return { anchor = 'SE', col = vim.o.columns, row = vim.o.lines - pad }
+  end
+  notify.setup({ window = { config = win_config, winblend = 0 } })
 	vim.notify = notify.make_notify()
 end)
 -- <-
@@ -64,6 +69,16 @@ later(function()
 end)
 -- <-
 
+-- mini.files ->
+add({ 
+	source = 'echasnovski/mini.files',
+	checkout = 'stable',
+})
+later(function()
+	require('mini.files').setup()
+end)
+-- <-
+
 -- mini.extra ->
 add({ source = 'echasnovski/mini.extra', checkout = 'stable' })
 later(function() require('mini.extra').setup() end)
@@ -89,6 +104,7 @@ now(function()
 	vim.g.vimtex_view_skim_sync = 1
 	vim.g.vimtex_view_skim_activate = 1
 	vim.g.vimtex_quickfix_open_on_warning = 0
+	vim.g.vimtex_fold_enabled = 1
 end)
 -- <-
 

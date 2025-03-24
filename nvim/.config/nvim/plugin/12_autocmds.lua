@@ -26,7 +26,14 @@ autocmd('ColorScheme', {
 		vim.api.nvim_set_hl(0, 'MiniPickNormal', { fg = '#8790a0' })
 		vim.api.nvim_set_hl(0, 'MiniPickMatchRanges', { fg = '#608e32', bold = true })
 
+		vim.api.nvim_set_hl(0, 'MiniNotifyNormal', { bg = none, fg = '#76af6f' })
+
 		vim.api.nvim_set_hl(0, 'Folded', { fg = '#8790a0', bg = '#dde2e7', bold = true })
+
+		vim.api.nvim_set_hl(0, 'FloatTitle', { bg = none, fg = '#76af6f', bold = true })
+
+		vim.api.nvim_set_hl(0, 'MiniFilesTitle', { bg = none, fg = '#76af6f' })
+		vim.api.nvim_set_hl(0, 'MiniFilesTitleFocused', { bg = none, fg = '#608e32', bold = true })
 	end
 })
 -- <-
