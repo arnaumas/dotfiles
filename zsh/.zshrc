@@ -22,3 +22,5 @@ clear
 alias vim="nvim"
 
 alias ll='ls -oa'
+
+source <(fzf --zsh)
