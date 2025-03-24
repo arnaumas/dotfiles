@@ -35,10 +35,3 @@ global.edge_enable_italic = true
 later(function() vim.cmd.colorscheme('edge') end)
 -- <-
 
--- statusline ->
-later(function() 
-	local statusline = require('mini.statusline')
-	statusline.setup()
-	statusline.section_location = function() return '%2l:%-2v' end
-end)
--- <-
