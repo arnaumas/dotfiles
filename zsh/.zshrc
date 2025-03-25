@@ -15,12 +15,39 @@ prompt pure
 PURE_PROMPT_SYMBOL=">"
 PURE_PROMPT_VICMD_SYMBOL="<"
 
-bindkey -v
-
-clear
-
 alias vim="nvim"
 
 alias ll='ls -oA'
 
 source <(fzf --zsh)
+
+# open manpages with vim
+export MANPAGER='nvim +Man!'
+export MANWIDTH=999
+
+# # change cursor based on mode
+bindkey -v
+KEYTIMEOUT=5
+# # Change cursor shape for different vi modes.
+# function zle-keymap-select {
+# if [[ ${KEYMAP} == vicmd ]] ||
+# 	[[ $1 = 'block' ]]; then
+# 	echo -ne '\e[1 q'
+#
+# elif [[ ${KEYMAP} == main ]] ||
+# 	[[ ${KEYMAP} == viins ]] ||
+# 	[[ ${KEYMAP} = '' ]] ||
+# 	[[ $1 = 'beam' ]]; then
+# 	echo -ne '\e[5 q'
+# fi
+# }
+# zle -N zle-keymap-select
+#
+# # Use beam shape cursor on startup.
+# echo -ne '\e[5 q'
+# # Use beam shape cursor for each new prompt.
+# preexec() {
+# 	echo -ne '\e[5 q'
+# }
+
+clear
