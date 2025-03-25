@@ -25,7 +25,14 @@ end)
 
 -- mini.icons ->
 add({ source = 'echasnovski/mini.icons', checkout = 'stable' })
-later(function() require('mini.icons').setup() end)
+later(function() 
+	local icons = require('mini.icons')
+	icons.setup({
+		file = {
+			['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' },
+		},
+	})
+end)
 -- <-
 
 -- mini.notify ->
@@ -79,6 +86,16 @@ later(function()
 end)
 -- <-
 
+-- mini.tabline ->
+add({ 
+	source = 'echasnovski/mini.tabline',
+	checkout = 'stable',
+})
+later(function()
+	require('mini.tabline').setup()
+end)
+-- <-
+
 -- mini.extra ->
 add({ source = 'echasnovski/mini.extra', checkout = 'stable' })
 later(function() require('mini.extra').setup() end)
@@ -89,7 +106,7 @@ add({ source = 'L3MON4D3/LuaSnip', checkout = 'stable' })
 later(function()
 	require('luasnip.loaders.from_lua').lazy_load({paths = '~/.config/nvim/snippets/'})
 	require('luasnip').setup({
-		cut_selection_keys = '<C-l>',
+		cut_selection_keys = { '<C-l>', '<tab>' },
 		enable_autosnippets = true,
 		update_events = 'TextChanged, TextChangedI'
 	})
@@ -106,6 +123,10 @@ now(function()
 	vim.g.vimtex_quickfix_open_on_warning = 0
 	vim.g.vimtex_fold_enabled = 1
 end)
+-- <-
+
+-- vim-pencil ->
+add({ source = 'preservim/vim-pencil' })
 -- <-
 
 -- noice (disabled) ->
