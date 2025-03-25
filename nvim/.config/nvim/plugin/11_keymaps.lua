@@ -22,7 +22,7 @@ map('n', '<leader>bp', vim.cmd.bp, { desc = '[b]uffer [p]revious' })
 map('n', '<leader>bd', vim.cmd.bd, { desc = '[b]uffer [d]elete' })
 
 map('n', ':', 'q:')
-map('n', '/', 'q/i')
+-- map('n', '/', 'q/i')
 
 -- mini.pick bindings ->
 later(function()
