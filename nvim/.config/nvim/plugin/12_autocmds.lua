@@ -49,3 +49,14 @@ autocmd('ColorScheme', {
 -- 	end
 -- })
 -- <-
+
+-- restore cursor after exiting vim ->
+autocmd('VimLeave', {
+	desc = 'Restore cursor to pipe after exiting neovim',
+	group = vim.api.nvim_create_augroup('restore_cursor', {clear = true}),
+	pattern = '*',
+	callback = function()
+		os.execute [[ echo -ne "\e[6 q" ]]
+	end
+})
+-- <-
