@@ -19,6 +19,7 @@ vim.cmd [[ map q <Nop> ]]
 map('n', '<leader>w', function() vim.cmd('silent write') end, { desc = '[w]rite file' })
 map('n', '<leader>s', vim.cmd.source, { desc = '[s]ource file' })
 map('n', '<leader>q', vim.cmd.quit, { desc = '[q]uit file' })
+map('n', '<leader>Q', function() vim.cmd.quit({ bang = true }) end, { desc = 'force [q]uit file' })
 
 map('n', '<leader>bn', vim.cmd.bn, { desc = '[b]uffer [n]ext' })
 map('n', '<leader>bp', vim.cmd.bp, { desc = '[b]uffer [p]revious' })
