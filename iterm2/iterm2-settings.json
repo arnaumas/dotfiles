@@ -211,7 +211,7 @@
     "Alpha Component" : 0.25,
     "Green Component" : 0.92049425840377808
   },
-  "ASCII Ligatures" : true,
+  "ASCII Ligatures" : false,
   "Send Code When Idle" : false,
   "Ansi 6 Color" : {
     "Red Component" : 0,
@@ -241,7 +241,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0
   },
-  "Vertical Spacing" : 1,
+  "Vertical Spacing" : 1.1000000000000001,
   "Disable Window Resizing" : true,
   "Close Sessions On End" : true,
   "Selection Color (Dark)" : {
