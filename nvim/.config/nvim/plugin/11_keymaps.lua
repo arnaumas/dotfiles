@@ -11,6 +11,9 @@ map('n', '<C-k>', '<C-w><C-k>', { desc = 'move focus to the window above' })
 
 map('n', '<esc>', '<cmd>nohlsearch<cr>', { desc = 'clear highlights' })
 
+-- vim.keymap.del('', 'q')
+vim.cmd [[ map q <Nop> ]]
+
 -- map('n', '<leader>pv', vim.cmd.Ex, { desc = '[p]roject [v]iew'})
 
 map('n', '<leader>w', function() vim.cmd('silent write') end, { desc = '[w]rite file' })
