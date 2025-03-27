@@ -1,5 +1,3 @@
-local status, hyperModeAppMappings = pcall(require, 'keyboard.hyper-apps')
-
 -- bind F18 to hyper mode
 hyper = hs.hotkey.modal.new({}, nil)
 hyper.pressed = function() hyper:enter() end
@@ -7,14 +5,12 @@ hyper.released = function() hyper:exit() end
 hs.hotkey.bind({}, 'F18', hyper.pressed, hyper.released)
 
 -- Hyper mode app launches
-if not status then
-  hyperModeAppMappings = {
-		{ 'a', 'Music' },             -- "A" for "Apple Music"
-		{ 'b', 'Safari' },            -- "B" for "Browser"
-		{ 'f', 'Finder' },            -- "F" for "Finder"
-		{ 't', 'iTerm' },             -- "T" for "Terminal"
-	}
-end
+hyperModeAppMappings = {
+	{ 'a', 'Music' },             -- "A" for "Apple Music"
+	{ 'b', 'Safari' },            -- "B" for "Browser"
+	{ 'f', 'Finder' },            -- "F" for "Finder"
+	{ 't', 'iTerm' },             -- "T" for "Terminal"
+}
 
 for i, mapping in ipairs(hyperModeAppMappings) do
   local key = mapping[1]
@@ -32,3 +28,4 @@ end
 hyper:bind({}, 'r', function()
   hs.reload()
 end)
+
