@@ -22,3 +22,12 @@ map('n', 'A', '$a', { silent = true , buffer = true }) -- append to end of scree
 
 vim.opt_local.cmdheight = 1 -- don't hide the cmd line to avoid getting the press Enter prompt when compiling
 
+vim.cmd [[
+call vimtex#imaps#add_map({ 'lhs' : ':', 'rhs' : '\colon', 'wrapper' : 'vimtex#imaps#wrap_math'})
+call vimtex#imaps#add_map({ 'lhs' :  '=', 'rhs' : '\leq', 'leader' : '<', 'wrapper' : 'vimtex#imaps#wrap_math'})
+call vimtex#imaps#add_map({ 'lhs' : '=', 'rhs' : '\geq', 'leader' : '>', 'wrapper' : 'vimtex#imaps#wrap_math'})
+call vimtex#imaps#add_map({ 'lhs' : 'R', 'rhs' : '\R', 'wrapper' : 'vimtex#imaps#wrap_math'})
+call vimtex#imaps#add_map({ 'lhs' : 'o', 'rhs' : '\in', 'wrapper' : 'vimtex#imaps#wrap_math'})
+let g:vimtex_imaps_disabled = ['jj', 'jJ', 'jk', 'jK', 'jh', 'jH', 'jl', 'jL']
+]]
+

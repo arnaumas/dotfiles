@@ -85,8 +85,9 @@ return {
     \begin{<>}
       <>
     \end{<>}
+		<>
     ]],
-    { i(1), d(2, get_visual), rep(1) }
+    { i(1), d(2, get_visual), rep(1), i(0) }
     )
   ),
 
@@ -96,8 +97,9 @@ return {
     \begin[<>]{<>}
       <>
     \end{<>}
+		<>
     ]],
-    { i(1), i(2), d(3, get_visual), rep(1) }
+    { i(1), i(2), d(3, get_visual), rep(1), i(0) }
     )
   ),
 
@@ -108,4 +110,36 @@ return {
     )
   ),
 
+  s({ trig = 'eq', name = 'begin [eq]uation', desc = 'LaTeX unnumbered equation', wordTrig = false },
+  fmta(
+    [[
+    \begin{equation*}
+      <>
+    \end{equation*}
+		<>
+    ]],
+    { i(1), i(0) } 
+    )
+  ),
+
+  s({ trig = 'fr', name = '[fr]action', wordTrig = false },
+  fmta(
+    [[\frac{<>}{<>}]],
+    { i(1), i(2) }
+    )
+  ),
+
+  s({ trig = '_', name = 'subindex', wordTrig = true },
+  fmta(
+    [[_{<>}]],
+    { i(1) }
+    )
+  ),
+
+  s({ trig = '^', name = 'superindex', wordTrig = true },
+  fmta(
+    [[^{<>}]],
+    { i(1) }
+    )
+  ),
 }

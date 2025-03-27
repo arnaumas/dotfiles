@@ -8,6 +8,7 @@ map('n', 'r', 'cl', { desc = '[o]pen line above' })
 map('n', 'R', 'cc', { desc = '[o]pen line above' })
 map({ 'n', 'x' }, 's', '<Nop>')
 map({ 'n', 'x' }, 'S', '<Nop>')
+map({ 'n', 'x' }, 'K', 'i<cr><esc>')
 --
 
 -- <-
@@ -23,6 +24,7 @@ map('n', '<esc>', '<cmd>nohlsearch<cr>', { desc = 'clear highlights' })
 
 -- cmdline ->
 vim.cmd [[ map q <Nop> ]] -- disable recording
+
 map('n', ':', 'q:')
 -- <-
 
@@ -54,7 +56,19 @@ end)
 
 -- mini.git bindings ->
 local git_log_cmd = [[Git log --pretty=format:\%h\ \%as\ │\ \%s --topo-order]]
-map('n', '<leader>gc', '<Cmd>Git commit<CR>', { desc = '[g]it [c]ommit' })
+map('n', '<leader>gc', '<cmd>Git commit<cr>',        { desc = '[g]it [c]ommit' })
+map('n', '<leader>ga', '<cmd>Git diff --cached<cr>', { desc = '[g]it [a]dd' })
+-- nmap_leader('gA', '<Cmd>Git diff --cached -- %<CR>',              'Added diff buffer')
+-- nmap_leader('gc', '<Cmd>Git commit<CR>',                          'Commit')
+-- nmap_leader('gC', '<Cmd>Git commit --amend<CR>',                  'Commit amend')
+-- nmap_leader('gd', '<Cmd>Git diff<CR>',                            'Diff')
+-- nmap_leader('gD', '<Cmd>Git diff -- %<CR>',                       'Diff buffer')
+-- nmap_leader('gg', '<Cmd>lua Config.open_lazygit()<CR>',           'Git tab')
+-- nmap_leader('gl', '<Cmd>' .. git_log_cmd .. '<CR>',               'Log')
+-- nmap_leader('gL', '<Cmd>' .. git_log_cmd .. ' --follow -- %<CR>', 'Log buffer')
+-- nmap_leader('go', '<Cmd>lua MiniDiff.toggle_overlay()<CR>',       'Toggle overlay')
+-- nmap_leader('gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>',        'Show at cursor')
+
 -- <- 
 
 -- mini.files bindings ->
