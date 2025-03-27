@@ -23,3 +23,7 @@ for i, mapping in ipairs(superduperMotions) do
 		hs.eventtap.event.newKeyEvent({}, motion, false):post()
 	end, nil)
 end
+
+superduper:bind({}, 'x', function()
+	hs.eventtap.keyStroke({'cmd'}, 'w')
+end)
