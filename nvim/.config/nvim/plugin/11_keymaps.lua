@@ -30,6 +30,7 @@ map('n', '<leader>Q', function() vim.cmd.quit({ bang = true }) end, { desc = 'fo
 map('n', '<leader>bn', vim.cmd.bn, { desc = '[b]uffer [n]ext' })
 map('n', '<leader>bp', vim.cmd.bp, { desc = '[b]uffer [p]revious' })
 map('n', '<leader>bd', vim.cmd.bd, { desc = '[b]uffer [d]elete' })
+map('n', '<leader>bs', vim.cmd.sp, { desc = '[b]uffer [s]plit' })
 -- <-
 
 -- mini.pick bindings ->
