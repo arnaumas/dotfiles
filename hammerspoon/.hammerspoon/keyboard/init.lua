@@ -1,9 +1,9 @@
 local log = hs.logger.new('init.lua', 'debug')
 
 -- Use Control+` to reload Hammerspoon config
-hs.hotkey.bind({'ctrl'}, '`', nil, function()
-  hs.reload()
-end)
+-- hs.hotkey.bind({'ctrl'}, '`', nil, function()
+  -- hs.reload()
+-- end)
 
 keyUpDown = function(modifiers, key)
   -- Un-comment & reload config to log each keystroke that we're triggering
@@ -31,9 +31,9 @@ enableHotkeyForWindowsMatchingFilter = function(windowFilter, hotkey)
   end)
 end
 
-require('keyboard.control-escape')
+-- require('keyboard.control-escape')
 -- require('keyboard.delete-words')
--- require('keyboard.hyper')
+require('keyboard.hyper')
 -- require('keyboard.markdown')
 -- require('keyboard.panes')
 -- require('keyboard.windows')
