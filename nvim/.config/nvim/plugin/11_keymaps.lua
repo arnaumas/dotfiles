@@ -1,10 +1,15 @@
 local map = vim.keymap.set
-	 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 -- editing ->
 map('n', 'o', 'o<esc>', { desc = '[o]pen line' })
 map('n', 'O', 'O<esc>', { desc = '[o]pen line above' })
+map('n', 'r', 'cl', { desc = '[o]pen line above' })
+map('n', 'R', 'cc', { desc = '[o]pen line above' })
+map({ 'n', 'x' }, 's', '<Nop>')
+map({ 'n', 'x' }, 'S', '<Nop>')
+--
+
 -- <-
 
 -- ui ->
@@ -22,7 +27,7 @@ map('n', ':', 'q:')
 -- <-
 
 -- saving, quitting, buffers ->
-map('n', '<leader>w', function() vim.cmd('silent write') end, { desc = '[w]rite file' })
+map('n', '<leader>w', function() vim.cmd[[ silent write ]] end, { desc = '[w]rite file', silent = true })
 map('n', '<leader>s', vim.cmd.source, { desc = '[s]ource file' })
 map('n', '<leader>q', vim.cmd.quit, { desc = '[q]uit file' })
 map('n', '<leader>Q', function() vim.cmd.quit({ bang = true }) end, { desc = 'force [q]uit file' })
@@ -65,18 +70,25 @@ map('n', '<leader>ed', [[<cmd>lua MiniFiles.open('/Users/arnau/dotfiles', false)
 
 -- luasnip expand snippet keymaps ->
 later(function()
-	local luasnip = require 'luasnip'
+local luasnip = require 'luasnip'
 
-	map({'i','s'}, '<C-l>', function()
-		if luasnip.expand_or_locally_jumpable() then
-			luasnip.expand_or_jump()
-		end
-	end, { silent = true })
+map({'i','s'}, '<C-l>', function()
+if luasnip.expand_or_locally_jumpable() then
+luasnip.expand_or_jump()
+end
+end, { silent = true })
 
-	map({'i','s'}, '<C-h>', function()
-		if luasnip.locally_jumpable(-1) then
-			luasnip.jump(-1)
-		end
-	end, { silent = true })
+map({'i','s'}, '<C-h>', function()
+if luasnip.locally_jumpable(-1) then
+luasnip.jump(-1)
+end
+end, { silent = true })
+
+-- also enable expanding with tab for faster typing
+map({'i','s'}, '<tab>', function()
+if luasnip.expand_or_locally_jumpable() then
+luasnip.expand_or_jump()
+end
+end, { silent = true })
 end)
 -- <-

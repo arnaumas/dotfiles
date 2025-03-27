@@ -2,6 +2,7 @@ local set = vim.opt
 local map = vim.keymap.set
 
 set.cursorlineopt = 'screenline' -- highlight cursor position
+set.ruler = false
 
 -- remap screen motions to text motions
 map({ 'n', 'o', 'v' }, 'gj', 'j', { silent = true , buffer = true }) -- move down one text line
@@ -19,5 +20,5 @@ map('o', '_', 'g_', { silent = true , buffer = true })
 
 map('n', 'A', '$a', { silent = true , buffer = true }) -- append to end of screen line
 
-set.cmdheight = 1 -- don't hide the cmd line to avoid getting the press Enter prompt when compiling
+vim.opt_local.cmdheight = 1 -- don't hide the cmd line to avoid getting the press Enter prompt when compiling
 
