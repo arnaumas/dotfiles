@@ -13,6 +13,7 @@ prompt pure
 # Comment out the print in prompt_pure_preprompt_render in pure.zsh to remove initial newline
 
 alias vim="nvim"
+alias python="python3"
 
 alias ll='ls -oA'
 
