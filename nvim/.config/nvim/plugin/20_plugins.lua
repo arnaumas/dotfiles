@@ -4,35 +4,39 @@ add('sainnhe/edge')
 
 -- mini.statusline ->
 add({ source = 'echasnovski/mini.statusline', checkout = 'stable' })
-later(function() 
-	local statusline = require('mini.statusline')
-	statusline.setup({
-		content = {
-			inactive = function()
-				local filename = statusline.section_filename({ trunc_width = 120 })
-				local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
-				return statusline.combine_groups({
-					{ hl = 'MiniStatuslineInactive', strings = { filename } },
-					'%=',
-					{ hl = 'MiniStatuslineFileinfo', strings = { fileinfo } }
-				})
-			end,
-		}
-	})
-	statusline.section_location = function() return '%2l:%-2v' end
-end)
+local statusline = require('mini.statusline')
+statusline.setup({
+	content = {
+		inactive = function()
+			local filename = statusline.section_filename({ trunc_width = 120 })
+			local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
+			return statusline.combine_groups({
+				{ hl = 'MiniStatuslineInactive', strings = { filename } },
+				'%=',
+				{ hl = 'MiniStatuslineFileinfo', strings = { fileinfo } }
+			})
+		end,
+	}
+})
+statusline.section_location = function() return '%2l:%-2v' end
+-- <-
+
+-- mini.tabline ->
+add({ 
+	source = 'echasnovski/mini.tabline',
+	checkout = 'stable',
+})
+require('mini.tabline').setup()
 -- <-
 
 -- mini.icons ->
 add({ source = 'echasnovski/mini.icons', checkout = 'stable' })
-later(function() 
-	local icons = require('mini.icons')
-	icons.setup({
-		file = {
-			['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' },
-		},
-	})
-end)
+local icons = require('mini.icons')
+icons.setup({
+	file = {
+		['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' },
+	},
+})
 -- <-
 
 -- mini.notify ->
@@ -81,20 +85,8 @@ add({
 	source = 'echasnovski/mini.files',
 	checkout = 'stable',
 })
-later(function()
-	require('mini.files').setup()
-end)
--- <-
-
--- mini.tabline ->
-add({ 
-	source = 'echasnovski/mini.tabline',
-	checkout = 'stable',
-})
-later(function()
-	require('mini.tabline').setup()
-end)
--- <-
+require('mini.files').setup({ options = { use_as_default_explorer = true } })
+-- <-}
 
 -- mini.extra ->
 add({ source = 'echasnovski/mini.extra', checkout = 'stable' })
@@ -117,9 +109,10 @@ end)
 add({ source = 'lervag/vimtex' })
 now(function()
 	vim.g.vimtex_imaps_leader = '.'
-	vim.g.vimtex_view_method = 'skim'
-	vim.g.vimtex_view_skim_sync = 1
-	vim.g.vimtex_view_skim_activate = 1
+	vim.g.vimtex_view_method = 'sioyek'
+	vim.g.vimtex_view_sioyek_exe = '/Applications/sioyek.app/Contents/MacOS/sioyek'
+	-- vim.g.vimtex_view_skim_sync = 1
+	-- vim.g.vimtex_view_skim_activate = 1
 	vim.g.vimtex_quickfix_open_on_warning = 0
 	vim.g.vimtex_fold_enabled = 1
 end)

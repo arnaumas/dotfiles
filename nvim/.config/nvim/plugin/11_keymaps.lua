@@ -23,7 +23,7 @@ map('n', '<esc>', '<cmd>nohlsearch<cr>', { desc = 'clear highlights' })
 -- <-
 
 -- cmdline ->
-vim.cmd [[ map q <Nop> ]] -- disable recording
+map({ 'n', 'x' }, 'q', '<Nop>')
 
 map('n', ':', 'q:')
 -- <-
@@ -79,6 +79,7 @@ end
 -- map('n', '<leader>ed', '<cmd>lua MiniFiles.open()<cr>',                             { desc = '[e]xplore [d]irectory' })
 map('n', '<leader>ef', '<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<cr>', { desc = '[e]xplore [f]ile directory' })
 map('n', '<leader>ed', [[<cmd>lua MiniFiles.open('/Users/arnau/dotfiles', false)<cr>]], { desc = '[e]xplore [d]dotfiles' })
+map('n', '<leader>en', [[<cmd>lua MiniFiles.open('/Users/arnau/dotfiles/nvim/.config/nvim', false)<cr>]], { desc = '[e]xplore [n]eovim configuration' })
 -- map('n', '<leader>ef', '<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<cr>', { desc = '[e]xplore [f]ile directory' })
 -- <- 
 
