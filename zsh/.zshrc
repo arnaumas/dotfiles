@@ -15,7 +15,13 @@ prompt pure
 alias vim="nvim"
 alias python="python3"
 
-alias ll='ls -oA'
+# list alias:
+# - show hidden files (-A),
+# - add slashes after directories (-F)
+# - delete total count (sed '1d')
+# - don't show .DS_Store (sed '.DS_Store'd)
+# - don't show file permissions (rest of sed command)
+alias ll"=ls -ohAF --color=always | sed '1d;/.DS_Store/d;s/^.\{11\}[[:space:]]*[[:digit:]]*[[:space:]]//g'"
 
 source <(fzf --zsh)
 
