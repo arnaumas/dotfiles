@@ -85,7 +85,10 @@ add({
 	source = 'echasnovski/mini.files',
 	checkout = 'stable',
 })
-require('mini.files').setup({ options = { use_as_default_explorer = true } })
+require('mini.files').setup({
+	options = { use_as_default_explorer = true },
+	content = { filter = function(fs_entry) return fs_entry.name ~= '.DS_Store' end }  
+})
 -- <-}
 
 -- mini.extra ->
