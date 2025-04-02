@@ -46,8 +46,8 @@ return {
 
   s({ trig = 'com', name = '[com]mand with argument', desc = 'LaTeX command with argument', wordTrig = false },
   fmta(
-    [[\<>{<>}<>]],
-    { i(1), d(2, get_visual), i(0) }
+    [[\<>{<>}]],
+    { i(1), d(2, get_visual) }
     )
   ),
 

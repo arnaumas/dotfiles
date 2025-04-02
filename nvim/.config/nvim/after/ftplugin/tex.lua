@@ -11,7 +11,7 @@ map({ 'n', 'o', 'v' }, 'g0', '0', { silent = true , buffer = true }) -- go to be
 map({ 'n', 'o', 'v' }, 'g$', '$', { silent = true , buffer = true }) -- go to end of text line
 map('o', 'g_', '_', { silent = true , buffer = true })
 
-map('n', 'o', 'i<cr><esc>')
+map('n', 'o', 'g$a<cr><esc>')
 
 -- remap text motions to screen motions
 map({ 'n', 'o', 'v' }, 'j', 'gj', { silent = true , buffer = true }) -- move down one screen line
