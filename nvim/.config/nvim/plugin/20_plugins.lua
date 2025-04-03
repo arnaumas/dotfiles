@@ -2,7 +2,7 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 add('sainnhe/edge')
 
--- mini.statusline ->
+-- mini.statusline -->
 add({ source = 'echasnovski/mini.statusline', checkout = 'stable' })
 local statusline = require('mini.statusline')
 statusline.setup({
@@ -19,17 +19,17 @@ statusline.setup({
 	}
 })
 statusline.section_location = function() return '%2l:%-2v' end
--- <-
+-- <--
 
--- mini.tabline ->
+-- mini.tabline -->
 add({ 
 	source = 'echasnovski/mini.tabline',
 	checkout = 'stable',
 })
 require('mini.tabline').setup()
--- <-
+-- <--
 
--- mini.icons ->
+-- mini.icons -->
 add({ source = 'echasnovski/mini.icons', checkout = 'stable' })
 local icons = require('mini.icons')
 icons.setup({
@@ -37,9 +37,9 @@ icons.setup({
 		['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' },
 	},
 })
--- <-
+-- <--
 
--- mini.notify ->
+-- mini.notify -->
 add({ source = 'echasnovski/mini.notify', checkout = 'stable' })
 later(function()
 	local notify = require('mini.notify')
@@ -51,24 +51,24 @@ later(function()
   notify.setup({ window = { config = win_config, winblend = 0 } })
 	vim.notify = notify.make_notify()
 end)
--- <-
+-- <--
 
--- mini.git ->
+-- mini.git -->
 add({ source = 'echasnovski/mini-git', checkout = 'stable' })
 later(function() require('mini.git').setup() end)
--- <-
+-- <--
 
--- mini.ai ->
+-- mini.ai -->
 add({ source = 'echasnovski/mini.ai', checkout = 'stable' })
 later(function() require('mini.ai').setup() end)
--- <-
+-- <--
 
--- mini.surround ->
+-- mini.surround -->
 add({ source = 'echasnovski/mini.surround', checkout = 'stable' })
 later(function() require('mini.surround').setup({silent = true}) end)
--- <-
+-- <--
 
--- mini.pick ->
+-- mini.pick -->
 add({ 
 	source = 'echasnovski/mini.pick',
 	checkout = 'stable',
@@ -78,9 +78,9 @@ later(function()
 	require('mini.pick').setup()
 	vim.ui.select = MiniPick.ui_select
 end)
--- <-
+-- <--
 
--- mini.files ->
+-- mini.files -->
 add({ 
 	source = 'echasnovski/mini.files',
 	checkout = 'stable',
@@ -89,14 +89,14 @@ require('mini.files').setup({
 	options = { use_as_default_explorer = true },
 	content = { filter = function(fs_entry) return fs_entry.name ~= '.DS_Store' end }  
 })
--- <-}
+-- <--
 
--- mini.extra ->
+-- mini.extra -->
 add({ source = 'echasnovski/mini.extra', checkout = 'stable' })
 later(function() require('mini.extra').setup() end)
--- <-
+-- <--
 
--- LuaSnip ->
+-- LuaSnip -->
 add({ source = 'L3MON4D3/LuaSnip', checkout = 'stable' })
 later(function()
 	require('luasnip.loaders.from_lua').lazy_load({paths = '~/.config/nvim/snippets/'})
@@ -106,9 +106,9 @@ later(function()
 		update_events = 'TextChanged, TextChangedI'
 	})
 end)
--- <-
+-- <--
 
--- vimtex ->
+-- vimtex -->
 add({ source = 'lervag/vimtex' })
 now(function()
 	vim.g.vimtex_imaps_leader = '.'
@@ -119,16 +119,16 @@ now(function()
 	vim.g.vimtex_quickfix_open_on_warning = 0
 	vim.g.vimtex_fold_enabled = 1
 end)
--- <-
+-- <--
 
--- vim-pencil ->
+-- vim-pencil -->
 add({ source = 'preservim/vim-pencil' })
--- <-
+-- <--
 
--- noice (disabled) ->
+-- noice (disabled) -->
 -- add({
 	-- source = 'folke/noice.nvim',
 	-- depends = { 'MunifTanjim/nui.nvim' }
 -- })
 -- later(function() require('noice').setup() end)
--- <-
+-- <--
