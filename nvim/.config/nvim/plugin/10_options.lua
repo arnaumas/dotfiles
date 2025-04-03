@@ -10,7 +10,6 @@ vim.schedule(function()
 	set.clipboard = 'unnamedplus' -- sync neovim and system clipboards
 end)
 -- <--
-
 -- ui -->
 set.number            = true          -- enable line numbers
 set.linebreak         = true          -- wrap lines automatically
@@ -28,13 +27,11 @@ set.showmode          = false         -- don't show mode prompt (already in stat
 set.showcmd           = false         -- don't show partial command
 set.shortmess         = 'ltToOCFscS'
 -- <--
-
 -- editing -->
 set.expandtab  = false
 set.shiftwidth = 2
 set.tabstop    = 2
 -- <--
-
 -- colorscheme -->
 global.edge_transparent_background = 1
 global.edge_enable_italic = true

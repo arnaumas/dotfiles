@@ -1,7 +1,14 @@
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
+-- colorschemes -->
 add('sainnhe/edge')
+-- <--
 
+-- mini plugins
+-- mini.ai -->
+add({ source = 'echasnovski/mini.ai', checkout = 'stable' })
+later(function() require('mini.ai').setup() end)
+-- <--
 -- mini.statusline -->
 add({ source = 'echasnovski/mini.statusline', checkout = 'stable' })
 local statusline = require('mini.statusline')
@@ -20,7 +27,6 @@ statusline.setup({
 })
 statusline.section_location = function() return '%2l:%-2v' end
 -- <--
-
 -- mini.tabline -->
 add({ 
 	source = 'echasnovski/mini.tabline',
@@ -28,7 +34,6 @@ add({
 })
 require('mini.tabline').setup()
 -- <--
-
 -- mini.icons -->
 add({ source = 'echasnovski/mini.icons', checkout = 'stable' })
 local icons = require('mini.icons')
@@ -38,7 +43,6 @@ icons.setup({
 	},
 })
 -- <--
-
 -- mini.notify -->
 add({ source = 'echasnovski/mini.notify', checkout = 'stable' })
 later(function()
@@ -52,22 +56,14 @@ later(function()
 	vim.notify = notify.make_notify()
 end)
 -- <--
-
 -- mini.git -->
 add({ source = 'echasnovski/mini-git', checkout = 'stable' })
 later(function() require('mini.git').setup() end)
 -- <--
-
--- mini.ai -->
-add({ source = 'echasnovski/mini.ai', checkout = 'stable' })
-later(function() require('mini.ai').setup() end)
--- <--
-
 -- mini.surround -->
 add({ source = 'echasnovski/mini.surround', checkout = 'stable' })
 later(function() require('mini.surround').setup({silent = true}) end)
 -- <--
-
 -- mini.pick -->
 add({ 
 	source = 'echasnovski/mini.pick',
@@ -79,7 +75,6 @@ later(function()
 	vim.ui.select = MiniPick.ui_select
 end)
 -- <--
-
 -- mini.files -->
 add({ 
 	source = 'echasnovski/mini.files',
@@ -90,7 +85,6 @@ require('mini.files').setup({
 	content = { filter = function(fs_entry) return fs_entry.name ~= '.DS_Store' end }  
 })
 -- <--
-
 -- mini.extra -->
 add({ source = 'echasnovski/mini.extra', checkout = 'stable' })
 later(function() require('mini.extra').setup() end)
@@ -121,10 +115,10 @@ now(function()
 end)
 -- <--
 
+-- disabled plugins
 -- vim-pencil -->
 add({ source = 'preservim/vim-pencil' })
 -- <--
-
 -- noice (disabled) -->
 -- add({
 	-- source = 'folke/noice.nvim',
