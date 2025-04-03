@@ -1,4 +1,5 @@
 -- bootstrap 'mini.deps'
+local path_package = vim.fn.stdpath('data') .. '/site'
 local mini_path = vim.fn.stdpath('data') .. '/site/pack/deps/start/mini.deps'
 if not vim.loop.fs_stat(mini_path) then
   vim.cmd('echo "Installing `mini.deps`" | redraw')
@@ -9,4 +10,4 @@ if not vim.loop.fs_stat(mini_path) then
 end
 
 -- start up mini.deps immediately
-require('mini.deps').setup()
+require('mini.deps').setup({ path = { package = path_package } })

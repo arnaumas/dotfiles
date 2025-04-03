@@ -17,8 +17,8 @@ map({ 'n', 'x' }, 'q', '<nop>')
 
 -- use cmd window buffer by default
 map('n', ':', 'q:i')
--- <--
 
+-- <--
 -- editing -->
 -- keep normal mode after opening lines
 map('n', 'o', 'o<esc>', { desc = '[o]pen line' })
@@ -30,14 +30,13 @@ map('n', 'R', 'cc')
 map({ 'n', 'x' }, 's', '<nop>')
 map({ 'n', 'x' }, 'S', '<nop>')
 
--- make undo silent
+-- make stuff silent
 map({ 'n', 'x' }, 'u', function() vim.cmd[[ silent undo ]] end )
 
 -- break lines (cf J to join lines)
 map({ 'n', 'x' }, 'K', 'i<cr><esc>')
 
 -- <---
-
 -- window moving and resizing -->
 map('n', '<C-h>', '<C-w><C-h>', { desc = 'move focus to the window to the left' })
 map('n', '<C-l>', '<C-w><C-l>', { desc = 'move focus to the window to the right' })

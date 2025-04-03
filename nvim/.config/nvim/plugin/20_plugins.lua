@@ -5,12 +5,53 @@ add('sainnhe/edge')
 -- <--
 
 -- mini plugins
+add({ source = 'echasnovski/mini.nvim', checkout = 'stable' })
 -- mini.ai -->
-add({ source = 'echasnovski/mini.ai', checkout = 'stable' })
 later(function() require('mini.ai').setup() end)
 -- <--
+-- mini.surround -->
+later(function() require('mini.surround').setup({silent = true}) end)
+-- <--
+-- mini.extra -->
+later(function() require('mini.extra').setup() end)
+-- <--
+-- mini.files -->
+require('mini.files').setup({
+	options = { use_as_default_explorer = true },
+	content = { filter = function(fs_entry) return fs_entry.name ~= '.DS_Store' end }  
+})
+-- <--
+-- mini.git -->
+later(function() require('mini.git').setup() end)
+-- <--
+-- mini.pick -->
+later(function()
+	require('mini.pick').setup()
+	vim.ui.select = MiniPick.ui_select
+end)
+-- <--
+
+-- mini.icons -->
+local icons = require('mini.icons')
+icons.setup({
+	file = {
+		['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' },
+	},
+})
+-- <--
+-- mini.notify -->
+later(function()
+	local notify = require('mini.notify')
+	local win_config = function()
+    local has_statusline = vim.o.laststatus > 0
+    local pad = vim.o.cmdheight + (has_statusline and 1 or 0)
+    return { anchor = 'SE', col = vim.o.columns, row = vim.o.lines - pad }
+  end
+  notify.setup({ window = { config = win_config, winblend = 0 } })
+	vim.notify = notify.make_notify()
+end)
+-- <--
 -- mini.statusline -->
-add({ source = 'echasnovski/mini.statusline', checkout = 'stable' })
 local statusline = require('mini.statusline')
 statusline.setup({
 	content = {
@@ -28,66 +69,7 @@ statusline.setup({
 statusline.section_location = function() return '%2l:%-2v' end
 -- <--
 -- mini.tabline -->
-add({ 
-	source = 'echasnovski/mini.tabline',
-	checkout = 'stable',
-})
 require('mini.tabline').setup()
--- <--
--- mini.icons -->
-add({ source = 'echasnovski/mini.icons', checkout = 'stable' })
-local icons = require('mini.icons')
-icons.setup({
-	file = {
-		['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' },
-	},
-})
--- <--
--- mini.notify -->
-add({ source = 'echasnovski/mini.notify', checkout = 'stable' })
-later(function()
-	local notify = require('mini.notify')
-	local win_config = function()
-    local has_statusline = vim.o.laststatus > 0
-    local pad = vim.o.cmdheight + (has_statusline and 1 or 0)
-    return { anchor = 'SE', col = vim.o.columns, row = vim.o.lines - pad }
-  end
-  notify.setup({ window = { config = win_config, winblend = 0 } })
-	vim.notify = notify.make_notify()
-end)
--- <--
--- mini.git -->
-add({ source = 'echasnovski/mini-git', checkout = 'stable' })
-later(function() require('mini.git').setup() end)
--- <--
--- mini.surround -->
-add({ source = 'echasnovski/mini.surround', checkout = 'stable' })
-later(function() require('mini.surround').setup({silent = true}) end)
--- <--
--- mini.pick -->
-add({ 
-	source = 'echasnovski/mini.pick',
-	checkout = 'stable',
-	-- depends = { 'echanovski/mini.extra' } 
-})
-later(function()
-	require('mini.pick').setup()
-	vim.ui.select = MiniPick.ui_select
-end)
--- <--
--- mini.files -->
-add({ 
-	source = 'echasnovski/mini.files',
-	checkout = 'stable',
-})
-require('mini.files').setup({
-	options = { use_as_default_explorer = true },
-	content = { filter = function(fs_entry) return fs_entry.name ~= '.DS_Store' end }  
-})
--- <--
--- mini.extra -->
-add({ source = 'echasnovski/mini.extra', checkout = 'stable' })
-later(function() require('mini.extra').setup() end)
 -- <--
 
 -- LuaSnip -->
@@ -117,7 +99,8 @@ end)
 
 -- disabled plugins
 -- vim-pencil -->
-add({ source = 'preservim/vim-pencil' })
+-- add({ source = 'preservim/vim-pencil' })
+
 -- <--
 -- noice (disabled) -->
 -- add({
