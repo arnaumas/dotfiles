@@ -1,16 +1,29 @@
-export ZSH=$HOME/.oh-my-zsh
+# history settings
+HISTFILE="${XDG_CACHE_HOME}/zsh/history"
 
-plugins=(git)
+# autocomplete
+# - enable tab selection
+# - autocomplete hidden files
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)
 
-source $ZSH/oh-my-zsh.sh
+# colors
+autoload -U colors && colors
 
-# Set theme to pure
-ZSH_THEME=""
+# prompt
+PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
-fpath+=($HOME/.zsh/pure)
-autoload -U promptinit; promptinit
-prompt pure
-# Comment out the print in prompt_pure_preprompt_render in pure.zsh to remove initial newline
+
+
+# OLD STUFF ==========================================
+
+# fpath+=($HOME/.zsh/pure)
+# autoload -U promptinit; promptinit
+# prompt pure
+# # Comment out the print in prompt_pure_preprompt_render in pure.zsh to remove initial newline
 
 alias vim="nvim"
 alias python="python3"
@@ -53,7 +66,4 @@ zle-line-init() {
 zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
-PURE_PROMPT_SYMBOL=">"
-PURE_PROMPT_VICMD_SYMBOL="<"
 
-clear

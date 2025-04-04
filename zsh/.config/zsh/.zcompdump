@@ -2035,6 +2035,3 @@ autoload -Uz +X _call_program
 
 typeset -gUa _comp_assocs
 _comp_assocs=( '' )
-
-#omz revision: f97e871c33da57d20e1b0411da6b1674126192a9
-#omz fpath: /Users/arnau/.oh-my-zsh/plugins/git /Users/arnau/.oh-my-zsh/functions /Users/arnau/.oh-my-zsh/completions /Users/arnau/.oh-my-zsh/custom/functions /Users/arnau/.oh-my-zsh/custom/completions /Users/arnau/.oh-my-zsh/cache/completions /usr/local/share/zsh/site-functions /usr/share/zsh/site-functions /usr/share/zsh/5.9/functions

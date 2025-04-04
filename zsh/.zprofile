@@ -6,3 +6,6 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 # add homebrew binaries to path
 export PATH=/opt/homebrew/bin:$PATH
+
+# disable shell sesions
+export SHELL_SESSIONS_DISABLE=1
