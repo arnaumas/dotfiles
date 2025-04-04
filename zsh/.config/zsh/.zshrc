@@ -1,5 +1,5 @@
 # history settings
-HISTFILE="${XDG_CACHE_HOME}/zsh/history"
+HISTFILE="$XDG_CACHE_HOME/zsh/history"
 
 # autocomplete
 # - enable tab selection
@@ -7,7 +7,7 @@ HISTFILE="${XDG_CACHE_HOME}/zsh/history"
 autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
-compinit
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 _comp_options+=(globdots)
 
 # colors
