@@ -1,5 +1,22 @@
 # history settings
 HISTFILE="$XDG_CACHE_HOME/zsh/history"
+setopt inc_append_history               # append to history file without having to exit shell
+
+# general settings
+export EDITOR="nvim"
+export MANPAGER='nvim +Man!'
+export MANWIDTH=999
+
+setopt autocd                           # no need to use cd to cd into directory
+
+# make things safe and verbose
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -Ivr"
+mkd() {
+	mkdir -pv -- "$1" &&
+		cd -- "$1"
+	}
 
 # autocomplete
 # - enable tab selection
@@ -14,7 +31,34 @@ _comp_options+=(globdots)
 autoload -U colors && colors
 
 # prompt
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+fpath+=($ZDOTDIR/prompts/pure)           # add prompts/pure to fpath
+export PURE_PROMPT_SYMBOL='>'
+export PURE_PROMPT_VICMD_SYMBOL='<'
+export PURE_GIT_UP_ARROW='↑'
+export PURE_GIT_DOWN_ARROW='↓'
+autoload -U promptinit; promptinit       # initialize prompt selector widget
+prompt pure                              # select pure
+
+# add exit code to RPROMPT
+function check_last_exit_code() {
+  local LAST_EXIT_CODE=$?
+  if [[ $LAST_EXIT_CODE -ne 0 ]]; then
+    local EXIT_CODE_PROMPT=' '
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg_bold[red]%}$LAST_EXIT_CODE%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+    echo "$EXIT_CODE_PROMPT"
+  fi
+}
+RPROMPT='$(check_last_exit_code)'
+
+# list alias:
+# - show hidden files (-A),
+# - add slashes after directories (-F)
+# - delete total count (sed '1d')
+# - don't show .DS_Store (sed '.DS_Store'/d)
+# - don't show file permissions (rest of sed command)
+alias ll"=ls -ohAF --color=always | sed '1d;/.DS_Store/d;s/^.\{11\}[[:space:]]*[[:digit:]]*[[:space:]]//g'"
 
 
 
@@ -28,19 +72,10 @@ PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magent
 alias vim="nvim"
 alias python="python3"
 
-# list alias:
-# - show hidden files (-A),
-# - add slashes after directories (-F)
-# - delete total count (sed '1d')
-# - don't show .DS_Store (sed '.DS_Store'd)
-# - don't show file permissions (rest of sed command)
-alias ll"=ls -ohAF --color=always | sed '1d;/.DS_Store/d;s/^.\{11\}[[:space:]]*[[:digit:]]*[[:space:]]//g'"
 
 source <(fzf --zsh)
 
 # open manpages with vim
-export MANPAGER='nvim +Man!'
-export MANWIDTH=999
 
 # vi mode
 bindkey -v
