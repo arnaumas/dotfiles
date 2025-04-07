@@ -19,13 +19,11 @@ mkd() {
 	}
 
 # autocomplete
-# - enable tab selection
-# - autocomplete hidden files
 autoload -U compinit
-zstyle ':completion:*' menu select
+zstyle ':completion:*' menu select         # enable tab selection
 zmodload zsh/complist
-compinit -d $XDG_CACHE_HOME/zsh/zcompdump
-_comp_options+=(globdots)
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump  
+_comp_options+=(globdots)                  # autocomplete hidden files
 
 # colors
 autoload -U colors && colors
@@ -38,6 +36,7 @@ export PURE_GIT_UP_ARROW='↑'
 export PURE_GIT_DOWN_ARROW='↓'
 autoload -U promptinit; promptinit       # initialize prompt selector widget
 prompt pure                              # select pure
+alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it does not add newline
 
 # list alias:
 # - show hidden files (-A),
