@@ -828,8 +828,8 @@ prompt_pure_setup() {
 		host                 242
 		path                 blue
 		prompt:error         red
-		prompt:success       magenta
-		prompt:continuation  242
+		prompt:success       blue
+		prompt:continuation  blue
 		suspended_jobs       red
 		user                 242
 		user:root            default
@@ -853,12 +853,12 @@ prompt_pure_setup() {
 	# If a virtualenv is activated, display it in grey.
 	PROMPT='%(12V.%F{$prompt_pure_colors[virtualenv]}%12v%f .)'
 
-	# Prompt turns red if the previous command didn't exit with 0.
-	local prompt_indicator='%(?.%F{$prompt_pure_colors[prompt:success]}.%F{$prompt_pure_colors[prompt:error]})${prompt_pure_state[prompt]}%f '
-	PROMPT+=$prompt_indicator
+	# Prompt turns red if the previous command didn't exit with 0 and shows exit code.
+	local prompt1_indicator='%(?.%F{$prompt_pure_colors[prompt:success]}.%F{$prompt_pure_colors[prompt:error]}$? )${prompt_pure_state[prompt]}%f '
+	PROMPT+=$prompt1_indicator
 
-	# Indicate continuation prompt by … and use a darker color for it.
-	PROMPT2='%F{$prompt_pure_colors[prompt:continuation]}… %(1_.%_ .%_)%f'$prompt_indicator
+	local prompt2_indicator='%(?.%F{$prompt_pure_colors[prompt:success]}.%F{$prompt_pure_colors[prompt:error]}) ${prompt_pure_state[prompt]}%f '
+	PROMPT2=$prompt2_indicator
 
 	# Store prompt expansion symbols for in-place expansion via (%). For
 	# some reason it does not work without storing them in a variable first.
