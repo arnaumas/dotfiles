@@ -38,6 +38,7 @@ autoload -U promptinit; promptinit       # initialize prompt selector widget
 prompt pure                              # select pure
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it does not add newline
 
+
 # list alias:
 # - show hidden files (-A),
 # - add slashes after directories (-F)
@@ -46,7 +47,9 @@ alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it 
 # - don't show file permissions (rest of sed command)
 alias ll"=ls -ohAF --color=always | sed '1d;/.DS_Store/d;s/^.\{11\}[[:space:]]*[[:digit:]]*[[:space:]]//g'"
 
-
+# misc ==========================================
+alias zz="tput cup $(stty size|awk '{print int($1/2);}') 0 && tput ed" # clear only half the screen
+alias so=
 
 # OLD STUFF ==========================================
 
@@ -55,7 +58,7 @@ alias ll"=ls -ohAF --color=always | sed '1d;/.DS_Store/d;s/^.\{11\}[[:space:]]*[
 # prompt pure
 # # Comment out the print in prompt_pure_preprompt_render in pure.zsh to remove initial newline
 
-alias vim="nvim"
+alias -g vim="nvim"
 alias python="python3"
 
 
