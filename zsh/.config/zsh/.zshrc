@@ -3,11 +3,14 @@ HISTFILE="$XDG_CACHE_HOME/zsh/history"
 HISTSIZE=10000000
 SAVEHIST=10000000
 setopt inc_append_history               # append to history file without having to exit shell
-autoload -U history-search-end          # use existing string to go up in history
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^[[A" history-beginning-search-backward-end
-bindkey "^[[B" history-beginning-search-forward-end
+
+autoload -U up-line-or-beginning-search # use existing string to search history
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
+
 
 # general settings
 export EDITOR="nvim"
@@ -55,8 +58,12 @@ alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it 
 alias ll"=ls -ohAF --color=always | sed '1d;/.DS_Store/d;s/^.\{11\}[[:space:]]*[[:digit:]]*[[:space:]]//g'"
 
 # misc ==========================================
-alias zz="tput cup $(stty size|awk '{print int($1/2);}') 0 && tput ed" # clear half the screen
-# alias so=
+# alias zz="tput cup $(stty size|awk '{print int($1/2);}') 0 && tput ed" # clear half the screen
+# zz() {
+	# for i in {1..$((LINES
+
+
+
 
 # OLD STUFF ==========================================
 
