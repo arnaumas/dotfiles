@@ -63,7 +63,7 @@ zz() {
 	do
 		echo
 	done
-	tput cup $((LINES/2 - 1)) 0
+	tput cup $((LINES/2 - 4)) 0
 }
 
 
