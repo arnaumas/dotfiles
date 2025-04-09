@@ -1,4 +1,4 @@
-# history settings
+# history settings ===============================
 HISTFILE="$XDG_CACHE_HOME/zsh/history"
 HISTSIZE=10000000
 SAVEHIST=10000000
@@ -12,7 +12,7 @@ bindkey "^[[A" up-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
 
 
-# general settings
+# general settings ===============================
 export EDITOR="nvim"
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
@@ -28,7 +28,7 @@ mkd() {
 		cd -- "$1"
 	}
 
-# autocomplete
+# autocomplete ====================================
 autoload -U compinit
 zstyle ':completion:*' menu select         # enable tab selection
 zmodload zsh/complist
@@ -38,7 +38,7 @@ _comp_options+=(globdots)                  # autocomplete hidden files
 # colors
 autoload -U colors && colors
 
-# prompt
+# prompt =========================================
 fpath+=($ZDOTDIR/prompts/pure)           # add prompts/pure to fpath
 export PURE_PROMPT_SYMBOL='>'
 export PURE_PROMPT_VICMD_SYMBOL='<'
@@ -58,9 +58,13 @@ alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it 
 alias ll"=ls -ohAF --color=always | sed '1d;/.DS_Store/d;s/^.\{11\}[[:space:]]*[[:digit:]]*[[:space:]]//g'"
 
 # misc ==========================================
-# alias zz="tput cup $(stty size|awk '{print int($1/2);}') 0 && tput ed" # clear half the screen
-# zz() {
-	# for i in {1..$((LINES
+zz() {
+	for i in {1..$((LINES/2))}
+	do
+		echo
+	done
+	tput cup $((LINES/2 - 1)) 0
+}
 
 
 
