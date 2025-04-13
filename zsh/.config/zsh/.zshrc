@@ -39,8 +39,13 @@ mkd() {
 	mkdir -pv -- "$1" && cd -- "$1"
 }
 
-alias -g vim=nvim
+alias vim=nvim
 alias python=python3
+
+# parent directories
+alias ...=../..
+alias ....=../../..
+alias .....=../../../..
 # <--
 
 # autocompletion -->
@@ -61,6 +66,10 @@ autoload -U promptinit; promptinit         # initialize prompt selector widget
 prompt pure                                # select pure
 
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it does not add newline
+# <--
+
+# vim mode -->
+
 # <--
 
 # misc -->
