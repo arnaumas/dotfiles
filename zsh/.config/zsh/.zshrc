@@ -1,23 +1,28 @@
-# history settings ===============================
-HISTFILE="$XDG_CACHE_HOME/zsh/history"
-HISTSIZE=10000000
-SAVEHIST=10000000
-setopt inc_append_history               # append to history file without having to exit shell
-
-autoload -U up-line-or-beginning-search # use existing string to search history
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search
-bindkey "^[[B" down-line-or-beginning-search
-
-
-# general settings ===============================
+# general settings and toggles ===============================
 export EDITOR="nvim"
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
 
 setopt autocd                           # no need to use cd to cd into directory
+autoload -U colors && colors            # enable colors
+
+
+# history ===============================
+HISTFILE="$XDG_CACHE_HOME/zsh/history"
+HISTSIZE=10000000
+SAVEHIST=10000000
+setopt inc_append_history               # append to history file without having to exit shell
+
+# use existing string to search history
+autoload -Uz up-line-or-beginning-search 
+autoload -Uz down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
+
+# aliases and bookmarks
+alias -g vim=nvim
 
 # make things safe and verbose
 alias cp="cp -iv"
@@ -28,24 +33,24 @@ mkd() {
 		cd -- "$1"
 	}
 
-# autocomplete ====================================
+# autocompletion ====================================
 autoload -U compinit
 zstyle ':completion:*' menu select         # enable tab selection
 zmodload zsh/complist
-compinit -d $XDG_CACHE_HOME/zsh/zcompdump  
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump  # create cache file in appropriate location
 _comp_options+=(globdots)                  # autocomplete hidden files
 
-# colors
-autoload -U colors && colors
 
 # prompt =========================================
-fpath+=($ZDOTDIR/prompts/pure)           # add prompts/pure to fpath
+fpath+=($ZDOTDIR/prompts/pure)             # add prompts/pure to fpath
 export PURE_PROMPT_SYMBOL='>'
 export PURE_PROMPT_VICMD_SYMBOL='<'
 export PURE_GIT_UP_ARROW='↑'
 export PURE_GIT_DOWN_ARROW='↓'
-autoload -U promptinit; promptinit       # initialize prompt selector widget
-prompt pure                              # select pure
+autoload -U promptinit; promptinit         # initialize prompt selector widget
+prompt pure                                # select pure
+
+
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it does not add newline
 
 
@@ -71,41 +76,36 @@ zz() {
 
 # OLD STUFF ==========================================
 
-# fpath+=($HOME/.zsh/pure)
-# autoload -U promptinit; promptinit
-# prompt pure
-# # Comment out the print in prompt_pure_preprompt_render in pure.zsh to remove initial newline
-
-alias -g vim="nvim"
-alias python="python3"
-
-
-source <(fzf --zsh)
-
-# open manpages with vim
-
-# vi mode
-bindkey -v
-export KEYTIMEOUT=1
-
-# Change cursor shape for different vi modes.
-function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
-}
-zle -N zle-keymap-select
-zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    echo -ne "\e[5 q"
-}
-zle -N zle-line-init
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
-
+# alias -g vim="nvim"
+# alias python="python3"
+#
+#
+# source <(fzf --zsh)
+#
+# # open manpages with vim
+#
+# # vi mode
+# bindkey -v
+# export KEYTIMEOUT=1
+#
+# # Change cursor shape for different vi modes.
+# function zle-keymap-select {
+#   if [[ ${KEYMAP} == vicmd ]] ||
+#      [[ $1 = 'block' ]]; then
+#     echo -ne '\e[1 q'
+#   elif [[ ${KEYMAP} == main ]] ||
+#        [[ ${KEYMAP} == viins ]] ||
+#        [[ ${KEYMAP} = '' ]] ||
+#        [[ $1 = 'beam' ]]; then
+#     echo -ne '\e[5 q'
+#   fi
+# }
+# zle -N zle-keymap-select
+# zle-line-init() {
+#     zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+#     echo -ne "\e[5 q"
+# }
+# zle -N zle-line-init
+# echo -ne '\e[5 q' # Use beam shape cursor on startup.
+# preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+#
