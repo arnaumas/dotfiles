@@ -84,8 +84,9 @@ alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it 
 bindkey -v              # enable vi mode
 export KEYTIMEOUT=1     # do not wait to enter vi mode
 
-bindkey "^H" backward-delete-char
+# bindkey "^H" backward-delete-char
 bindkey "^?" backward-delete-char
+bindkey -M viins "^[[3~" delete-char
 
 # change cursor shape for different vi modes.
 beam-cursor() { echo -ne '\e[5 q' }
@@ -116,11 +117,4 @@ zz() {
 	done
 	tput cup $((LINES/2 - 4)) 0
 }
-# <--
-
-
-# OLD STUFF -->
-
-# source <(fzf --zsh)
-#
 # <--
