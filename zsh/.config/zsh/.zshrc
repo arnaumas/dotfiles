@@ -88,19 +88,23 @@ bindkey "^H" backward-delete-char
 bindkey "^?" backward-delete-char
 
 # change cursor shape for different vi modes.
+beam-cursor() { echo -ne '\e[5 q' }
+block-cursor() { echo -ne '\e[1 q' }
 function switch-cursor () {
 	case $KEYMAP in
-		vicmd) echo -ne '\e[1 q';;             # block cursor in normal mode
-		viins|main) echo -ne '\e[5 q';;        # beam cursor in command mode
+		vicmd) block-cursor;;             # block cursor in normal mode
+		viins|main) beam-cursor;;         # beam cursor in command mode
 	esac
 }
 zle -N switch-cursor
-add-zle-hook-widget zle-keymap-select switch-cursor
+zle -N beam-cursor
+add-zle-hook-widget zle-keymap-select switch-cursor  # switch cursor whenever modes are switched
+add-zle-hook-widget zle-line-init beam-cursor        # use beam cursor whenever a line is initialized
+# add-zsh-hook preexec beam-cursor
 
 # use existing string to search history also in vi mode
 bindkey -M vicmd "k" up-line-or-beginning-search
 bindkey -M vicmd "j" down-line-or-beginning-search
-
 # <--
 
 # misc -->
@@ -117,31 +121,6 @@ zz() {
 
 # OLD STUFF -->
 
-# alias python="python3"
-#
-#
 # source <(fzf --zsh)
 #
-# # vi mode
-#
-# # Change cursor shape for different vi modes.
-# function zle-keymap-select {
-#   if [[ ${KEYMAP} == vicmd ]] ||
-#      [[ $1 = 'block' ]]; then
-#     echo -ne '\e[1 q'
-#   elif [[ ${KEYMAP} == main ]] ||
-#        [[ ${KEYMAP} == viins ]] ||
-#        [[ ${KEYMAP} = '' ]] ||
-#        [[ $1 = 'beam' ]]; then
-#     echo -ne '\e[5 q'
-#   fi
-# }
-# zle -N zle-keymap-select
-# zle-line-init() {
-#     zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-#     echo -ne "\e[5 q"
-# }
-# zle -N zle-line-init
-# echo -ne '\e[5 q' # Use beam shape cursor on startup.
-# preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 # <--
