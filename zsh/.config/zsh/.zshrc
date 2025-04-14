@@ -66,6 +66,17 @@ export PURE_GIT_DOWN_ARROW='↓'
 autoload -U promptinit; promptinit         # initialize prompt selector widget
 prompt pure                                # select pure
 
+# print newline after command but not first line
+new-line() {
+	if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
+		NEW_LINE_BEFORE_PROMPT=1
+	elif [ "$NEW_LINE_BEFORE_PROMPT" -eq 1 ]; then
+		echo ""
+	fi
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd new-line
+
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it does not add newline
 # <--
 
@@ -76,7 +87,7 @@ export KEYTIMEOUT=1     # do not wait to enter vi mode
 bindkey "^H" backward-delete-char
 bindkey "^?" backward-delete-char
 
-# Change cursor shape for different vi modes.
+# change cursor shape for different vi modes.
 function switch-cursor () {
 	case $KEYMAP in
 		vicmd) echo -ne '\e[1 q';;             # block cursor in normal mode
@@ -85,6 +96,10 @@ function switch-cursor () {
 }
 zle -N switch-cursor
 add-zle-hook-widget zle-keymap-select switch-cursor
+
+# use existing string to search history also in vi mode
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
 
 # <--
 
