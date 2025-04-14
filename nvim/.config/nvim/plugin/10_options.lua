@@ -10,6 +10,7 @@ vim.schedule(function()
 	set.clipboard = 'unnamedplus' -- sync neovim and system clipboards
 end)
 -- <--
+
 -- ui -->
 set.number            = true          -- enable line numbers
 set.linebreak         = true          -- wrap lines automatically
@@ -21,12 +22,13 @@ set.splitright        = true          -- vsplit new buffers to the right of exis
 set.smoothscroll      = true          -- enable smoothscrolling
 set.fillchars         = { eob = ' '}  -- eliminate tildes after end of buffer
 global.have_nerd_font = true
-set.cmdheight         = 1             -- hide comandline when not in use
+set.cmdheight         = 0             -- hide comandline when not in use
 set.cmdwinheight      = 2
 set.showmode          = false         -- don't show mode prompt (already in status line)
 set.showcmd           = false         -- don't show partial command
 set.shortmess         = 'ltToOCFscS'
 -- <--
+
 -- editing -->
 set.expandtab  = false
 set.shiftwidth = 2
