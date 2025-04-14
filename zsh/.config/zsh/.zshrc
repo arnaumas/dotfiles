@@ -71,10 +71,21 @@ alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it 
 
 # vim mode -->
 bindkey -v              # enable vi mode
-# export KEYTIMEOUT=1     # do not wait to enter vi mode
-#
-# bindkey "^H" backward-delete-char
-# bindkey "^?" backward-delete-char
+export KEYTIMEOUT=1     # do not wait to enter vi mode
+
+bindkey "^H" backward-delete-char
+bindkey "^?" backward-delete-char
+
+# Change cursor shape for different vi modes.
+function switch-cursor () {
+	case $KEYMAP in
+		vicmd) echo -ne '\e[1 q';;             # block cursor in normal mode
+		viins|main) echo -ne '\e[5 q';;        # beam cursor in command mode
+	esac
+}
+zle -N switch-cursor
+add-zle-hook-widget zle-keymap-select switch-cursor
+
 # <--
 
 # misc -->
