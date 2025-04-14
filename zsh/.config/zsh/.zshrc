@@ -1,6 +1,7 @@
 # general -->
 export EDITOR="nvim"
-export MANPAGER='nvim +Man!'
+export VISUAL="nvim"
+export MANPAGER='nvim +Man!'            # open manpages with vim
 export MANWIDTH=999
 
 setopt autocd                           # no need to use cd to cd into directory
@@ -18,8 +19,8 @@ autoload -Uz up-line-or-beginning-search
 autoload -Uz down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search
-bindkey "^[[B" down-line-or-beginning-search
+bindkey -M viins "^[[A" up-line-or-beginning-search
+bindkey -M viins "^[[B" down-line-or-beginning-search
 # <--
 
 # aliases -->
@@ -69,7 +70,11 @@ alias clear="unset NEW_LINE_BEFORE_PROMPT && clear" # redefine clear so that it 
 # <--
 
 # vim mode -->
-
+bindkey -v              # enable vi mode
+# export KEYTIMEOUT=1     # do not wait to enter vi mode
+#
+# bindkey "^H" backward-delete-char
+# bindkey "^?" backward-delete-char
 # <--
 
 # misc -->
@@ -91,11 +96,7 @@ zz() {
 #
 # source <(fzf --zsh)
 #
-# # open manpages with vim
-#
 # # vi mode
-# bindkey -v
-# export KEYTIMEOUT=1
 #
 # # Change cursor shape for different vi modes.
 # function zle-keymap-select {
