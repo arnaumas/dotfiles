@@ -6,6 +6,7 @@ export MANWIDTH=999
 
 setopt autocd                           # no need to use cd to cd into directory
 autoload -U colors && colors            # enable colors
+zle_highlight=('paste:none')            # don't highlight pasted text
 # <--
 
 # history --> 
@@ -130,6 +131,11 @@ function zsh-add-plugin() {
 		git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
 	fi
 }
+
+zsh-add-plugin "zsh-users/zsh-autosuggestions"
+bindkey '^y' autosuggest-accept
+ZSH_AUTOSUGGEST_STRATEGY=(completion history)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=249"
 
 zsh-add-plugin "zdharma-continuum/fast-syntax-highlighting"
 # <--
