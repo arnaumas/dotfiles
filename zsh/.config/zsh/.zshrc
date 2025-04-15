@@ -101,20 +101,49 @@ zle -N switch-cursor
 zle -N beam-cursor
 add-zle-hook-widget zle-keymap-select switch-cursor  # switch cursor whenever modes are switched
 add-zle-hook-widget zle-line-init beam-cursor        # use beam cursor whenever a line is initialized
-# add-zsh-hook preexec beam-cursor
+add-zsh-hook preexec beam-cursor
 
 # use existing string to search history also in vi mode
 bindkey -M vicmd "k" up-line-or-beginning-search
 bindkey -M vicmd "j" down-line-or-beginning-search
+
+# edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+bindkey -M vicmd '^[[3~' vi-delete-char
+bindkey -M visual '^[[3~' vi-delete
+bindkey -M vicmd '^e' edit-command-line
+# <--
+
+# plugins -->
+function zsh-add-plugin() {
+	PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+	if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then 
+		# For plugins
+		source "$ZDOTDIR/plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" || \
+			source "$ZDOTDIR/plugins/$PLUGIN_NAME/$PLUGIN_NAME.zsh"
+	else
+		git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
+	fi
+}
+
+zsh-add-plugin "zdharma-continuum/fast-syntax-highlighting"
 # <--
 
 # misc -->
 # clear half the screen
-zz() {
-	for i in {1..$((LINES/2))}
-	do
-		echo
-	done
-	tput cup $((LINES/2 - 4)) 0
+#
+# TODO: Fix this
+clear-half() {
+	CURSOR_PREV="$CURSOR"
+	HALFLINES=$(( (LINES-1)/2 ))
+	for i in {1..$HALFLINES}; do echo; done
+	if [[ $? -eq 0 ]]; then
+		tput cup $(( HALFLINES )) $((CURSOR_PREV + 2))
+	else
+		tput cup $(( LINES - HALFLINES )) $((CURSOR_PREV + 3 + $#?))
+	fi
 }
+zle -N clear-half
+bindkey -M vicmd "zz" clear-half
 # <--
