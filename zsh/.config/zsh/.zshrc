@@ -14,6 +14,10 @@ HISTSIZE=10000000
 SAVEHIST=10000000
 setopt inc_append_history               # append to history file without having to exit shell
 
+# move history files to appropriate locations to appropriate location
+export PYTHON_HISTORY="$XDG_CACHE_HOME/python/history"
+export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
+
 # use existing string to search history
 autoload -Uz up-line-or-beginning-search 
 autoload -Uz down-line-or-beginning-search
@@ -89,8 +93,8 @@ bindkey "^?" backward-delete-char
 bindkey -M viins "^[[3~" delete-char
 
 # change cursor shape for different vi modes.
-beam-cursor() { echo -ne '\e[5 q' }
-block-cursor() { echo -ne '\e[1 q' }
+beam-cursor() { echo -ne '\e[6 q' }
+block-cursor() { echo -ne '\e[2 q' }
 function switch-cursor () {
 	case $KEYMAP in
 		vicmd) block-cursor;;             # block cursor in normal mode
