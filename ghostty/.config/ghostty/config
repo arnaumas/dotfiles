@@ -1,0 +1,19 @@
+font-family = Liga SFMono Nerd Font
+font-size = 12
+font-feature = -calt, -liga, -dlig, +kern
+font-thicken = true
+font-thicken-strength = 60
+adjust-cell-width = "-5%"
+
+theme = edge
+background-opacity = 0.9
+background-blur = true
+
+
+# window settings
+window-inherit-working-directory = true
+window-save-state = always
+macos-titlebar-style = tabs
+macos-titlebar-proxy-icon = hidden
+window-padding-x = 4
+window-padding-y = 0,4
