@@ -23,7 +23,7 @@ set.smoothscroll      = true          -- enable smoothscrolling
 set.fillchars         = { eob = ' '}  -- eliminate tildes after end of buffer
 global.have_nerd_font = true
 set.cmdheight         = 0             -- hide comandline when not in use
-set.cmdwinheight      = 2
+set.cmdwinheight      = 1
 set.showmode          = false         -- don't show mode prompt (already in status line)
 set.showcmd           = false         -- don't show partial command
 set.shortmess         = 'ltToOCFscS'
@@ -34,6 +34,7 @@ set.expandtab  = false
 set.shiftwidth = 2
 set.tabstop    = 2
 -- <--
+
 -- colorscheme -->
 global.edge_transparent_background = 1
 global.edge_enable_italic = true

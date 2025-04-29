@@ -17,8 +17,8 @@ map({ 'n', 'x' }, 'q', '<nop>')
 
 -- use cmd window buffer by default
 map('n', ':', 'q:i')
-
 -- <--
+
 -- editing -->
 -- keep normal mode after opening lines
 map('n', 'o', 'o<esc>', { desc = '[o]pen line' })
@@ -35,15 +35,15 @@ map({ 'n', 'x' }, 'u', function() vim.cmd[[ silent undo ]] end )
 
 -- break lines (cf J to join lines)
 map({ 'n', 'x' }, 'K', 'i<cr><esc>')
-
 -- <---
+
 -- window moving and resizing -->
-map('n', '<C-h>', '<C-w><C-h>', { desc = 'move focus to the window to the left' })
-map('n', '<C-l>', '<C-w><C-l>', { desc = 'move focus to the window to the right' })
-map('n', '<C-j>', '<C-w><C-j>', { desc = 'move focus to the window below' })
-map('n', '<C-k>', '<C-w><C-k>', { desc = 'move focus to the window above' })
-map('n', '<C-+>', function() vim.cmd.resize('+5') end)
-map('n', '<C-->', function() vim.cmd.resize('-5') end)
+map('n', '<Leader-h>', '<C-w><C-h>', { desc = 'move focus to the window to the left' })
+map('n', '<Leader-l>', '<C-w><C-l>', { desc = 'move focus to the window to the right' })
+map('n', '<Leader-j>', '<C-w><C-j>', { desc = 'move focus to the window below' })
+map('n', '<Leader-k>', '<C-w><C-k>', { desc = 'move focus to the window above' })
+map('n', '<Leader-+>', function() vim.cmd.resize('+5') end)
+map('n', '<Leader-->', function() vim.cmd.resize('-5') end)
 -- <--
 
 ----------- leader maps
