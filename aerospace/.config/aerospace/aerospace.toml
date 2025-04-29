@@ -46,6 +46,7 @@ alt-ctrl-cmd-shift-l = 'move right'
 alt-ctrl-cmd-slash = 'resize smart -50'
 alt-ctrl-cmd-rightSquareBracket = 'resize smart +50'
 
+alt-ctrl-cmd-0 = 'workspace 0'
 alt-ctrl-cmd-1 = 'workspace 1'
 alt-ctrl-cmd-2 = 'workspace 2'
 alt-ctrl-cmd-3 = 'workspace 3'
@@ -56,6 +57,7 @@ alt-ctrl-cmd-7 = 'workspace 7'
 alt-ctrl-cmd-8 = 'workspace 8'
 alt-ctrl-cmd-9 = 'workspace 9'
 
+alt-ctrl-cmd-shift-0 = 'move-node-to-workspace 0'
 alt-ctrl-cmd-shift-1 = 'move-node-to-workspace 1'
 alt-ctrl-cmd-shift-2 = 'move-node-to-workspace 2'
 alt-ctrl-cmd-shift-3 = 'move-node-to-workspace 3'
@@ -70,6 +72,18 @@ alt-ctrl-cmd-tab = 'workspace-back-and-forth'
 alt-ctrl-cmd-shift-tab = 'move-node-to-workspace --focus-follows-window --wrap-around next'
 
 alt-ctrl-cmd-shift-semicolon = 'mode service'
+
+[workspace-to-monitor-force-assignment]
+0 = 'main'
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = 'main'
+5 = 'secondary'
+6 = 'secondary'
+7 = 'secondary'
+8 = 'secondary'
+9 = 'secondary'
 
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
