@@ -38,12 +38,12 @@ map({ 'n', 'x' }, 'K', 'i<cr><esc>')
 -- <---
 
 -- window moving and resizing -->
-map('n', '<Leader-h>', '<C-w><C-h>', { desc = 'move focus to the window to the left' })
-map('n', '<Leader-l>', '<C-w><C-l>', { desc = 'move focus to the window to the right' })
-map('n', '<Leader-j>', '<C-w><C-j>', { desc = 'move focus to the window below' })
-map('n', '<Leader-k>', '<C-w><C-k>', { desc = 'move focus to the window above' })
-map('n', '<Leader-+>', function() vim.cmd.resize('+5') end)
-map('n', '<Leader-->', function() vim.cmd.resize('-5') end)
+map('n', '<Leader>h', '<C-w><C-h>', { desc = 'move focus to the window to the left' })
+map('n', '<Leader>l', '<C-w><C-l>', { desc = 'move focus to the window to the right' })
+map('n', '<Leader>j', '<C-w><C-j>', { desc = 'move focus to the window below' })
+map('n', '<Leader>k', '<C-w><C-k>', { desc = 'move focus to the window above' })
+map('n', '<Leader>+', function() vim.cmd.resize('+5') end)
+map('n', '<Leader>-', function() vim.cmd.resize('-5') end)
 -- <--
 
 ----------- leader maps
