@@ -25,54 +25,51 @@ outer.bottom =     5
 outer.top =        5
 outer.right =      5
 
-# [key-mapping.key-notation-to-key-code]
-# hyper = 'ctrl-alt-shift-cmd'
-
 [mode.main.binding]
-alt-period = 'layout tiles horizontal vertical'
-alt-comma = 'layout accordion horizontal vertical'
+alt-ctrl-cmd-period = 'layout tiles horizontal vertical'
+alt-ctrl-cmd-comma = 'layout accordion horizontal vertical'
 
-alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
-alt-l = 'focus right'
+alt-ctrl-cmd-h = 'focus left'
+alt-ctrl-cmd-j = 'focus down'
+alt-ctrl-cmd-k = 'focus up'
+alt-ctrl-cmd-l = 'focus right'
 
-alt-m = 'focus-monitor --wrap-around next'
-alt-shift-m = 'move-node-to-monitor --wrap-around next'
+alt-ctrl-cmd-m = 'focus-monitor --wrap-around next'
+alt-ctrl-cmd-shift-m = 'move-node-to-monitor --wrap-around next'
 
-alt-shift-h = 'move left'
-alt-shift-j = 'move down'
-alt-shift-k = 'move up'
-alt-shift-l = 'move right'
+alt-ctrl-cmd-shift-h = 'move left'
+alt-ctrl-cmd-shift-j = 'move down'
+alt-ctrl-cmd-shift-k = 'move up'
+alt-ctrl-cmd-shift-l = 'move right'
 
 # slash is really - and rightSquareBracket is really +
-alt-slash = 'resize smart -50'
-alt-rightSquareBracket = 'resize smart +50'
+alt-ctrl-cmd-slash = 'resize smart -50'
+alt-ctrl-cmd-rightSquareBracket = 'resize smart +50'
 
-alt-1 = 'workspace 1'
-alt-2 = 'workspace 2'
-alt-3 = 'workspace 3'
-alt-4 = 'workspace 4'
-alt-5 = 'workspace 5'
-alt-6 = 'workspace 6'
-alt-7 = 'workspace 7'
-alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
+alt-ctrl-cmd-1 = 'workspace 1'
+alt-ctrl-cmd-2 = 'workspace 2'
+alt-ctrl-cmd-3 = 'workspace 3'
+alt-ctrl-cmd-4 = 'workspace 4'
+alt-ctrl-cmd-5 = 'workspace 5'
+alt-ctrl-cmd-6 = 'workspace 6'
+alt-ctrl-cmd-7 = 'workspace 7'
+alt-ctrl-cmd-8 = 'workspace 8'
+alt-ctrl-cmd-9 = 'workspace 9'
 
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
-alt-shift-6 = 'move-node-to-workspace 6'
-alt-shift-7 = 'move-node-to-workspace 7'
-alt-shift-8 = 'move-node-to-workspace 8'
-alt-shift-9 = 'move-node-to-workspace 9'
+alt-ctrl-cmd-shift-1 = 'move-node-to-workspace 1'
+alt-ctrl-cmd-shift-2 = 'move-node-to-workspace 2'
+alt-ctrl-cmd-shift-3 = 'move-node-to-workspace 3'
+alt-ctrl-cmd-shift-4 = 'move-node-to-workspace 4'
+alt-ctrl-cmd-shift-5 = 'move-node-to-workspace 5'
+alt-ctrl-cmd-shift-6 = 'move-node-to-workspace 6'
+alt-ctrl-cmd-shift-7 = 'move-node-to-workspace 7'
+alt-ctrl-cmd-shift-8 = 'move-node-to-workspace 8'
+alt-ctrl-cmd-shift-9 = 'move-node-to-workspace 9'
 
-alt-tab = 'workspace-back-and-forth'
-alt-shift-tab = 'move-node-to-workspace --focus-follows-window --wrap-around next'
+alt-ctrl-cmd-tab = 'workspace-back-and-forth'
+alt-ctrl-cmd-shift-tab = 'move-node-to-workspace --focus-follows-window --wrap-around next'
 
-alt-shift-semicolon = 'mode service'
+alt-ctrl-cmd-shift-semicolon = 'mode service'
 
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
@@ -80,11 +77,20 @@ r = ['flatten-workspace-tree', 'mode main'] # reset layout
 f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+alt-ctrl-cmd-shift-h = ['join-with left', 'mode main']
+alt-ctrl-cmd-shift-j = ['join-with down', 'mode main']
+alt-ctrl-cmd-shift-k = ['join-with up', 'mode main']
+alt-ctrl-cmd-shift-l = ['join-with right', 'mode main']
 
 down = 'volume down'
 up = 'volume up'
 shift-down = ['volume set 0', 'mode main']
+
+[[on-window-detected]]
+if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.pqrs.Karabiner-EventViewer'
+run = 'layout floating'
+
