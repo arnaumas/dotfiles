@@ -34,9 +34,15 @@ end)
 -- mini.icons -->
 local icons = require('mini.icons')
 icons.setup({
+	default = {
+		file = { glyph = '󰈔' }
+	},
 	file = {
 		['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' },
 	},
+	extension = {
+		toml = { glyph = '󰈔' }
+	}
 })
 -- <--
 -- mini.notify -->
