@@ -68,8 +68,13 @@ alt-ctrl-cmd-shift-7 = 'move-node-to-workspace --focus-follows-window 7'
 alt-ctrl-cmd-shift-8 = 'move-node-to-workspace --focus-follows-window 8'
 alt-ctrl-cmd-shift-9 = 'move-node-to-workspace --focus-follows-window 9'
 
-alt-ctrl-cmd-tab = 'workspace --wrap-around next'
-alt-ctrl-cmd-shift-tab = 'move-node-to-workspace --focus-follows-window --wrap-around next'
+# alt-ctrl-cmd-tab = 'workspace --wrap-around next'
+# alt-ctrl-cmd-shift-tab = 'workspace --wrap-around prev'
+
+alt-ctrl-cmd-n = 'workspace --wrap-around next'
+alt-ctrl-cmd-p = 'workspace --wrap-around prev'
+alt-ctrl-cmd-shift-n = 'move-node-to-workspace --focus-follows-window --wrap-around next'
+alt-ctrl-cmd-shift-p = 'move-node-to-workspace --focus-follows-window --wrap-around prev'
 
 alt-ctrl-cmd-r = 'reload-config'
 
