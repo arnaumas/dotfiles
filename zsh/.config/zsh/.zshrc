@@ -153,6 +153,10 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=249"
 zsh-add-plugin "zdharma-continuum/fast-syntax-highlighting"
 # <--
 
+# homebrew -->
+export HOMEBREW_NO_AUTO_UPDATE=1
+# <--
+
 # misc -->
 # clear half the screen
 #
