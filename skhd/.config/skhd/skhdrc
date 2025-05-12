@@ -13,3 +13,7 @@ ctrl + cmd + alt - p : yabai -m space --focus prev || yabai -m space --focus las
 
 ctrl + cmd + alt + shift - n : yabai -m window --space next --focus || yabai -m window --space first --focus 
 ctrl + cmd + alt + shift - p : yabai -m window --space prev --focus || yabai -m window --space last --focus
+
+ctrl + cmd + alt - t : yabai -m space --create
+
+ctrl + cmd + alt - r : skhd -r
