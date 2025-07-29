@@ -1,31 +1,34 @@
-# set ft=zsh
+# vim: filetype=sh
 
+# navigation
 ctrl + cmd + alt - j : yabai -m window --focus south || yabai -m display --focus south
 ctrl + cmd + alt - k : yabai -m window --focus north || yabai -m display --focus north
 ctrl + cmd + alt - h : yabai -m window --focus west || yabai -m display --focus west
 ctrl + cmd + alt - l : yabai -m window --focus east || yabai -m display --focus east
 
-ctrl + cmd + alt + shift - j : yabai -m window --warp south || $(yabai -m window --display south && yabai -m display --focus south && yabai -m window --warp last) || yabai -m window --move rel:0:10
-ctrl + cmd + alt + shift - k : yabai -m window --warp north || $(yabai -m window --display north && yabai -m display --focus north) || yabai -m window --move rel:0:-10
-ctrl + cmd + alt + shift - h : yabai -m window --warp west || $(yabai -m window --display west && yabai -m display --focus west && yabai -m window --warp first) || yabai -m window --move rel:-10:0
-ctrl + cmd + alt + shift - l : yabai -m window --warp east || $(yabai -m window --display east && yabai -m display --focus east) || yabai -m window --move rel:10:0
+# window movement
+ctrl + cmd + alt + shift - j : yabai -m window --warp south || yabai -m window --display south --focus || yabai -m window --move rel:0:10
+ctrl + cmd + alt + shift - k : yabai -m window --warp north || yabai -m window --display north --focus || yabai -m window --move rel:0:-10
+ctrl + cmd + alt + shift - h : yabai -m window --warp west || (yabai -m window --display west --focus && yabai -m window --warp last) || yabai -m window --move rel:-10:0
+ctrl + cmd + alt + shift - l : yabai -m window --warp east || (yabai -m window --display east --focus && yabai -m window --warp first) || yabai -m window --move rel:10:0
 
+# swap displays
 ctrl + cmd + alt - m : yabai -m display --focus recent
-
 ctrl + cmd + alt + shift - m : yabai -m space --display recent
 
-ctrl + cmd + alt - n : yabai -m space --focus next || yabai -m space --focus first
-ctrl + cmd + alt - p : yabai -m space --focus prev || yabai -m space --focus last
+ctrl + cmd + alt - n : info=$(yabai -m query --spaces --display); last=$(echo $info | jq '.[-1]."has-focus"'); if [[ $last == "false" ]]; then yabai -m space --focus next; else yabai -m space --focus $(echo $info | jq '.[0].index'); fi
+ctrl + cmd + alt - p : info=$(yabai -m query --spaces --display); first=$(echo $info | jq '.[0]."has-focus"'); if [[ $first == "false" ]]; then yabai -m space --focus prev; else yabai -m space --focus $(echo $info | jq '.[-1].index'); fi
 
-ctrl + cmd + alt + shift - n : yabai -m window --space next --focus || yabai -m window --space first --focus 
-ctrl + cmd + alt + shift - p : yabai -m window --space prev --focus || yabai -m window --space last --focus
-
-ctrl + cmd + alt - t : yabai -m space --create && yabai -m space --focus last
-ctrl + cmd + alt - x : yabai -m space --destroy
+ctrl + cmd + alt + shift  - n : info=$(yabai -m query --spaces --display); last=$(echo $info | jq '.[-1]."has-focus"'); if [[ $last == "false" ]]; then yabai -m window --space next --focus; else yabai -m window --space $(echo $info | jq '.[0].index') --focus; fi
+ctrl + cmd + alt + shift  - p : info=$(yabai -m query --spaces --display); first=$(echo $info | jq '.[0]."has-focus"'); if [[ $first == "false" ]]; then yabai -m window --space prev --focus; else yabai -m window --space $(echo $info | jq '.[-1].index') --focus; fi
 
 ctrl + cmd + alt - f : yabai -m window --toggle split
-
 ctrl + cmd + alt - b : yabai -m space --balance
+ctrl + cmd + alt - v : yabai -m window --toggle float && yabai -m window --layer normal
 
-ctrl + cmd + alt - r : skhd -r
+# create desktop, move window and follow focus
+ctrl + cmd + alt - t : yabai -m space --create
+ctrl + cmd + alt - x : yabai -m space --destroy
+
+ctrl + cmd + alt - r : skhd -r && yabai --restart-service
 

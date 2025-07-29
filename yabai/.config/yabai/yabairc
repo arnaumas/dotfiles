@@ -19,7 +19,7 @@ yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^QuickTime Player$" manage=off
 yabai -m rule --add app="^Logi Options\+$" manage=off
 yabai -m rule --add app="Arc" title="Seleccioneu un certificat" manage=off
-yabai -m rule --add app="^JabRef$" title!="^.*\.bib \- JabRef" manage=off
+yabai -m rule --add app="^JabRef$" title!="^.*\.bib - JabRef" manage=off
 
 # float child window
 yabai -m signal --add event=window_created action='
