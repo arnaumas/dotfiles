@@ -18,6 +18,7 @@ yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^QuickTime Player$" manage=off
 yabai -m rule --add app="^Logi Options\+$" manage=off
+yabai -m rule --add app="^Opal$" manage=off
 yabai -m rule --add app="Arc" title="Seleccioneu un certificat" manage=off
 yabai -m rule --add app="^JabRef$" title!="^.*\.bib - JabRef" manage=off
 
