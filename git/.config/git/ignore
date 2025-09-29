@@ -2,7 +2,7 @@
 .DS_Store
 *.swp
 
-# LaTeX compilatin products
+# LaTeX compilation products
 *.aux
 *.fdb_latexmk
 *.fls
@@ -12,3 +12,6 @@
 *.bbl
 *.blg
 *.synctex(busy)
+*.idx
+*.ind
+*.ilg
