@@ -16,3 +16,6 @@
 *.ind
 *.ilg
 *.toc
+*.cb
+*.brf
+*.cb2
