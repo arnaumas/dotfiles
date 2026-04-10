@@ -2,28 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AIFeatureFunctionCalling</key>
-	<true/>
-	<key>AIFeatureHostedCodeInterpeter</key>
-	<true/>
-	<key>AIFeatureHostedFileSearch</key>
-	<true/>
-	<key>AIFeatureHostedWebSearch</key>
-	<true/>
-	<key>AIFeatureStreamingResponses</key>
-	<true/>
-	<key>AITermAPI</key>
-	<integer>2</integer>
-	<key>AIVectorStore</key>
-	<integer>0</integer>
-	<key>AiMaxTokens</key>
-	<integer>400000</integer>
-	<key>AiModel</key>
-	<string>gpt-5.1</string>
-	<key>AiResponseMaxTokens</key>
-	<integer>128000</integer>
-	<key>AitermURL</key>
-	<string>https://api.openai.com/v1/responses</string>
 	<key>AutoHideTmuxClientSession</key>
 	<true/>
 	<key>BadgeFont</key>
@@ -1676,14 +1654,6 @@
 	<real>0.0</real>
 	<key>MinimalTabStyleTreatLeftInsetAsPartOfFirstTab</key>
 	<false/>
-	<key>NeverWarnAboutShortLivedSessions_9F5D5825-52EC-45AA-B79D-1DBDBA5B9277</key>
-	<true/>
-	<key>NeverWarnAboutShortLivedSessions_9F5D5825-52EC-45AA-B79D-1DBDBA5B9277_selection</key>
-	<integer>0</integer>
-	<key>NeverWarnAboutShortLivedSessions_CE81F794-6BC9-4DE0-8CBC-F9689B2BF151</key>
-	<true/>
-	<key>NeverWarnAboutShortLivedSessions_CE81F794-6BC9-4DE0-8CBC-F9689B2BF151_selection</key>
-	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -5429,8 +5399,6 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
-	<key>Print In Black And White</key>
-	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>RemoveAddTabButton</key>
