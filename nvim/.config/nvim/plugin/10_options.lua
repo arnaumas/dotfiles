@@ -21,12 +21,14 @@ set.splitbelow        = true          -- split new buffers below existing one
 set.splitright        = true          -- vsplit new buffers to the right of existing one
 set.smoothscroll      = true          -- enable smoothscrolling
 set.fillchars         = { eob = ' '}  -- eliminate tildes after end of buffer
+set.signcolumn        = 'number'      -- show diagnostic signs in the number column (no separate column)
 global.have_nerd_font = true
 set.cmdheight         = 0             -- hide comandline when not in use
 set.cmdwinheight      = 1
 set.showmode          = false         -- don't show mode prompt (already in status line)
 set.showcmd           = false         -- don't show partial command
 set.shortmess         = 'ltToOCFscS'
+require('vim._core.ui2').enable()     -- enable experimental ui mode
 -- <--
 
 -- editing -->
