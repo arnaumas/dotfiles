@@ -1,13 +1,17 @@
--- bootstrap 'mini.deps'
-local path_package = vim.fn.stdpath('data') .. '/site'
-local mini_path = vim.fn.stdpath('data') .. '/site/pack/deps/start/mini.deps'
-if not vim.loop.fs_stat(mini_path) then
-  vim.cmd('echo "Installing `mini.deps`" | redraw')
-  local clone_cmd = { 'git', 'clone', '--filter=blob:none', 'https://github.com/echasnovski/mini.deps', mini_path }
-  vim.fn.system(clone_cmd)
-  vim.cmd('packadd mini.deps | helptags ALL')
-  vim.cmd('echo "Installed `mini.deps`" | redraw')
-end
+-- Plugin manager: vim.pack (built-in, Neovim 0.12+). No bootstrap needed.
+-- Plugins are declared here so they load BEFORE any plugin/ file runs, which
+-- lets all downstream config (options, keymaps, setup calls) be eager.
+--
+-- Manage with:
+--   :lua vim.pack.update()         update all plugins (review diff, :write to confirm)
+--   :lua vim.pack.del({ 'name' })  remove a plugin
+-- Lockfile: nvim-pack-lock.json in the config dir (commit it for reproducibility).
+-- See :h vim.pack
 
--- start up mini.deps immediately
-require('mini.deps').setup({ path = { package = path_package } })
+vim.pack.add({
+	{ src = 'https://github.com/nvim-mini/mini.nvim', version = 'stable' },
+	{ src = 'https://github.com/sainnhe/edge' },
+	{ src = 'https://github.com/L3MON4D3/LuaSnip' },                       -- before blink (its snippet source)
+	{ src = 'https://github.com/saghen/blink.cmp', version = 'v1.9.1' },   -- v1: v2 needs an untagged main + blink.lib
+	{ src = 'https://github.com/lervag/vimtex' },
+})

@@ -1,5 +1,4 @@
 local map = vim.keymap.set
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 local nmap_leader = function(suffix, rhs, desc, opts)
 	opts = opts or {}
@@ -72,7 +71,6 @@ nmap_leader('ez', function() MiniFiles.open(config('zsh'), false) end,         '
 -- <-- 
 
 -- f is for [f]uzzyfind -->
-later(function()
 local pick = require('mini.pick')
 local extra = require('mini.extra')
 nmap_leader('ff', pick.builtin.files,                        '[f]ind in [f]iles' )
@@ -82,8 +80,7 @@ nmap_leader('fh', pick.builtin.help,                         '[f]ind in [h]elp' 
 nmap_leader('fH', extra.pickers.hl_groups,                   '[f]ind in [H]ighlight groups' )
 nmap_leader('fl', '<Cmd>Pick buf_lines scope="current"<CR>', '[f]ind in buffer [l]ines' )
 nmap_leader('fL', '<Cmd>Pick buf_lines scope="all"<CR>',     '[f]ind in all buffer [l]ines' )
-end)
--- <-- 
+-- <--
 
 -- g is for [g]it -->
 local git_log_cmd = [[Git log --pretty=format:\%h\ \%as\ │\ \%s --topo-order]]
@@ -108,7 +105,6 @@ nmap_leader('Lc', function() vim.cmd.runtime{ '*.lua', bang = true} vim.notify('
 -- <--
 
 -- luasnip expand snippet keymaps -->
-later(function()
 local luasnip = require 'luasnip'
 
 map({'i','s'}, '<C-l>', function()
@@ -129,5 +125,4 @@ if luasnip.expand_or_locally_jumpable() then
 luasnip.expand_or_jump()
 end
 end, { silent = true })
-end)
 -- <--

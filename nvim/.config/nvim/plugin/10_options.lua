@@ -1,6 +1,5 @@
 local set = vim.opt
 local global = vim.g
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 -- general -->
 vim.g.mapleader      = ' '
@@ -40,6 +39,6 @@ set.tabstop    = 2
 -- colorscheme -->
 global.edge_transparent_background = 1
 global.edge_enable_italic = true
-later(function() vim.cmd.colorscheme('edge') end)
+vim.cmd.colorscheme('edge')
 -- <--
 
