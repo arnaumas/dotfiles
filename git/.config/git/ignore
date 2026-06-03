@@ -21,4 +21,5 @@
 *.cb2
 
 # Claude
-.claude
+.claude/
+CLAUDE.md
