@@ -79,13 +79,39 @@ require('mini.tabline').setup()
 -- <--
 
 -- LuaSnip -->
-add({ source = 'L3MON4D3/LuaSnip', checkout = 'stable' })
+add({ source = 'L3MON4D3/LuaSnip' })
 later(function()
 	require('luasnip.loaders.from_lua').lazy_load({paths = '~/.config/nvim/snippets/'})
 	require('luasnip').setup({
 		cut_selection_keys = { '<C-l>', '<tab>' },
 		enable_autosnippets = true,
 		update_events = 'TextChanged, TextChangedI'
+	})
+end)
+-- <--
+
+-- blink.cmp -->
+-- Pinned to v1: v2 requires nvim 0.12+ (we're on 0.11). v1 is self-contained (no blink.lib).
+add({ source = 'saghen/blink.cmp', checkout = 'v1.9.1', depends = { 'L3MON4D3/LuaSnip' } })
+later(function()
+	require('blink.cmp').setup({
+		snippets = { preset = 'luasnip' },                       -- blink lists/expands your luasnip snippets
+		sources = { default = { 'lsp', 'snippets', 'buffer', 'path' } },
+		signature = { enabled = true },                          -- param hints as you type
+		-- Auto-downloads a prebuilt Rust matcher (no cargo); falls back to Lua + warning if it can't.
+		fuzzy = { implementation = 'prefer_rust_with_warning' },
+		completion = {
+			documentation = { auto_show = true },                  -- docs popup automatically
+		},
+		keymap = {
+			preset = 'none',                                       -- Tab / C-l / C-h stay 100% LuaSnip
+			['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+			['<C-n>']     = { 'select_next', 'fallback' },
+			['<C-p>']     = { 'select_prev', 'fallback' },
+			['<C-y>']     = { 'select_and_accept' },
+			['<C-e>']     = { 'hide', 'fallback' },
+			['<C-k>']     = { 'show_signature', 'hide_signature', 'fallback' },
+		},
 	})
 end)
 -- <--
