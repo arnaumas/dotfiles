@@ -1,8 +1,5 @@
-# move configuration files to ~/.config
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+# NOTE: XDG_* and ZDOTDIR are set in ~/.zshenv so they apply to non-login
+# shells too (this file is only sourced for login shells).
 
 # PATH exports
 # homebrew binaries
