@@ -1,47 +1,13 @@
--- LSP via Neovim 0.11 built-ins (vim.lsp.config / vim.lsp.enable).
--- No nvim-lspconfig, no mason. Binaries installed with Homebrew.
--- Completion capabilities are injected globally by blink.cmp's plugin file
--- (vim.lsp.config('*', {...})), so we don't set capabilities per-server here.
+-- LSP wiring. Server configs live in lsp/<name>.lua on the runtimepath and are
+-- auto-discovered by vim.lsp.enable(). Servers are installed via Homebrew
+-- (listed in the Brewfile). Completion capabilities are injected globally by
+-- blink.cmp's plugin file, so no per-server capabilities needed here.
 
--- list of servers to be installed. 
--- they are manually installed with homebrew, and should be listed in Brewfile
-local servers = {
-	lua_ls = {
-		cmd          = { 'lua-language-server' },
-		filetypes    = { 'lua' },
-		root_markers = { '.luarc.json', '.luarc.jsonc', '.git' },
-		settings = {
-			Lua = {
-				runtime     = { version = 'LuaJIT' },
-				diagnostics = { globals = { 'vim', 'MiniDeps', 'MiniPick', 'MiniFiles', 'MiniExtra', 'FoldText' } },
-				workspace   = {
-					library         = vim.api.nvim_get_runtime_file('', true), -- know the vim.* API
-					checkThirdParty = false,
-				},
-				telemetry   = { enable = false },
-			},
-		},
-	},
-
-	texlab = {
-		cmd          = { 'texlab' },
-		filetypes    = { 'tex', 'plaintex', 'bib' },
-		root_markers = { '.latexmkrc', '.git' },
-		-- texlab works well with zero settings; build/forward-search can be added later.
-	},
-}
+-- enable language servers (must match the filenames in lsp/). -->
+vim.lsp.enable({ 'lua_ls', 'texlab' })
 -- <--
 
--- register + enable every server in the list. -->
-for name, config in pairs(servers) do
-	vim.lsp.config(name, config)
-end
-vim.lsp.enable(vim.tbl_keys(servers))
--- <--
-
--- Buffer-local keymaps on attach. -->
--- NOTE: 0.11 already provides defaults on attach: K hover, grn rename,
---       gra code action, grr references, gri implementation, gO doc symbols.
+-- buffer-local keymaps shared by every server servers -->
 vim.api.nvim_create_autocmd('LspAttach', {
 	group    = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
 	callback = function(ev)

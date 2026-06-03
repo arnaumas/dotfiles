@@ -96,12 +96,37 @@ add({ source = 'saghen/blink.cmp', checkout = 'v1.9.1', depends = { 'L3MON4D3/Lu
 later(function()
 	require('blink.cmp').setup({
 		snippets = { preset = 'luasnip' },                       -- blink lists/expands your luasnip snippets
-		sources = { default = { 'lsp', 'snippets', 'buffer', 'path' } },
+		sources = {
+			default = { 'lsp', 'snippets', 'buffer', 'path' },
+
+			-- LaTeX prose: only complete commands/refs/cites (LSP) + snippets.
+			-- Dropping 'buffer' means typing prose words won't pop a menu;
+			-- texlab returns nothing for plain words, so the menu only appears
+			-- after '\' , '{', etc. -- the Overleaf-style behavior.
+			per_filetype = {
+				tex = { 'lsp', 'snippets' },
+			},
+
+			providers = {
+				buffer = {
+					min_keyword_length = 5,           -- don't suggest until 3+ chars typed
+					-- Suppress previously-used words while inside comments/strings.
+					enabled = function()
+						local ok, node = pcall(vim.treesitter.get_node)
+						if ok and node then
+							local t = node:type()
+							if t:find('comment') or t:find('string') then return false end
+						end
+						return true
+					end,
+				},
+			},
+		},
 		signature = { enabled = true },                          -- param hints as you type
 		-- Auto-downloads a prebuilt Rust matcher (no cargo); falls back to Lua + warning if it can't.
 		fuzzy = { implementation = 'prefer_rust_with_warning' },
 		completion = {
-			documentation = { auto_show = true },                  -- docs popup automatically
+			documentation = { auto_show = false },                  -- docs popup automatically
 		},
 		keymap = {
 			preset = 'none',                                       -- Tab / C-l / C-h stay 100% LuaSnip
