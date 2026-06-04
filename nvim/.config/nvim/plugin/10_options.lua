@@ -37,8 +37,10 @@ set.tabstop    = 2
 -- <--
 
 -- colorscheme -->
-global.edge_transparent_background = 1
-global.edge_enable_italic = true
-vim.cmd.colorscheme('edge')
+-- edge-ansi (colors/edge-ansi.lua) is anchored to the terminal's 16 ANSI colors,
+-- so termguicolors is OFF on purpose: cterm indices map straight onto the iterm
+-- edge-light palette, the single source of truth for colors.
+vim.opt.termguicolors = false
+vim.cmd.colorscheme('edge-ansi')
 -- <--
 

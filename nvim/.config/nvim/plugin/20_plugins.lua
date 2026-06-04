@@ -133,6 +133,11 @@ vim.g.vimtex_view_sioyek_exe = '/Applications/sioyek.app/Contents/MacOS/sioyek'
 -- vim.g.vimtex_view_skim_activate = 1
 vim.g.vimtex_quickfix_open_on_warning = 0
 vim.g.vimtex_fold_enabled = 1
+-- Treat \mathbb{R}, \mathcal{...}, \mathbf{...} etc. as ordinary commands
+-- (\name blue + argument as plain math) instead of one concealed symbol token.
+-- Only affects the math-symbol *conceal* feature, which is dormant at
+-- conceallevel=0 anyway -- so no visual change, just consistent coloring.
+vim.g.vimtex_syntax_conceal = vim.tbl_extend('force', vim.g.vimtex_syntax_conceal or {}, { math_symbols = 0 })
 -- <--
 
 -- disabled plugins

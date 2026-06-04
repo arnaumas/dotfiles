@@ -10,7 +10,6 @@
 
 vim.pack.add({
 	{ src = 'https://github.com/nvim-mini/mini.nvim', version = 'stable' },
-	{ src = 'https://github.com/sainnhe/edge' },
 	{ src = 'https://github.com/L3MON4D3/LuaSnip' },                       -- before blink (its snippet source)
 	{ src = 'https://github.com/saghen/blink.cmp', version = 'v1.9.1' },   -- v1: v2 needs an untagged main + blink.lib
 	{ src = 'https://github.com/lervag/vimtex' },
