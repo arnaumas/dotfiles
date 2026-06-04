@@ -146,11 +146,51 @@ function zsh-add-plugin() {
 }
 
 zsh-add-plugin "zsh-users/zsh-autosuggestions"
-bindkey 'tab' autosuggest-accept
-ZSH_AUTOSUGGEST_STRATEGY=(completion)
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=249"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"          # recessive grey (matches the editor palette)
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)   # prefer real history, fall back to completion
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30              # no suggestions on very long lines
 
-zsh-add-plugin "zdharma-continuum/fast-syntax-highlighting"
+# Tab: accept the autosuggestion if one is shown, else complete as usual.
+# (the else-branch moves to fzf-tab in the fzf phase)
+_autosuggest_or_complete() {
+	if [[ -n "$POSTDISPLAY" ]]; then
+		zle autosuggest-accept
+	elif (( $+widgets[fzf-completion] )); then
+		zle fzf-completion
+	else
+		zle expand-or-complete
+	fi
+}
+zle -N _autosuggest_or_complete
+bindkey -M viins '^I' _autosuggest_or_complete
+
+# zsh-syntax-highlighting (simpler than FSH; the styles array below IS the
+# idiomatic customization, kept here in-config). Source after the zle widgets above.
+zsh-add-plugin "zsh-users/zsh-syntax-highlighting"
+
+# Map onto the same ANSI slots as the editor: command position blue; strings
+# green; comments yellow; existing paths magenta (+underline); globs cyan;
+# everything else (options, separators, redirections, subcommands, keywords,
+# command-not-found) stays calm.
+typeset -gA ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[command]='fg=4'                  # first word: the command
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=4'
+ZSH_HIGHLIGHT_STYLES[function]='fg=4'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=4'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=4'               # sudo, command, ...
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=2'   # strings
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=2'
+ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=2'
+ZSH_HIGHLIGHT_STYLES[comment]='fg=3'                  # comments
+ZSH_HIGHLIGHT_STYLES[path]='fg=5,underline'           # existing paths: magenta + underline
+ZSH_HIGHLIGHT_STYLES[globbing]='fg=6'                 # * ? [ ]
+ZSH_HIGHLIGHT_STYLES[unknown-token]='none'            # command-not-found: calm (no red)
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='none'     # -x
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='none'     # --xyz
+ZSH_HIGHLIGHT_STYLES[commandseparator]='none'         # ; | && ||
+ZSH_HIGHLIGHT_STYLES[redirection]='none'              # > < >>
+ZSH_HIGHLIGHT_STYLES[reserved-word]='none'            # if/for/then
+ZSH_HIGHLIGHT_STYLES[default]='none'                  # args/subcommands stay calm
 # <--
 
 # homebrew -->
