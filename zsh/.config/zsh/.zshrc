@@ -86,7 +86,7 @@ prompt pure                                # select pure
 
 # override Pure colors to use the ANSI palette . The dirty-git '*' defaults to
 # a hardcoded 256-color (218); use palette red instead.
-zstyle ':prompt:pure:git:dirty' color red
+zstyle ':prompt:pure:git:dirty' color yellow
 zstyle ':prompt:pure:git:branch' color default
 zstyle ':prompt:pure:host' color 8
 zstyle ':prompt:pure:user' color 8
