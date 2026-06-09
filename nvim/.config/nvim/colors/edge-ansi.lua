@@ -35,7 +35,7 @@ local groups = {
 	Folded = { bg = sel },
 	Visual = { bg = grey }, VisualNOS = { bg = grey },
 	-- search: current match under cursor = yellow; other matches = grey bg
-	Search = { bg = grey }, IncSearch = { fg = 0, bg = byellow }, CurSearch = { fg = 0, bg = byellow },
+	Search = { bg = grey }, IncSearch = { fg = 0, bg = bgreen }, CurSearch = { fg = 0, bg = bgreen },
 	MatchParen = { fg = accent, bold = true, underline = true },
 	Pmenu = { bg = sel }, PmenuSel = { fg = white, bg = accent, bold = true },
 	PmenuSbar = { bg = sel }, PmenuThumb = { bg = grey },
@@ -135,7 +135,7 @@ local groups = {
 	MiniTablineModifiedCurrent = { bg = sel, bold = true, italic = true },
 	MiniTablineModifiedVisible = { bg = faint, italic = true }, MiniTablineModifiedHidden = { fg = grey, bg = faint, italic = true },
 	MiniTablineTabpagesection = { fg = white, bg = blue, bold = true }, MiniTablineFill = {},
-	MiniNotifyNormal = { bg = sel }, MiniNotifyBorder = { fg = grey }, MiniNotifyTitle = { fg = accent, bold = true },
+	MiniNotifyNormal = {}, MiniNotifyBorder = { fg = grey }, MiniNotifyTitle = { fg = accent, bold = true },
 	MiniIconsAzure = { fg = blue }, MiniIconsBlue = { fg = bblue }, MiniIconsCyan = { fg = cyan },
 	MiniIconsGreen = { fg = green }, MiniIconsGrey = { fg = grey }, MiniIconsOrange = { fg = byellow },
 	MiniIconsPurple = { fg = magenta }, MiniIconsRed = { fg = bred }, MiniIconsYellow = { fg = yellow },
