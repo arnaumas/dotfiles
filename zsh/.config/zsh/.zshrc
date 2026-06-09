@@ -84,6 +84,14 @@ export PURE_GIT_DOWN_ARROW='↓'
 autoload -U promptinit; promptinit         # initialize prompt selector widget
 prompt pure                                # select pure
 
+# override Pure colors to use the ANSI palette . The dirty-git '*' defaults to
+# a hardcoded 256-color (218); use palette red instead.
+zstyle ':prompt:pure:git:dirty' color red
+zstyle ':prompt:pure:git:branch' color default
+zstyle ':prompt:pure:host' color 8
+zstyle ':prompt:pure:user' color 8
+zstyle ':prompt:pure:virtualenv' color 8
+
 # print newline after command but not first line
 new-line() {
 	if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
@@ -164,8 +172,7 @@ _autosuggest_or_complete() {
 zle -N _autosuggest_or_complete
 bindkey -M viins '^I' _autosuggest_or_complete
 
-# zsh-syntax-highlighting (simpler than FSH; the styles array below IS the
-# idiomatic customization, kept here in-config). Source after the zle widgets above.
+# zsh-syntax-highlighting, source after the zle widgets above.
 zsh-add-plugin "zsh-users/zsh-syntax-highlighting"
 
 # Map onto the same ANSI slots as the editor: command position blue; strings
