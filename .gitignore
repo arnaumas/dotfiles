@@ -2,6 +2,5 @@
 /**/karabiner/automatic_backups/*
 
 # zsh plugins are cloned on-demand by zsh-add-plugin (not vendored), so they are
-# not committed. fzf is the exception: it's generated `fzf --zsh` output, not a repo.
+# not committed. 
 zsh/.config/zsh/plugins/*/
-!zsh/.config/zsh/plugins/fzf/
