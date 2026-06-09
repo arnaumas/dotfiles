@@ -101,7 +101,14 @@ nmap_leader('ga', '<cmd>Git diff --cached<cr>', '[g]it [a]dd' )
 
 -- L is for [L]ua -->
 nmap_leader('Ls', function() vim.cmd.source('%') vim.notify('Sourced file') end,                              '[L]ua [s]ource file' )
-nmap_leader('Lc', function() vim.cmd.runtime{ '*.lua', bang = true} vim.notify('Sourced ~/.config/nvim') end, '[L]ua source [c]onfig' )
+nmap_leader('Lc', function()
+	for _, f in
+		ipairs(vim.fn.globpath(vim.fn.stdpath('config'),
+		'**/*.lua', false, true)) do
+		vim.cmd.source(f)
+	end
+	vim.notify('Sourced ~/.config/nvim')
+end, '[L]ua source [c]onfig' )
 -- <--
 
 -- luasnip expand snippet keymaps -->
