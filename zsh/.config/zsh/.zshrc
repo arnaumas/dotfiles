@@ -58,7 +58,17 @@ alias .....=../../../..
 autoload -U compinit
 compinit -d $XDG_CACHE_HOME/zsh/zcompdump  # create cache file in appropriate location
 _comp_options+=(globdots)                  # autocomplete hidden files
-# (no `menu select` / complist: fzf-tab renders completion in an fzf picker)
+
+# candidate colors in the picker — match ll: dir=blue, symlink=magenta (files stay default)
+zstyle ':completion:*' list-colors \
+  'di=34' 'ln=35' 'so=32' 'pi=33' 'ex=31' \
+  'bd=34;46' 'cd=34;43' 'su=30;41' 'sg=30;46' 'tw=30;42' 'ow=30;43'
+# group candidates by type, with headers fzf-tab can show/switch between
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '[%d]'
+# cd: prefer real local dirs over $cdpath, and allow ../
+zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack
+zstyle ':completion:*' special-dirs false
 # <--
 
 # keybinds -->
@@ -146,6 +156,7 @@ bindkey -M vicmd '^e' edit-command-line
 # <--
 
 # plugins -->
+# plugin management functions
 function zsh-add-plugin() {
 	PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
 	[ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ] || \
@@ -154,27 +165,30 @@ function zsh-add-plugin() {
 		source "$ZDOTDIR/plugins/$PLUGIN_NAME/$PLUGIN_NAME.zsh"               # source the plugin
 }
 
-# pull every cloned plugin (those with a .git) to latest
 function zsh-update-plugins() {
 	for d in $ZDOTDIR/plugins/*(/N); do
 		[[ -d $d/.git ]] && { print -P "%F{4}↻%f ${d:t}"; git -C $d pull --ff-only; }
 	done
 }
 
-# fzf-tab: replaces zsh's completion menu with an fzf picker (fuzzy + preview).
-# Loads after compinit; binds Tab to fzf-tab-complete (the widget below delegates to it).
+# fzf-tab -->
 zsh-add-plugin "Aloxaf/fzf-tab"
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
+zstyle ':fzf-tab:*' switch-group '^' '+'
+zstyle ':fzf-tab:*' continuous-trigger '/'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -p --color=always -- "$realpath" 2>/dev/null'
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
 	'[[ -d "$realpath" ]] && ls -p --color=always -- "$realpath" 2>/dev/null || bat --color=always --style=plain -- "$realpath" 2>/dev/null || true'
+# <--
 
+# zsh-autosuggestions -->
 zsh-add-plugin "zsh-users/zsh-autosuggestions"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"          # recessive grey (matches the editor palette)
-ZSH_AUTOSUGGEST_STRATEGY=(history)              # only obvious: real past commands, no speculation
+ZSH_AUTOSUGGEST_STRATEGY=(completion history)
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30              # no suggestions on very long lines
 
-# Tab: accept the autosuggestion if one is shown, else hand off to fzf-tab.
+# tab: accept the autosuggestion if one is shown, else hand off to fzf-tab.
 _autosuggest_or_complete() {
 	if [[ -n "$POSTDISPLAY" ]]; then
 		zle autosuggest-accept
@@ -186,14 +200,14 @@ _autosuggest_or_complete() {
 }
 zle -N _autosuggest_or_complete
 bindkey -M viins '^I' _autosuggest_or_complete
+# <--
 
-# zsh-syntax-highlighting, source after the zle widgets above.
+# zsh-syntax-highlighting -->
 zsh-add-plugin "zsh-users/zsh-syntax-highlighting"
 
 # Map onto the same ANSI slots as the editor: command position blue; strings
 # green; comments yellow; existing paths magenta (+underline); globs cyan;
-# everything else (options, separators, redirections, subcommands, keywords,
-# command-not-found) stays calm.
+ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets)
 typeset -gA ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[command]='fg=4'                  # first word: the command
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=4'
@@ -204,7 +218,7 @@ ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=2'   # strings
 ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=2'
 ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=2'
 ZSH_HIGHLIGHT_STYLES[comment]='fg=3'                  # comments
-ZSH_HIGHLIGHT_STYLES[path]='fg=5,underline'           # existing paths: magenta + underline
+ZSH_HIGHLIGHT_STYLES[path]='underline'           
 ZSH_HIGHLIGHT_STYLES[globbing]='fg=6'                 # * ? [ ]
 ZSH_HIGHLIGHT_STYLES[unknown-token]='none'            # command-not-found: calm (no red)
 ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='none'     # -x
@@ -213,6 +227,13 @@ ZSH_HIGHLIGHT_STYLES[commandseparator]='none'         # ; | && ||
 ZSH_HIGHLIGHT_STYLES[redirection]='none'              # > < >>
 ZSH_HIGHLIGHT_STYLES[reserved-word]='none'            # if/for/then
 ZSH_HIGHLIGHT_STYLES[default]='none'                  # args/subcommands stay calm
+ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='fg=10,underline'
+ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=8'
+ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=8'
+ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=8'
+ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=8'
+ZSH_HIGHLIGHT_STYLES[bracket-error]='fg=8'
+# <--
 # <--
 
 # homebrew -->
