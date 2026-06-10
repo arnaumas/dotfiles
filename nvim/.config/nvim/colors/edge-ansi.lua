@@ -35,7 +35,7 @@ local groups = {
 	Folded = { bg = sel },
 	Visual = { bg = grey }, VisualNOS = { bg = grey },
 	-- search: current match under cursor = yellow; other matches = grey bg
-	Search = { bg = grey }, IncSearch = { fg = 0, bg = bgreen }, CurSearch = { fg = 0, bg = bgreen },
+	Search = { bg = grey }, IncSearch = { fg = 0, bg = byellow }, CurSearch = { fg = 0, bg = byellow },
 	MatchParen = { fg = accent, bold = true, underline = true },
 	Pmenu = { bg = sel }, PmenuSel = { fg = white, bg = accent, bold = true },
 	PmenuSbar = { bg = sel }, PmenuThumb = { bg = grey },
@@ -166,6 +166,10 @@ local groups = {
 	-- citations & references pop:
 	texRefArg = { fg = cyan }, texRefConcealedArg = { fg = cyan }, texRefEqConcealedArg = { fg = cyan },
 	-- (text-style command contents, texStyleBold/Ital/..., link to Normal below)
+
+	-- zsh (built-in syntax; no treesitter parser). Tonsky: definitions blue.
+	-- Covers name() (zshFunction) and `function name` (zshKSHFunction links here).
+	zshFunction = { fg = blue },
 }
 for g, s in pairs(groups) do hl(g, s) end
 
