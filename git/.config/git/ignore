@@ -19,7 +19,3 @@
 *.cb
 *.brf
 *.cb2
-
-# Claude
-.claude/
-CLAUDE.md
