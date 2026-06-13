@@ -55,12 +55,15 @@ intent.
 ## Colorscheme: terminal-anchored palette
 
 `colors/edge-ansi.lua` is the single most cross-cutting design decision. **`termguicolors` is OFF
-on purpose** (`plugin/10_options.lua`): all highlights use the terminal's 16 ANSI slots, and the
-actual hex values live in the iTerm profile (`iterm2/`), which is the single source of truth for
-color. The **same ANSI palette is mirrored everywhere** — zsh-syntax-highlighting, fzf
+on purpose** (`plugin/10_options.lua`): all highlights use the terminal's 16 ANSI slots. The hex
+values for those slots live in **`palette/edge-light.yaml`** (repo root, app-independent), which is
+the single source of truth for color. Every consumer mirrors it: the ghostty theme
+(`ghostty/.config/ghostty/themes/edge`), the iTerm profile (`iterm2/`), nvim's slot mapping, and the
+zsh UIs. The **same ANSI palette is mirrored everywhere** — zsh-syntax-highlighting, fzf
 (`FZF_DEFAULT_OPTS`), fzf-tab, and the pure prompt in `.zshrc` all map onto slots 0–15 so every UI
-matches the editor. If you change a color, change the ANSI slot meaning consistently across nvim
-*and* zsh; do not introduce truecolor hex into nvim highlights. Highlighting philosophy follows
+matches the editor. If you change a color, edit `palette/edge-light.yaml` first, then propagate the
+slot meaning consistently across the terminal emulators, nvim, *and* zsh; do not introduce truecolor
+hex into nvim highlights. Highlighting philosophy follows
 tonsky.me/blog/syntax-highlighting (color only what carries meaning; comments yellow not grey;
 punctuation greyed).
 
