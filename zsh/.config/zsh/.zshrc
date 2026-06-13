@@ -57,6 +57,7 @@ alias .....=../../../..
 # autocompletion -->
 autoload -U compinit
 compinit -d $XDG_CACHE_HOME/zsh/zcompdump  # create cache file in appropriate location
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 _comp_options+=(globdots)                  # autocomplete hidden files
 
 # candidate colors in the picker — match ll: dir=blue, symlink=magenta (files stay default)
