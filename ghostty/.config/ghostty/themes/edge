@@ -1,8 +1,11 @@
+# edge (light) — mirrored from iterm2/.config/iterm2/edge-light.itermcolors
+# iTerm is the single source of truth for color; keep these in sync.
+
 foreground = #4b505b
 background = #fafafa
 
-selection-foreground = #fafafa
-selection-background = #6996e0
+selection-foreground = #4b505b
+selection-background = #e8ebf0
 selection-invert-fg-bg = false
 
 cursor-text = #fafafa
@@ -17,11 +20,11 @@ palette =  5=#b05ccc
 palette =  6=#3a8b84
 palette =  7=#dde2e7
 
-palette =  8=#8790a0
-palette =  9=#d05858
-palette = 10=#608e32
-palette = 11=#be7e05
-palette = 12=#5079be
-palette = 13=#b05ccc
-palette = 14=#3a8b84
-palette = 15=#fafafa
+palette =  8=#aab1bd
+palette =  9=#e06464
+palette = 10=#7aad33
+palette = 11=#e09600
+palette = 12=#4f8ae0
+palette = 13=#c468e6
+palette = 14=#44a89e
+palette = 15=#eef1f4

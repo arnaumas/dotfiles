@@ -4,10 +4,14 @@ font-feature = -calt, -liga, -dlig, +kern
 font-thicken = true
 font-thicken-strength = 60
 adjust-cell-width = "-5%"
+adjust-underline-position = 3
 
 theme = edge
-background-opacity = 0.9
-background-blur = true
+# background-opacity = 0.9
+# background-blur = true
+
+quick-terminal-position = center
+quick-terminal-size = 30%,30%
 
 
 # window settings
@@ -16,4 +20,5 @@ window-save-state = always
 macos-titlebar-style = tabs
 macos-titlebar-proxy-icon = hidden
 window-padding-x = 4
-window-padding-y = 0,4
+window-padding-y = 0
+# window-padding-color = extend
