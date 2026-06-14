@@ -1,9 +1,8 @@
-font-family = Liga SFMono Nerd Font
+font-family = Geist Mono
 font-size = 12
 font-feature = -calt, -liga, -dlig, +kern
 font-thicken = true
 font-thicken-strength = 60
-adjust-cell-width = "-5%"
 adjust-underline-position = 3
 
 theme = edge

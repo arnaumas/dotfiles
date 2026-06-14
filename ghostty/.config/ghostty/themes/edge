@@ -1,11 +1,9 @@
-# edge (light) — mirrored from iterm2/.config/iterm2/edge-light.itermcolors
-# iTerm is the single source of truth for color; keep these in sync.
+# edge (light) — mirrored from colors/light.yaml (single source of truth)
 
 foreground = #4b505b
 background = #fafafa
 
-selection-foreground = #4b505b
-selection-background = #e8ebf0
+selection-background = #aab1bd
 selection-invert-fg-bg = false
 
 cursor-text = #fafafa

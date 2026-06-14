@@ -14,12 +14,10 @@
 
 # special-purpose roles
 special:
-  background:           "#fafafa"
-  foreground:           "#4b505b"
-  cursor:               "#5079be"
-  cursor_text:          "#fafafa"
-  selection_background: "#e8ebf0"
-  selection_foreground: "#4b505b"
+  background:  "#fafafa"
+  foreground:  "#4b505b"
+  cursor:      "#5079be"
+  cursor_text: "#eef1f4"
 
 # the 16 ANSI slots: normal (0-7) then bright (8-15)
 ansi:
