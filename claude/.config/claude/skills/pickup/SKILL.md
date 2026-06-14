@@ -5,7 +5,7 @@ description: Reconstruct context from a session handoff document to resume work 
 
 # Session Pickup
 
-Companion to session-handoff. Reads a handoff checkpoint and reconstructs working context silently — no narration, no progress updates, no confirmation messages unless something is wrong.
+Companion to handoff. Reads a handoff checkpoint and reconstructs working context silently — no narration, no progress updates, no confirmation messages unless something is wrong.
 
 ## Locate the Handoff
 

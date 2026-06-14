@@ -4,5 +4,39 @@
   "statusLine": {
     "type": "command",
     "command": "sh ~/.config/claude/statusline-command.sh"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(ls *)",
+      "Bash(ls)",
+      "Bash(rg *)",
+      "Bash(find *)",
+      "Bash(pwd)",
+      "Bash(cat *)",
+      "Bash(echo *)",
+      "Bash(which *)",
+      "Bash(type *)",
+      "Bash(wc *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(stat *)",
+      "Bash(file *)",
+      "Bash(du *)",
+      "Bash(df *)",
+      "Bash(env)",
+      "Bash(printenv *)",
+      "Read(*)",
+      "Glob(*)"
+    ],
+    "deny": [
+      "Bash(rm *)",
+      "Bash(rmdir *)",
+      "Bash(mv *)",
+      "Bash(dd *)",
+      "Bash(mkfs *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(sudo *)"
+    ]
   }
 }
