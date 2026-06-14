@@ -116,8 +116,8 @@ local groups = {
 	MiniStatuslineModeReplace = { fg = white, bg = yellow, bold = true },
 	MiniStatuslineModeCommand = { fg = white, bg = green, bold = true },
 	MiniStatuslineModeOther = { fg = white, bg = cyan, bold = true },
-	MiniStatuslineDevinfo = { bg = sel }, MiniStatuslineFileinfo = { bg = sel },
-	MiniStatuslineFilename = { bg = sel }, MiniStatuslineInactive = { fg = grey },
+	MiniStatuslineDevinfo = { bg = white }, MiniStatuslineFileinfo = { bg = white },
+	MiniStatuslineFilename = { bg = white }, MiniStatuslineInactive = { fg = grey },
 
 	-- mini.pick / files / tabline / notify / icons
 	MiniPickNormal = {},

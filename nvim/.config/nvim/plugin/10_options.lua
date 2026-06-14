@@ -27,6 +27,7 @@ set.cmdwinheight      = 1
 set.showmode          = false         -- don't show mode prompt (already in status line)
 set.showcmd           = false         -- don't show partial command
 set.shortmess         = 'ltToOCFscS'
+set.winborder         = "rounded"
 require('vim._core.ui2').enable()     -- enable experimental ui mode
 -- <--
 
