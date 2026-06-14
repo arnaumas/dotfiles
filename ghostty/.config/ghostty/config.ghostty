@@ -13,12 +13,15 @@ theme = edge
 quick-terminal-position = center
 quick-terminal-size = 30%,30%
 
+cursor-color = cell-foreground
+cursor-text = cell-background
+
 
 # window settings
 window-inherit-working-directory = true
 window-save-state = always
-macos-titlebar-style = tabs
+macos-titlebar-style = hidden
 macos-titlebar-proxy-icon = hidden
 window-padding-x = 4
-window-padding-y = 0
+window-padding-y = 10,0
 # window-padding-color = extend
