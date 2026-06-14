@@ -19,3 +19,6 @@
 *.cb
 *.brf
 *.cb2
+
+# Claude files
+.claude/
