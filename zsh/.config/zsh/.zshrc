@@ -70,6 +70,11 @@ zstyle ':completion:*:descriptions' format '[%d]'
 # cd: prefer real local dirs over $cdpath, and allow ../
 zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack
 zstyle ':completion:*' special-dirs false
+
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':completion:*' recent-dirs-insert both
 # <--
 
 # keybinds -->
@@ -82,7 +87,7 @@ bindkey -r ^H
 
 # fzf -->
 export FZF_DEFAULT_OPTS='
---height=40%
+--height=~8
 --layout=reverse
 --color=fg:-1,list-fg:8,bg:-1     
 --color=fg+:-1:regular,bg+:7
@@ -188,6 +193,9 @@ function zsh-update-plugins() {
 
 # fzf-tab -->
 zsh-add-plugin "Aloxaf/fzf-tab"
+
+bindkey -M viins '^I' fzf-tab-complete
+
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 zstyle ':fzf-tab:*' switch-group '^' '+'
 zstyle ':fzf-tab:*' continuous-trigger '/'
@@ -203,18 +211,8 @@ ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30              # no suggestions on very long lines
 
-# tab: accept the autosuggestion if one is shown, else hand off to fzf-tab.
-_autosuggest_or_complete() {
-	if [[ -n "$POSTDISPLAY" ]]; then
-		zle autosuggest-accept
-	elif (( $+widgets[fzf-tab-complete] )); then
-		zle fzf-tab-complete
-	else
-		zle expand-or-complete
-	fi
-}
-zle -N _autosuggest_or_complete
-bindkey -M viins '^I' _autosuggest_or_complete
+# accept with <C-Y>
+bindkey -M viins '^Y' autosuggest-accept
 # <--
 
 # zsh-syntax-highlighting -->
