@@ -108,18 +108,10 @@ local groups = {
 	DiffAdd = { fg = bgreen }, DiffChange = { fg = byellow }, DiffDelete = { fg = bred }, DiffText = { fg = white, bg = bblue },
 	MiniDiffSignAdd = { fg = bgreen }, MiniDiffSignChange = { fg = byellow }, MiniDiffSignDelete = { fg = bred },
 
-	-- mini.statusline: modes use edge's normal (not bright) hues with white text;
-	-- section text stays at full foreground (readable) on a grey bg, as in edge.
-	MiniStatuslineModeNormal = { fg = white, bg = magenta, bold = true },
-	MiniStatuslineModeInsert = { fg = white, bg = blue, bold = true },
-	MiniStatuslineModeVisual = { fg = white, bg = red, bold = true },
-	MiniStatuslineModeReplace = { fg = white, bg = yellow, bold = true },
-	MiniStatuslineModeCommand = { fg = white, bg = green, bold = true },
-	MiniStatuslineModeOther = { fg = white, bg = cyan, bold = true },
-	MiniStatuslineDevinfo = { bg = white }, MiniStatuslineFileinfo = { bg = white },
-	MiniStatuslineFilename = { bg = white }, MiniStatuslineInactive = { fg = grey },
+	-- statusline + tabline: handled by lualine's edge theme (raw ANSI slots) in
+	-- plugin/20_plugins.lua, not here.
 
-	-- mini.pick / files / tabline / notify / icons
+	-- mini.pick / files / notify / icons
 	MiniPickNormal = {},
 	MiniPickBorder = { fg = grey }, MiniPickBorderText = { fg = accent, bold = true },
 	MiniPickPrompt = { fg = accent, bold = true }, MiniPickPromptCaret = { fg = accent },
@@ -128,13 +120,6 @@ local groups = {
 	MiniFilesBorder = { fg = grey }, MiniFilesBorderModified = { fg = byellow },
 	MiniFilesTitle = { fg = grey }, MiniFilesTitleFocused = { fg = accent, bold = true },
 	MiniFilesDirectory = { fg = blue }, MiniFilesCursorLine = { bg = sel },
-	-- tabs: normal text on grey (like the statusline); current = sel (darker),
-	-- visible/hidden = faint grey; modified shown with italic
-	MiniTablineCurrent = { bg = sel, bold = true },
-	MiniTablineVisible = { bg = faint }, MiniTablineHidden = { fg = grey, bg = faint },
-	MiniTablineModifiedCurrent = { bg = sel, bold = true, italic = true },
-	MiniTablineModifiedVisible = { bg = faint, italic = true }, MiniTablineModifiedHidden = { fg = grey, bg = faint, italic = true },
-	MiniTablineTabpagesection = { fg = white, bg = blue, bold = true }, MiniTablineFill = {},
 	MiniNotifyNormal = {}, MiniNotifyBorder = { fg = grey }, MiniNotifyTitle = { fg = accent, bold = true },
 	MiniIconsAzure = { fg = blue }, MiniIconsBlue = { fg = bblue }, MiniIconsCyan = { fg = cyan },
 	MiniIconsGreen = { fg = green }, MiniIconsGrey = { fg = grey }, MiniIconsOrange = { fg = byellow },

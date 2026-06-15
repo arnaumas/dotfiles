@@ -37,6 +37,7 @@ icons.setup({
 		toml = { glyph = '󰈔' }
 	}
 })
+icons.mock_nvim_web_devicons()   -- route lualine's icon lookups through mini.icons (no nvim-web-devicons dep)
 -- <--
 -- mini.notify -->
 local notify = require('mini.notify')
@@ -45,28 +46,102 @@ local win_config = function()
 	local pad = vim.o.cmdheight + (has_statusline and 1 or 0)
 	return { anchor = 'SE', col = vim.o.columns, row = vim.o.lines - pad }
 end
-notify.setup({ window = { config = win_config, winblend = 0 } })
+-- lsp_progress off: lualine owns the LSP loading indicator (see lualine block).
+-- mini.notify stays as the general vim.notify backend.
+notify.setup({ window = { config = win_config, winblend = 0 }, lsp_progress = { enable = false } })
 vim.notify = notify.make_notify()
 -- <--
--- mini.statusline -->
-local statusline = require('mini.statusline')
-statusline.setup({
-	content = {
-		inactive = function()
-			local filename = statusline.section_filename({ trunc_width = 120 })
-			local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
-			return statusline.combine_groups({
-				{ hl = 'MiniStatuslineInactive', strings = { filename } },
-				'%=',
-				{ hl = 'MiniStatuslineFileinfo', strings = { fileinfo } }
-			})
-		end,
+-- lualine -->
+-- Replaces mini.statusline + mini.tabline + mini.notify's LSP progress.
+-- termguicolors is OFF (see 10_options): the theme uses raw ANSI slot numbers
+-- (0-15) so it stays colorscheme-agnostic and matches edge-ansi everywhere.
+-- lualine passes numeric fg/bg straight through to ctermfg/ctermbg.
+local slot = {
+	grey = 8, red = 1, green = 2, yellow = 3, blue = 4, magenta = 5, cyan = 6, white = 15, text = 0,
+}
+-- section text: dark fg (slot 0) on the faint surface (slot 15), like the old
+-- mini sections; mode (a) is white text on a per-mode hue, bold.
+local function modeline(bg)
+	return {
+		a = { fg = slot.white, bg = bg, gui = 'bold' },
+		b = { fg = slot.text,  bg = slot.white },
+		c = { fg = slot.text,  bg = slot.white },
 	}
+end
+local edge_theme = {
+	normal   = modeline(slot.magenta),
+	insert   = modeline(slot.blue),
+	visual   = modeline(slot.red),
+	replace  = modeline(slot.yellow),
+	command  = modeline(slot.green),
+	terminal = modeline(slot.cyan),
+	-- inactive: filename + filetype only, all on slot 15 so it doesn't read as
+	-- body text; muted grey fg to signal the window isn't focused.
+	inactive = {
+		a = { fg = slot.grey, bg = slot.white },
+		b = { fg = slot.grey, bg = slot.white },
+		c = { fg = slot.grey, bg = slot.white },
+	},
+}
+
+-- git branch from mini.git's per-buffer summary string (no fugitive/gitsigns dep).
+local function git_branch()
+	local s = vim.b.minigit_summary_string
+	return (s and s ~= '') and s or ''
+end
+
+-- LSP: attached server names, with a braille spinner + progress title while a
+-- server is loading (vim.lsp.status, Neovim 0.10+). The LspProgress autocmd
+-- below refreshes lualine so the spinner animates.
+local spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
+local function lsp_status()
+	local clients = vim.lsp.get_clients({ bufnr = 0 })
+	if #clients == 0 then return '' end
+	local names = {}
+	for _, c in ipairs(clients) do names[#names + 1] = c.name end
+	local label = table.concat(names, ',')
+	local progress = vim.lsp.status()
+	if progress ~= '' then
+		local frame = spinner[(math.floor(vim.uv.hrtime() / 1e8) % #spinner) + 1]
+		return frame .. ' ' .. progress
+	end
+	return ' ' .. label
+end
+
+require('lualine').setup({
+	options = {
+		theme = edge_theme,
+		icons_enabled = true,
+		globalstatus = false,             -- per-window statuslines (keeps inactive line)
+		section_separators = '',          -- flat, minimal: no powerline arrows
+		component_separators = '',
+	},
+	sections = {
+		lualine_a = { 'mode' },
+		lualine_b = { git_branch, 'diagnostics' },
+		lualine_c = { 'filename' },
+		lualine_x = { lsp_status, 'filetype' },
+		lualine_y = { 'encoding', 'fileformat' },
+		lualine_z = { function() return '%2l:%-2v' end },
+	},
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = { 'filename' },
+		lualine_x = { 'filetype' },
+		lualine_y = {},
+		lualine_z = {},
+	},
+	tabline = {
+		lualine_a = { 'tabs' },           -- tab list, replaces mini.tabline
+	},
 })
-statusline.section_location = function() return '%2l:%-2v' end
--- <--
--- mini.tabline -->
-require('mini.tabline').setup()
+
+-- animate the LSP spinner while a server reports progress
+vim.api.nvim_create_autocmd('LspProgress', {
+	group = vim.api.nvim_create_augroup('lualine-lsp-progress', { clear = true }),
+	callback = function() require('lualine').refresh() end,
+})
 -- <--
 
 -- LuaSnip -->
