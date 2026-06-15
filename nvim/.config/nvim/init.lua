@@ -14,4 +14,5 @@ vim.pack.add({
 	{ src = 'https://github.com/saghen/blink.cmp', version = 'v1.9.1' },   -- v1: v2 needs an untagged main + blink.lib
 	{ src = 'https://github.com/lervag/vimtex' },
 	{ src = 'https://github.com/nvim-lualine/lualine.nvim' },             -- statusline + tabline (icons via mini.icons mock)
+	{ src = 'https://github.com/ibhagwan/fzf-lua' },
 })

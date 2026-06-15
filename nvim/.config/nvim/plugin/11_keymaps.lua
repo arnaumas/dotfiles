@@ -71,15 +71,14 @@ nmap_leader('ez', function() MiniFiles.open(config('zsh'), false) end,         '
 -- <-- 
 
 -- f is for [f]uzzyfind -->
-local pick = require('mini.pick')
-local extra = require('mini.extra')
-nmap_leader('ff', pick.builtin.files,                        '[f]ind in [f]iles' )
-nmap_leader('fb', pick.builtin.buffers,                      '[f]ind in open [b]uffers' )
-nmap_leader('fg', pick.builtin.grep_live,                    '[f]ind in [g]rep file' )
-nmap_leader('fh', pick.builtin.help,                         '[f]ind in [h]elp' )
-nmap_leader('fH', extra.pickers.hl_groups,                   '[f]ind in [H]ighlight groups' )
-nmap_leader('fl', '<Cmd>Pick buf_lines scope="current"<CR>', '[f]ind in buffer [l]ines' )
-nmap_leader('fL', '<Cmd>Pick buf_lines scope="all"<CR>',     '[f]ind in all buffer [l]ines' )
+local fzf = require('fzf-lua')
+nmap_leader('ff', fzf.files,      '[f]ind in [f]iles' )
+nmap_leader('fb', fzf.buffers,    '[f]ind in open [b]uffers' )
+nmap_leader('fg', fzf.live_grep,  '[f]ind in [g]rep' )
+nmap_leader('fh', fzf.help_tags,  '[f]ind in [h]elp' )
+nmap_leader('fH', fzf.highlights, '[f]ind in [H]ighlight groups' )
+nmap_leader('fl', fzf.blines,     '[f]ind in buffer [l]ines' )
+nmap_leader('fL', fzf.lines,      '[f]ind in all buffer [l]ines' )
 -- <--
 
 -- g is for [g]it -->

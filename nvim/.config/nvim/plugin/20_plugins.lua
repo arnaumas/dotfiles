@@ -7,9 +7,6 @@ require('mini.ai').setup()
 -- mini.surround -->
 require('mini.surround').setup({silent = true})
 -- <--
--- mini.extra -->
-require('mini.extra').setup()
--- <--
 -- mini.files -->
 require('mini.files').setup({
 	options = { use_as_default_explorer = true },
@@ -19,9 +16,10 @@ require('mini.files').setup({
 -- mini.git -->
 require('mini.git').setup()
 -- <--
--- mini.pick -->
-require('mini.pick').setup()
-vim.ui.select = MiniPick.ui_select
+-- fzf-lua -->
+local fzf_lua = require('fzf-lua')
+fzf_lua.setup({})
+fzf_lua.register_ui_select()
 -- <--
 
 -- mini.icons -->
