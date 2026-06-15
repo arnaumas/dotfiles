@@ -71,10 +71,10 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack
 zstyle ':completion:*' special-dirs false
 
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
-zstyle ':chpwd:*' recent-dirs-max 500
-zstyle ':completion:*' recent-dirs-insert both
+# autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+# add-zsh-hook chpwd chpwd_recent_dirs
+# zstyle ':chpwd:*' recent-dirs-max 500
+# zstyle ':completion:*' recent-dirs-insert both
 # <--
 
 # keybinds -->
