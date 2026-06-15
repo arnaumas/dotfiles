@@ -1,10 +1,4 @@
 {
-  "theme": "auto",
-  "effortLevel": "medium",
-  "statusLine": {
-    "type": "command",
-    "command": "sh ~/.config/claude/statusline-command.sh"
-  },
   "permissions": {
     "allow": [
       "Bash(ls *)",
@@ -38,5 +32,12 @@
       "Bash(chown *)",
       "Bash(sudo *)"
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "sh ~/.config/claude/statusline-command.sh"
+  },
+  "effortLevel": "medium",
+  "theme": "auto",
+  "inputNeededNotifEnabled": true
 }

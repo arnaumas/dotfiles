@@ -1,4 +1,4 @@
--- edge-ansi: minimal, semantic colorscheme anchored to the terminal's 16 ANSI
+-- light: minimal, semantic colorscheme anchored to the terminal's 16 ANSI
 -- colors. Highlighting follows tonsky.me/blog/syntax-highlighting/: color
 -- strings/numbers (green), constants (magenta), comments (yellow, not grey),
 -- definitions (blue); grey out punctuation; leave keywords and ordinary
@@ -7,7 +7,7 @@
 
 vim.cmd('highlight clear')
 if vim.fn.exists('syntax_on') then vim.cmd('syntax reset') end
-vim.g.colors_name = 'edge-ansi'
+vim.g.colors_name = 'light'
 
 -- ANSI slots; the actual hex lives in the iterm profile.
 local grey, red, green, yellow, blue, magenta, cyan, sel = 8, 1, 2, 3, 4, 5, 6, 7
@@ -40,7 +40,7 @@ local groups = {
 	Pmenu = { bg = sel }, PmenuSel = { fg = white, bg = accent, bold = true },
 	PmenuSbar = { bg = sel }, PmenuThumb = { bg = grey },
 	PmenuKind = { fg = blue, bg = sel }, PmenuExtra = { fg = grey, bg = sel },
-	StatusLine = { bg = sel }, StatusLineNC = { fg = grey },
+	StatusLine = { bg = faint, fg = 0 }, StatusLineNC = { bg = faint, fg = grey },
 	TabLine = { fg = grey, bg = sel }, TabLineSel = { fg = white, bg = accent, bold = true }, TabLineFill = {},
 	WinSeparator = { fg = grey }, VertSplit = { fg = grey },
 	NonText = { fg = grey }, Whitespace = { fg = grey }, SpecialKey = { fg = grey }, Conceal = { fg = grey },
@@ -108,8 +108,15 @@ local groups = {
 	DiffAdd = { fg = bgreen }, DiffChange = { fg = byellow }, DiffDelete = { fg = bred }, DiffText = { fg = white, bg = bblue },
 	MiniDiffSignAdd = { fg = bgreen }, MiniDiffSignChange = { fg = byellow }, MiniDiffSignDelete = { fg = bred },
 
-	-- statusline + tabline: handled by lualine's edge theme (raw ANSI slots) in
-	-- plugin/20_plugins.lua, not here.
+	-- statusline: lualine's edge theme links each section to these (the tab list
+	-- lives in the statusline too). Mode block (a) is white on a per-mode hue,
+	-- bold; b/c sit on the faint slot-15 surface.
+	-- EdgeStlModeNormal   = { fg = white, bg = magenta, bold = true },
+	-- EdgeStlModeInsert   = { fg = white, bg = blue, bold = true },
+	-- EdgeStlModeVisual   = { fg = white, bg = red, bold = true },
+	-- EdgeStlModeReplace  = { fg = white, bg = yellow, bold = true },
+	-- EdgeStlModeCommand  = { fg = white, bg = green, bold = true },
+	-- EdgeStlModeTerminal = { fg = white, bg = cyan, bold = true },
 
 	-- mini.pick / files / notify / icons
 	MiniPickNormal = {},

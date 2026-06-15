@@ -72,7 +72,7 @@ Add to the vimtex block in `plugin/20_plugins.lua`:
 ## 3 — Built-in spell + personal dictionary (built-in, zero deps)
 
 The colorscheme already defines the `SpellBad/SpellCap/...` undercurl highlights
-(`colors/edge-ansi.lua`) — currently unused.
+(`colors/light.lua`) — currently unused.
 - Enable per-filetype (not global) in `after/ftplugin/tex.lua`:
   `vim.opt_local.spell = true`, `vim.opt_local.spelllang = 'en_us'`. (Same for markdown
   if/when wanted.)
