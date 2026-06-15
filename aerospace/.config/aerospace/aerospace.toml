@@ -26,58 +26,62 @@ outer.top =        5
 outer.right =      5
 
 [mode.main.binding]
-alt-ctrl-cmd-period = 'layout tiles horizontal vertical'
-alt-ctrl-cmd-comma = 'layout accordion horizontal vertical'
+alt-period = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
 
-alt-ctrl-cmd-h = 'focus --boundaries-action wrap-around-the-workspace left'
-alt-ctrl-cmd-j = 'focus --boundaries-action wrap-around-the-workspace down'
-alt-ctrl-cmd-k = 'focus --boundaries-action wrap-around-the-workspace up'
-alt-ctrl-cmd-l = 'focus --boundaries-action wrap-around-the-workspace right'
+alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
+alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
+alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
+alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
 
-alt-ctrl-cmd-m = 'focus-monitor --wrap-around next'
-alt-ctrl-cmd-shift-m = 'move-node-to-monitor --wrap-around --focus-follows-window next'
+alt-m = 'focus-monitor --wrap-around next'
+alt-shift-m = 'move-node-to-monitor --wrap-around --focus-follows-window next'
 
-alt-ctrl-cmd-shift-h = 'move left'
-alt-ctrl-cmd-shift-j = 'move down'
-alt-ctrl-cmd-shift-k = 'move up'
-alt-ctrl-cmd-shift-l = 'move right'
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
 
 # slash is really - and rightSquareBracket is really +
-alt-ctrl-cmd-slash = 'resize smart -50'
-alt-ctrl-cmd-rightSquareBracket = 'resize smart +50'
+alt-slash = 'resize smart -50'
+alt-rightSquareBracket = 'resize smart +50'
 
-alt-ctrl-cmd-0 = 'workspace 0'
-alt-ctrl-cmd-1 = 'workspace 1'
-alt-ctrl-cmd-2 = 'workspace 2'
-alt-ctrl-cmd-3 = 'workspace 3'
-alt-ctrl-cmd-4 = 'workspace 4'
-alt-ctrl-cmd-5 = 'workspace 5'
-alt-ctrl-cmd-6 = 'workspace 6'
-alt-ctrl-cmd-7 = 'workspace 7'
-alt-ctrl-cmd-8 = 'workspace 8'
-alt-ctrl-cmd-9 = 'workspace 9'
+alt-0 = 'workspace 0'
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
 
-alt-ctrl-cmd-shift-0 = 'move-node-to-workspace --focus-follows-window 0'
-alt-ctrl-cmd-shift-1 = 'move-node-to-workspace --focus-follows-window 1'
-alt-ctrl-cmd-shift-2 = 'move-node-to-workspace --focus-follows-window 2'
-alt-ctrl-cmd-shift-3 = 'move-node-to-workspace --focus-follows-window 3'
-alt-ctrl-cmd-shift-4 = 'move-node-to-workspace --focus-follows-window 4'
-alt-ctrl-cmd-shift-5 = 'move-node-to-workspace --focus-follows-window 5'
-alt-ctrl-cmd-shift-6 = 'move-node-to-workspace --focus-follows-window 6'
-alt-ctrl-cmd-shift-7 = 'move-node-to-workspace --focus-follows-window 7'
-alt-ctrl-cmd-shift-8 = 'move-node-to-workspace --focus-follows-window 8'
-alt-ctrl-cmd-shift-9 = 'move-node-to-workspace --focus-follows-window 9'
+alt-shift-0 = 'move-node-to-workspace --focus-follows-window 0'
+alt-shift-1 = 'move-node-to-workspace --focus-follows-window 1'
+alt-shift-2 = 'move-node-to-workspace --focus-follows-window 2'
+alt-shift-3 = 'move-node-to-workspace --focus-follows-window 3'
+alt-shift-4 = 'move-node-to-workspace --focus-follows-window 4'
+alt-shift-5 = 'move-node-to-workspace --focus-follows-window 5'
+alt-shift-6 = 'move-node-to-workspace --focus-follows-window 6'
+alt-shift-7 = 'move-node-to-workspace --focus-follows-window 7'
+alt-shift-8 = 'move-node-to-workspace --focus-follows-window 8'
+alt-shift-9 = 'move-node-to-workspace --focus-follows-window 9'
 
 # alt-ctrl-cmd-tab = 'workspace --wrap-around next'
 # alt-ctrl-cmd-shift-tab = 'workspace --wrap-around prev'
 
-alt-ctrl-cmd-n = 'workspace --wrap-around next'
-alt-ctrl-cmd-p = 'workspace --wrap-around prev'
-alt-ctrl-cmd-shift-n = 'move-node-to-workspace --focus-follows-window --wrap-around next'
-alt-ctrl-cmd-shift-p = 'move-node-to-workspace --focus-follows-window --wrap-around prev'
+alt-n = 'workspace --wrap-around next'
+alt-p = 'workspace --wrap-around prev'
+alt-shift-n = 'move-node-to-workspace --focus-follows-window --wrap-around next'
+alt-shift-p = 'move-node-to-workspace --focus-follows-window --wrap-around prev'
 
-alt-ctrl-cmd-s = 'mode service'
-alt-ctrl-cmd-r = 'reload-config'
+alt-s = 'mode service'
+alt-r = 'reload-config'
+
+# scratchpad: floating ghostty on a dedicated tmux session
+alt-enter = '''exec-and-forget aerospace-scratchpad show Ghostty -F window-title='scratchpad' \
+  || /Applications/Ghostty.app/Contents/MacOS/ghostty --title=scratchpad --window-width=90 --window-height=90 -e tmux new-session -A -s scratch'''
 
 [workspace-to-monitor-force-assignment]
 0 = 'secondary'
@@ -97,10 +101,10 @@ r = ['flatten-workspace-tree', 'mode main'] # reset layout
 f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
-alt-ctrl-cmd-shift-h = ['join-with left', 'mode main']
-alt-ctrl-cmd-shift-j = ['join-with down', 'mode main']
-alt-ctrl-cmd-shift-k = ['join-with up', 'mode main']
-alt-ctrl-cmd-shift-l = ['join-with right', 'mode main']
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
 
 down = 'volume down'
 up = 'volume up'
@@ -116,4 +120,12 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Music'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
 run = 'layout floating'

@@ -20,7 +20,7 @@ so `stow <pkg>` symlinks it into place from the repo root:
 When adding a config file, place it at the path it should occupy *relative to its install target*,
 not where it's convenient.
 
-**Actively used:** `nvim`, `zsh`, `git`. **Ignore** `ghostty`, `svim`, `aerospace` (and other
+**Actively used:** `nvim`, `zsh`, `git`, `tmux`. **Ignore** `ghostty`, `svim`, `aerospace` (and other
 unused GUI/WM packages) unless asked — they are kept but not in use.
 
 ## Neovim (`nvim/.config/nvim/`)

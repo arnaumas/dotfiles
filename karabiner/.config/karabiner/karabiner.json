@@ -5,7 +5,22 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Caps Lock to Esc and Ctrl",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "right_control" }],
+                                "to_if_alone": [{ "key_code": "escape" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Left Option to Hyper",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -23,21 +38,8 @@
                         ]
                     },
                     {
-                        "description": "Caps Lock to Esc and Ctrl",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "right_control" }],
-                                "to_if_alone": [{ "key_code": "escape" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "S+D -> (S)uper(D)uper Mode",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
