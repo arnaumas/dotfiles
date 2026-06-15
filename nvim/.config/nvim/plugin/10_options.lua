@@ -12,6 +12,7 @@ end)
 
 -- ui -->
 set.number            = true          -- enable line numbers
+set.relativenumber    = true          -- enable line numbers
 set.linebreak         = true          -- wrap lines automatically
 set.breakindent       = true          -- maintain indentation level of wrapped lines
 set.cursorline        = true          -- highlight the line the cursor is one
@@ -38,10 +39,10 @@ set.tabstop    = 2
 -- <--
 
 -- colorscheme -->
--- edge-ansi (colors/edge-ansi.lua) is anchored to the terminal's 16 ANSI colors,
--- so termguicolors is OFF on purpose: cterm indices map straight onto the iterm
--- edge-light palette, the single source of truth for colors.
+-- the 'light' colorscheme (colors/light.lua) is anchored to the terminal's 16 ANSI
+-- colors, so termguicolors is OFF on purpose: cterm indices map straight onto the
+-- iterm edge-light palette, the single source of truth for colors.
 vim.opt.termguicolors = false
-vim.cmd.colorscheme('edge-ansi')
+vim.cmd.colorscheme('light')
 -- <--
 

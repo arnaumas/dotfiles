@@ -4,7 +4,7 @@
 # independent of any app. Mirror these values into every consumer:
 #   - ghostty/.config/ghostty/themes/edge
 #   - iterm2/.config/iterm2/edge-light.itermcolors
-#   - nvim colors/edge-ansi.lua (slots 0-15)
+#   - nvim colors/light.lua (slots 0-15)
 #   - zsh (syntax-highlighting, fzf, fzf-tab, pure prompt)
 #
 # Hex values are reference only; nvim runs with termguicolors OFF and reads

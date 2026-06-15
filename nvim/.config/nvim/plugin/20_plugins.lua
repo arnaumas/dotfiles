@@ -37,6 +37,7 @@ icons.setup({
 		toml = { glyph = '󰈔' }
 	}
 })
+icons.mock_nvim_web_devicons()   -- route lualine's icon lookups through mini.icons
 -- <--
 -- mini.notify -->
 local notify = require('mini.notify')
@@ -45,28 +46,97 @@ local win_config = function()
 	local pad = vim.o.cmdheight + (has_statusline and 1 or 0)
 	return { anchor = 'SE', col = vim.o.columns, row = vim.o.lines - pad }
 end
-notify.setup({ window = { config = win_config, winblend = 0 } })
+-- lsp_progress off: lualine owns the LSP loading indicator (see lualine block).
+-- mini.notify stays as the general vim.notify backend.
+notify.setup({ window = { config = win_config, winblend = 0 }, lsp_progress = { enable = false } })
 vim.notify = notify.make_notify()
 -- <--
--- mini.statusline -->
-local statusline = require('mini.statusline')
-statusline.setup({
-	content = {
-		inactive = function()
-			local filename = statusline.section_filename({ trunc_width = 120 })
-			local fileinfo = statusline.section_fileinfo({ trunc_width = 120 })
-			return statusline.combine_groups({
-				{ hl = 'MiniStatuslineInactive', strings = { filename } },
-				'%=',
-				{ hl = 'MiniStatuslineFileinfo', strings = { fileinfo } }
-			})
-		end,
-	}
-})
-statusline.section_location = function() return '%2l:%-2v' end
--- <--
--- mini.tabline -->
-require('mini.tabline').setup()
+-- lualine -->
+local bred, bgreen, byellow, bblue, bmagenta, bcyan, white = 9, 10, 11, 12, 13, 14, 15
+local function modeline(bg)
+	return { a = { fg = white, bg = bg, gui = 'bold' }, b = 'StatusLine', c = 'StatusLine' }
+end
+
+local theme = {
+	normal   = modeline(bmagenta),
+	insert   = modeline(bblue),
+	visual   = modeline(bred),
+	replace  = modeline(byellow),
+	command  = modeline(bgreen),
+	terminal = modeline(bcyan),
+	inactive = {a = 'StatusLineNc', b = 'StatusLineNC', c = 'StatusLineNC'}
+}
+
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = theme,
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    always_show_tabline = true,
+    globalstatus = true,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+      refresh_time = 16, -- ~60fps
+      events = {
+        'WinEnter',
+        'BufEnter',
+        'BufWritePost',
+        'SessionLoadPost',
+        'FileChangedShellPost',
+        'VimResized',
+        'Filetype',
+        'CursorMoved',
+        'CursorMovedI',
+        'ModeChanged',
+      },
+    }
+  },
+  sections = {
+		lualine_a = {
+			{ 'mode', fmt = function(s) return (s:gsub('(%a)%a*', '%1')) end }
+		},
+    lualine_b = {},
+    lualine_c = {
+			{
+				'tabs',
+				mode = 1,
+				path = 1,
+				tab_max_length = 30,
+				tabs_color = {
+					active   = { fg = 0, bg = 7, gui = 'bold' },
+					inactive = { fg = 0, bg = 15 },
+				},
+			}
+		},
+    lualine_x = {},
+    lualine_y = {
+			{
+				'diagnostics',
+				symbols = {
+					error = '\u{f015a} %#StatusLine#', warn = '\u{f002a} %#StatusLine#',
+					info  = '\u{f02fd} %#StatusLine#', hint = '\u{f0336} %#StatusLine#',
+				},
+				diagnostics_color = {
+					error = 'DiagnosticError', warn = 'DiagnosticWarn',
+					info  = 'DiagnosticInfo',  hint = 'DiagnosticHint',
+				}
+			},
+			{ 'branch', icon = '\u{e725}' },
+			'filetype'
+		},
+		lualine_z = {'location'}
+	},
+  extensions = {}
+}
 -- <--
 
 -- LuaSnip -->

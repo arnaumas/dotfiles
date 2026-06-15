@@ -54,7 +54,7 @@ intent.
 
 ## Colorscheme: terminal-anchored palette
 
-`colors/edge-ansi.lua` is the single most cross-cutting design decision. **`termguicolors` is OFF
+`colors/light.lua` is the single most cross-cutting design decision. **`termguicolors` is OFF
 on purpose** (`plugin/10_options.lua`): all highlights use the terminal's 16 ANSI slots. The hex
 values for those slots live in **`palette/edge-light.yaml`** (repo root, app-independent), which is
 the single source of truth for color. Every consumer mirrors it: the ghostty theme

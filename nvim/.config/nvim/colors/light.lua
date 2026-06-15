@@ -1,4 +1,4 @@
--- edge-ansi: minimal, semantic colorscheme anchored to the terminal's 16 ANSI
+-- light: minimal, semantic colorscheme anchored to the terminal's 16 ANSI
 -- colors. Highlighting follows tonsky.me/blog/syntax-highlighting/: color
 -- strings/numbers (green), constants (magenta), comments (yellow, not grey),
 -- definitions (blue); grey out punctuation; leave keywords and ordinary
@@ -7,7 +7,7 @@
 
 vim.cmd('highlight clear')
 if vim.fn.exists('syntax_on') then vim.cmd('syntax reset') end
-vim.g.colors_name = 'edge-ansi'
+vim.g.colors_name = 'light'
 
 -- ANSI slots; the actual hex lives in the iterm profile.
 local grey, red, green, yellow, blue, magenta, cyan, sel = 8, 1, 2, 3, 4, 5, 6, 7
@@ -40,7 +40,7 @@ local groups = {
 	Pmenu = { bg = sel }, PmenuSel = { fg = white, bg = accent, bold = true },
 	PmenuSbar = { bg = sel }, PmenuThumb = { bg = grey },
 	PmenuKind = { fg = blue, bg = sel }, PmenuExtra = { fg = grey, bg = sel },
-	StatusLine = { bg = sel }, StatusLineNC = { fg = grey },
+	StatusLine = { bg = faint, fg = 0 }, StatusLineNC = { bg = faint, fg = grey },
 	TabLine = { fg = grey, bg = sel }, TabLineSel = { fg = white, bg = accent, bold = true }, TabLineFill = {},
 	WinSeparator = { fg = grey }, VertSplit = { fg = grey },
 	NonText = { fg = grey }, Whitespace = { fg = grey }, SpecialKey = { fg = grey }, Conceal = { fg = grey },
@@ -108,18 +108,17 @@ local groups = {
 	DiffAdd = { fg = bgreen }, DiffChange = { fg = byellow }, DiffDelete = { fg = bred }, DiffText = { fg = white, bg = bblue },
 	MiniDiffSignAdd = { fg = bgreen }, MiniDiffSignChange = { fg = byellow }, MiniDiffSignDelete = { fg = bred },
 
-	-- mini.statusline: modes use edge's normal (not bright) hues with white text;
-	-- section text stays at full foreground (readable) on a grey bg, as in edge.
-	MiniStatuslineModeNormal = { fg = white, bg = magenta, bold = true },
-	MiniStatuslineModeInsert = { fg = white, bg = blue, bold = true },
-	MiniStatuslineModeVisual = { fg = white, bg = red, bold = true },
-	MiniStatuslineModeReplace = { fg = white, bg = yellow, bold = true },
-	MiniStatuslineModeCommand = { fg = white, bg = green, bold = true },
-	MiniStatuslineModeOther = { fg = white, bg = cyan, bold = true },
-	MiniStatuslineDevinfo = { bg = white }, MiniStatuslineFileinfo = { bg = white },
-	MiniStatuslineFilename = { bg = white }, MiniStatuslineInactive = { fg = grey },
+	-- statusline: lualine's edge theme links each section to these (the tab list
+	-- lives in the statusline too). Mode block (a) is white on a per-mode hue,
+	-- bold; b/c sit on the faint slot-15 surface.
+	-- EdgeStlModeNormal   = { fg = white, bg = magenta, bold = true },
+	-- EdgeStlModeInsert   = { fg = white, bg = blue, bold = true },
+	-- EdgeStlModeVisual   = { fg = white, bg = red, bold = true },
+	-- EdgeStlModeReplace  = { fg = white, bg = yellow, bold = true },
+	-- EdgeStlModeCommand  = { fg = white, bg = green, bold = true },
+	-- EdgeStlModeTerminal = { fg = white, bg = cyan, bold = true },
 
-	-- mini.pick / files / tabline / notify / icons
+	-- mini.pick / files / notify / icons
 	MiniPickNormal = {},
 	MiniPickBorder = { fg = grey }, MiniPickBorderText = { fg = accent, bold = true },
 	MiniPickPrompt = { fg = accent, bold = true }, MiniPickPromptCaret = { fg = accent },
@@ -128,13 +127,6 @@ local groups = {
 	MiniFilesBorder = { fg = grey }, MiniFilesBorderModified = { fg = byellow },
 	MiniFilesTitle = { fg = grey }, MiniFilesTitleFocused = { fg = accent, bold = true },
 	MiniFilesDirectory = { fg = blue }, MiniFilesCursorLine = { bg = sel },
-	-- tabs: normal text on grey (like the statusline); current = sel (darker),
-	-- visible/hidden = faint grey; modified shown with italic
-	MiniTablineCurrent = { bg = sel, bold = true },
-	MiniTablineVisible = { bg = faint }, MiniTablineHidden = { fg = grey, bg = faint },
-	MiniTablineModifiedCurrent = { bg = sel, bold = true, italic = true },
-	MiniTablineModifiedVisible = { bg = faint, italic = true }, MiniTablineModifiedHidden = { fg = grey, bg = faint, italic = true },
-	MiniTablineTabpagesection = { fg = white, bg = blue, bold = true }, MiniTablineFill = {},
 	MiniNotifyNormal = {}, MiniNotifyBorder = { fg = grey }, MiniNotifyTitle = { fg = accent, bold = true },
 	MiniIconsAzure = { fg = blue }, MiniIconsBlue = { fg = bblue }, MiniIconsCyan = { fg = cyan },
 	MiniIconsGreen = { fg = green }, MiniIconsGrey = { fg = grey }, MiniIconsOrange = { fg = byellow },
