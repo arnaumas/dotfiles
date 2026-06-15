@@ -24,10 +24,10 @@ map('n', 'o', 'o<esc>', { desc = '[o]pen line' })
 map('n', 'O', 'O<esc>', { desc = '[o]pen line above' })
 
 -- merge r and s behaviour
-map('n', 'r', 'cl')
-map('n', 'R', 'cc')
-map({ 'n', 'x' }, 's', '<nop>')
-map({ 'n', 'x' }, 'S', '<nop>')
+-- map('n', 'r', 'cl')
+-- map('n', 'R', 'cc')
+-- map({ 'n', 'x' }, 's', '<nop>')
+-- map({ 'n', 'x' }, 'S', '<nop>')
 
 -- make stuff silent
 map({ 'n', 'x' }, 'u', function() vim.cmd[[ silent undo ]] end )
@@ -47,7 +47,7 @@ map('n', '<Leader>-', function() vim.cmd.resize('-5') end)
 
 ----------- leader maps
 -- b is for [b]uffer -->
-nmap_leader('w', function() vim.cmd[[ silent write ]] end,     '[w]rite file')
+nmap_leader('w', function() vim.cmd[[ silent update ]] end,    '[w]rite file')
 nmap_leader('q', vim.cmd.quit,                                 '[q]uit file' )
 nmap_leader('Q', function() vim.cmd.quit({ bang = true }) end, 'force [q]uit file' )
 
