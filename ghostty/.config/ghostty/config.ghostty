@@ -15,6 +15,7 @@ quick-terminal-size = 30%,30%
 cursor-color = cell-foreground
 cursor-text = cell-background
 
+confirm-close-surface = false
 
 # window settings
 window-inherit-working-directory = true
