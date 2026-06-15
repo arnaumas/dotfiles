@@ -89,7 +89,7 @@ bindkey -r ^H
 export FZF_DEFAULT_OPTS='
 --height=~8
 --layout=reverse
---color=fg:-1,list-fg:8,bg:-1     
+--color=fg:-1,list-fg:0,bg:-1     
 --color=fg+:-1:regular,bg+:7
 --color=hl:11:bold,hl+:11:bold
 --color=query:-1:regular,prompt:4:regular,marker:2
@@ -201,7 +201,7 @@ zstyle ':fzf-tab:*' switch-group '^' '+'
 zstyle ':fzf-tab:*' continuous-trigger '/'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -p --color=always -- "$realpath" 2>/dev/null'
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
-	'[[ -d "$realpath" ]] && ls -p --color=always -- "$realpath" 2>/dev/null || bat --color=always --style=plain -- "$realpath" 2>/dev/null || true'
+	'[[ -d "$realpath" ]] && ls -p --color=always -- "$realpath" 2>/dev/null || bat --color=always --style=plain --theme=ansi -- "$realpath" 2>/dev/null || true'
 # <--
 
 # zsh-autosuggestions -->
