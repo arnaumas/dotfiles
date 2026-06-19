@@ -65,7 +65,7 @@ Resumed from [date]. Branch: [branch]. [1 sentence on what's in progress].
 Next: [Resume Command from handoff]
 ```
 
-Then stop. Wait for the user to direct next action.
+The handoff file can now safely be deleted, since the context has been rebuilt. Then stop. Wait for the user to direct next action.
 
 ## Guardrails
 
