@@ -1,10 +1,9 @@
-
 start-at-login = true
 
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
-accordion-padding = 10
+accordion-padding = 80
 
 default-root-container-layout = 'tiles'
 
@@ -18,72 +17,69 @@ automatically-unhide-macos-hidden-apps = false
 preset = 'qwerty'
 
 [gaps]
-inner.horizontal = 5
-inner.vertical =   5
-outer.left =       5
-outer.bottom =     5
-outer.top =        5
-outer.right =      5
+outer.top =        0
+outer.bottom =     3
+outer.left =       3
+outer.right =      3
+inner.horizontal = 3
+inner.vertical =   3
 
 [mode.main.binding]
-alt-period = 'layout horizontal vertical'
-alt-comma = 'layout tiles accordion'
-alt-f = 'layout floating tiling'
+alt-ctrl-cmd-period = 'layout horizontal vertical'
+alt-ctrl-cmd-comma = 'layout tiles accordion'
+alt-ctrl-cmd-f = 'layout floating tiling'
 
-alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
-alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
-alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
-alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+alt-ctrl-cmd-h = 'focus --boundaries-action wrap-around-the-workspace left'
+alt-ctrl-cmd-j = 'focus --boundaries-action wrap-around-the-workspace down'
+alt-ctrl-cmd-k = 'focus --boundaries-action wrap-around-the-workspace up'
+alt-ctrl-cmd-l = 'focus --boundaries-action wrap-around-the-workspace right'
 
-alt-m = 'focus-monitor --wrap-around next'
-alt-shift-m = 'move-node-to-monitor --wrap-around --focus-follows-window next'
+alt-ctrl-cmd-m = 'focus-monitor --wrap-around next'
+alt-ctrl-cmd-shift-m = 'move-node-to-monitor --wrap-around --focus-follows-window next'
 
-alt-shift-h = 'move left'
-alt-shift-j = 'move down'
-alt-shift-k = 'move up'
-alt-shift-l = 'move right'
+alt-ctrl-cmd-shift-h = 'move left'
+alt-ctrl-cmd-shift-j = 'move down'
+alt-ctrl-cmd-shift-k = 'move up'
+alt-ctrl-cmd-shift-l = 'move right'
 
-alt-ctrl-h = 'join-with left'
-alt-ctrl-j = 'join-with down'
-alt-ctrl-k = 'join-with up'
-alt-ctrl-l = 'join-with right'
 
 # slash is really - and rightSquareBracket is really +
-alt-slash = 'resize smart -50'
-alt-rightSquareBracket = 'resize smart +50'
+alt-ctrl-cmd-slash = 'resize smart -50'
+alt-ctrl-cmd-rightSquareBracket = 'resize smart +50'
 
-alt-0 = 'workspace 0'
-alt-1 = 'workspace 1'
-# alt-2 = 'workspace 2'
-# alt-3 = 'workspace 3'
-alt-4 = 'workspace 4'
-alt-5 = 'workspace 5'
-alt-6 = 'workspace 6'
-alt-7 = 'workspace 7'
-alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
-alt-n = 'workspace --wrap-around next'
-alt-p = 'workspace --wrap-around prev'
-alt-tab = 'workspace-back-and-forth'
+alt-ctrl-cmd-0 = 'workspace 0'
+alt-ctrl-cmd-1 = 'workspace 1'
+alt-ctrl-cmd-2 = 'workspace 2'
+alt-ctrl-cmd-3 = 'workspace 3'
+alt-ctrl-cmd-4 = 'workspace 4'
+alt-ctrl-cmd-5 = 'workspace 5'
+alt-ctrl-cmd-6 = 'workspace 6'
+alt-ctrl-cmd-7 = 'workspace 7'
+alt-ctrl-cmd-8 = 'workspace 8'
+alt-ctrl-cmd-9 = 'workspace 9'
+alt-ctrl-cmd-n = 'workspace --wrap-around next'
+alt-ctrl-cmd-p = 'workspace --wrap-around prev'
+alt-ctrl-cmd-tab = 'workspace-back-and-forth'
 
-alt-shift-0 = 'move-node-to-workspace --focus-follows-window 0'
-alt-shift-1 = 'move-node-to-workspace --focus-follows-window 1'
-alt-shift-2 = 'move-node-to-workspace --focus-follows-window 2'
-alt-shift-3 = 'move-node-to-workspace --focus-follows-window 3'
-alt-shift-4 = 'move-node-to-workspace --focus-follows-window 4'
-alt-shift-5 = 'move-node-to-workspace --focus-follows-window 5'
-alt-shift-6 = 'move-node-to-workspace --focus-follows-window 6'
-alt-shift-7 = 'move-node-to-workspace --focus-follows-window 7'
-alt-shift-8 = 'move-node-to-workspace --focus-follows-window 8'
-alt-shift-9 = 'move-node-to-workspace --focus-follows-window 9'
-alt-shift-n = 'move-node-to-workspace --focus-follows-window --wrap-around next'
-alt-shift-p = 'move-node-to-workspace --focus-follows-window --wrap-around prev'
+alt-ctrl-cmd-shift-0 = 'move-node-to-workspace --focus-follows-window 0'
+alt-ctrl-cmd-shift-1 = 'move-node-to-workspace --focus-follows-window 1'
+alt-ctrl-cmd-shift-2 = 'move-node-to-workspace --focus-follows-window 2'
+alt-ctrl-cmd-shift-3 = 'move-node-to-workspace --focus-follows-window 3'
+alt-ctrl-cmd-shift-4 = 'move-node-to-workspace --focus-follows-window 4'
+alt-ctrl-cmd-shift-5 = 'move-node-to-workspace --focus-follows-window 5'
+alt-ctrl-cmd-shift-6 = 'move-node-to-workspace --focus-follows-window 6'
+alt-ctrl-cmd-shift-7 = 'move-node-to-workspace --focus-follows-window 7'
+alt-ctrl-cmd-shift-8 = 'move-node-to-workspace --focus-follows-window 8'
+alt-ctrl-cmd-shift-9 = 'move-node-to-workspace --focus-follows-window 9'
+alt-ctrl-cmd-shift-n = 'move-node-to-workspace --focus-follows-window --wrap-around next'
+alt-ctrl-cmd-shift-p = 'move-node-to-workspace --focus-follows-window --wrap-around prev'
 
-alt-s = 'mode service'
-alt-r = 'reload-config'
+alt-ctrl-cmd-s = 'mode service'
+alt-ctrl-cmd-b = 'mode join'
+alt-ctrl-cmd-r = 'reload-config'
 
 # scratchpad: floating ghostty on a dedicated tmux session
-alt-enter = '''exec-and-forget aerospace-scratchpad show Ghostty -F window-title='scratchpad' \
+alt-ctrl-cmd-enter = '''exec-and-forget aerospace-scratchpad show Ghostty -F window-title='scratchpad' \
   || /Applications/Ghostty.app/Contents/MacOS/ghostty --title=scratchpad --window-width=90 --window-height=90 -e tmux new-session -A -s scratch'''
 
 [workspace-to-monitor-force-assignment]
@@ -104,10 +100,11 @@ r = ['flatten-workspace-tree', 'mode main'] # reset layout
 f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+[mode.join.binding]
+h = ['join-with left', 'mode main']
+j = ['join-with down', 'mode main']
+k = ['join-with up', 'mode main']
+l = ['join-with right', 'mode main']
 
 down = 'volume down'
 up = 'volume up'
@@ -136,3 +133,12 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = 'layout floating'
+
+# group all mail windows into one accordion node
+#   count < 2: first window, do nothing
+#   count = 2: create the container, then accordion
+#   count >= 3: new window auto-joins the node, just reassert accordion
+# 'join-with left' assumes a landscape root (new window opens to the right); use 'up' on a portrait monitor
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = '''exec-and-forget /bin/sh -c 'c=$(/opt/homebrew/bin/aerospace list-windows --workspace focused --app-bundle-id com.apple.mail --count); [ "$c" -lt 2 ] && exit 0; [ "$c" -eq 2 ] && /opt/homebrew/bin/aerospace join-with left; /opt/homebrew/bin/aerospace layout accordion' '''
