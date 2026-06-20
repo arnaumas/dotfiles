@@ -8,14 +8,14 @@
 	<string></string>
 	<key>CFBundleVersion</key>
 	<string></string>
-	<key>KLInfo_Spanish (no dead keys)</key>
+	<key>KLInfo_Español (sin teclas muertas)</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
 		<true/>
 		<key>TISInputSourceID</key>
-		<string>org.sil.ukelele.keyboardlayout..spanish(nodeadkeys)</string>
+		<string>org.sil.ukelele.keyboardlayout..español(sinteclasmuertas)</string>
 		<key>TISIntendedLanguage</key>
 		<string>es</string>
 	</dict>
