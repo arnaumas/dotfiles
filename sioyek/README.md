@@ -135,34 +135,6 @@ propagate the slot meaning here and across the other consumers (ghostty theme, i
 profile, nvim slot mapping, zsh UIs). Do not introduce hex values that have no
 corresponding palette slot.
 
-## Single-document startup
-
-Opening a file from Finder launches sioyek through a LaunchServices open-document event
-rather than a command-line argument. With an empty argument list, sioyek opens the file
-recorded on the first line of `last_document_path.txt` and then opens the file from the
-event, producing two windows.
-
-The launch-state file is pinned to a non-existent path and made immutable so sioyek
-cannot repopulate it. On startup sioyek reads the pinned path, fails to open it, and
-shows only the document from the open-document event.
-
-Setup on a new machine:
-
-```bash
-f=~/Library/Application\ Support/sioyek/last_document_path.txt
-printf '/dev/null/__sioyek_no_restore__.pdf\n' > "$f"
-chflags uchg "$f"
-```
-
-To undo, clear the immutable flag:
-
-```bash
-chflags nouchg ~/Library/Application\ Support/sioyek/last_document_path.txt
-```
-
-A non-existent path is required rather than an empty file: an empty file makes sioyek
-fall back to the bundled tutorial PDF, while an unresolvable path opens nothing.
-
 ## Navigation
 
 - [Repository root](../) — dotfiles overview and stow layout
