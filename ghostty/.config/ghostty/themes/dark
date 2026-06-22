@@ -1,9 +1,10 @@
-# vague (dark) — mirrored from colors/vague.yaml (single source of truth)
+# dark colorscheme, mirrored from light.yaml
 
 foreground = #cdcdcd
 background = #141415
 
-selection-background = #252530
+selection-background = #606079
+selection-foreground = #cdcdcd
 selection-invert-fg-bg = false
 
 cursor-color = cell-foreground
@@ -17,7 +18,7 @@ palette =  2=#7fa563
 palette =  3=#f3be7c
 palette =  4=#6e94b2
 palette =  5=#bb9dbd
-palette =  6=#aeaed1
+palette =  6=#6ababa
 palette =  7=#252530
 
 palette =  8=#606079

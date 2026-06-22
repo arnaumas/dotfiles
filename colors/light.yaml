@@ -1,0 +1,28 @@
+# light colorscheme
+# based on edge-light
+
+# special-purpose roles
+special:
+  background:  "#faf9f7"
+  foreground:  "#4b505b"
+  cursor:      "#5079be"
+  cursor_text: "#eeedea"
+
+# ANSI slots
+ansi:
+  0:  "#4b505b"  # black
+  1:  "#d05858"  # red
+  2:  "#608e32"  # green
+  3:  "#be7e05"  # yellow
+  4:  "#5079be"  # blue
+  5:  "#b05ccc"  # magenta
+  6:  "#3a8b84"  # cyan
+  7:  "#dfe0d9"  # white         
+  8:  "#aaa9a4"  # dim black
+  9:  "#d89c99"  # dim red
+  10: "#a0b786"  # dim green
+  11: "#cfaf6f"  # dim yellow
+  12: "#98adcc"  # dim blue
+  13: "#c89ed3"  # dim magenta
+  14: "#8db6af"  # dim cyan
+  15: "#eeedea"  # dim white
