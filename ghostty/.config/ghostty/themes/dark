@@ -3,7 +3,7 @@
 foreground = #cdcdcd
 background = #141415
 
-selection-background = #606079
+selection-background = #252530
 selection-foreground = #cdcdcd
 selection-invert-fg-bg = false
 

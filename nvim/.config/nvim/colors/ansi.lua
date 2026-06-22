@@ -21,7 +21,7 @@ local fg, dim_fg, bg, dim_bg = 0, 8, 7, 15
 local red, green, yellow, blue, magenta, cyan = 1, 2, 3, 4, 5, 6
 local red_bg, green_bg, yellow_bg, blue_bg, magenta_bg, cyan_bg = 9, 10, 11, 12, 13, 14
 local accent, accent_bg = green, green_bg          -- UI accent (titles, prompts, focused)
-local selection_fg, selection_bg = fg, dim_fg      -- visual mode: uniform fg on the dim surface
+local selection_fg, selection_bg = fg, bg      -- visual mode: uniform fg on the dim surface
 
 local function hl(group, s)
 	vim.api.nvim_set_hl(0, group, {
