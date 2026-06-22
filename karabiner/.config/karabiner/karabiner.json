@@ -5,11 +5,11 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "´ to Hyper",
+                        "description": "ç to Hyper",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "quote",
+                                    "key_code": "backslash",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [
@@ -18,7 +18,7 @@
                                         "modifiers": ["left_control", "left_option"]
                                     }
                                 ],
-                                "to_if_alone": [{ "key_code": "quote" }],
+                                "to_if_alone": [{ "key_code": "backslash" }],
                                 "type": "basic"
                             }
                         ]
