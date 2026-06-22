@@ -5,7 +5,7 @@ font-thicken = true
 font-thicken-strength = 60
 adjust-underline-position = 3
 
-theme = edge
+theme = light:edge,dark:vague
 # background-opacity = 0.9
 # background-blur = true
 

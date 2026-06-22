@@ -1,10 +1,12 @@
-# edge (light) — mirrored from colors/light.yaml (single source of truth)
+# edge (light) — mirrored from colors/edge-light.yaml
 
 foreground = #4b505b
 background = #fafafa
 
 selection-background = #aab1bd
-selection-invert-fg-bg = false
+selection-foreground = #4b505b
+# selection-foreground = #eef1f4
+# selection-invert-fg-bg = false
 
 cursor-text = #fafafa
 cursor-color = #5079be
