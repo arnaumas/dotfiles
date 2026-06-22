@@ -23,7 +23,7 @@ map('o', '_', 'g_', { silent = true , buffer = true })
 map('n', 'A', 'g$a', { silent = true , buffer = true }) -- append to end of screen line
 map('n', 'cc', 'g0c$', { silent = true , buffer = true }) -- change full line
 
-vim.opt_local.cmdheight = 1 -- don't hide the cmd line to avoid getting the press Enter prompt when compiling
+-- vim.opt_local.cmdheight = 1 -- don't hide the cmd line to avoid getting the press Enter prompt when compiling
 
 vim.cmd [[
 call vimtex#imaps#add_map({ 'lhs' : ':', 'rhs' : '\colon', 'wrapper' : 'vimtex#imaps#wrap_math'})

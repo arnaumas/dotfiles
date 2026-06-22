@@ -24,8 +24,8 @@ map('n', 'o', 'o<esc>', { desc = '[o]pen line' })
 map('n', 'O', 'O<esc>', { desc = '[o]pen line above' })
 
 -- merge r and s behaviour
--- map('n', 'r', 'cl')
--- map('n', 'R', 'cc')
+-- map('n', 's', 'cl')
+-- map('n', 'S', 'cc')
 -- map({ 'n', 'x' }, 's', '<nop>')
 -- map({ 'n', 'x' }, 'S', '<nop>')
 
