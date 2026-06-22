@@ -1,16 +1,8 @@
-# light colors
+# edge - light
 #
 # single source of truth for the terminal-anchored 16-color ANSI scheme,
-# independent of any app. Mirror these values into every consumer:
+# independent of any app, set only for ghostty
 #   - ghostty/.config/ghostty/themes/edge
-#   - iterm2/.config/iterm2/edge-light.itermcolors
-#   - nvim colors/light.lua (slots 0-15)
-#   - zsh (syntax-highlighting, fzf, fzf-tab, pure prompt)
-#
-# Hex values are reference only; nvim runs with termguicolors OFF and reads
-# the live terminal slots — keep the terminal emulators authoritative there.
-#
-# based on the edge-light colorscheme
 
 # special-purpose roles
 special:
