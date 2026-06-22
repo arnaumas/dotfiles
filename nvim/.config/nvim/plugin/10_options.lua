@@ -28,7 +28,6 @@ set.cmdwinheight      = 1
 set.showmode          = false         -- don't show mode prompt (already in status line)
 set.showcmd           = false         -- don't show partial command
 set.shortmess         = 'ltToOCFscS'
-set.winborder         = "rounded"
 require('vim._core.ui2').enable()     -- enable experimental ui mode
 -- <--
 
@@ -39,10 +38,10 @@ set.tabstop    = 2
 -- <--
 
 -- colorscheme -->
--- the 'light' colorscheme (colors/light.lua) is anchored to the terminal's 16 ANSI
+-- the 'ansi' colorscheme (colors/ansi.lua) is anchored to the terminal's 16 ANSI
 -- colors, so termguicolors is OFF on purpose: cterm indices map straight onto the
--- iterm edge-light palette, the single source of truth for colors.
+-- terminal palette (colors/*.yaml), the single source of truth for colors.
 vim.opt.termguicolors = false
-vim.cmd.colorscheme('light')
+vim.cmd.colorscheme('ansi')
 -- <--
 

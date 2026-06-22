@@ -50,19 +50,17 @@ notify.setup({ window = { config = win_config, winblend = 0 }, lsp_progress = { 
 vim.notify = notify.make_notify()
 -- <--
 -- lualine -->
-local bred, bgreen, byellow, bblue, bmagenta, bcyan, white = 9, 10, 11, 12, 13, 14, 15
-local function modeline(bg)
-	return { a = { fg = white, bg = bg, gui = 'bold' }, b = 'StatusLine', c = 'StatusLine' }
-end
-
+-- sections reference colorscheme groups by name (colors defined in colors/ansi.lua),
+-- so no slot numbers live here. Mode block (a) is a per-mode StlMode* group; b/c
+-- inherit StatusLine.
 local theme = {
-	normal   = modeline(bmagenta),
-	insert   = modeline(bblue),
-	visual   = modeline(bred),
-	replace  = modeline(byellow),
-	command  = modeline(bgreen),
-	terminal = modeline(bcyan),
-	inactive = {a = 'StatusLineNc', b = 'StatusLineNC', c = 'StatusLineNC'}
+	normal   = { a = 'StlModeNormal',   b = 'StatusLine', c = 'StatusLine' },
+	insert   = { a = 'StlModeInsert',   b = 'StatusLine', c = 'StatusLine' },
+	visual   = { a = 'StlModeVisual',   b = 'StatusLine', c = 'StatusLine' },
+	replace  = { a = 'StlModeReplace',  b = 'StatusLine', c = 'StatusLine' },
+	command  = { a = 'StlModeCommand',  b = 'StatusLine', c = 'StatusLine' },
+	terminal = { a = 'StlModeTerminal', b = 'StatusLine', c = 'StatusLine' },
+	inactive = { a = 'StatusLineNC',    b = 'StatusLineNC', c = 'StatusLineNC' },
 }
 
 require('lualine').setup {
@@ -110,8 +108,8 @@ require('lualine').setup {
 				path = 1,
 				tab_max_length = 30,
 				tabs_color = {
-					active   = { fg = 0, bg = 7, gui = 'bold' },
-					inactive = { fg = 0, bg = 15 },
+					active   = 'StlTabActive',
+					inactive = 'StlTabInactive',
 				},
 			}
 		},
