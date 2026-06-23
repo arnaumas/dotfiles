@@ -39,11 +39,13 @@ local groups = {
 	CursorLine = { bg = dim_bg }, CursorLineNr = { fg = accent, bold = true },
 	CursorColumn = { bg = dim_bg }, ColorColumn = { bg = bg },
 	SignColumn = {}, FoldColumn = { fg = dim_fg },
-	Folded = { bg = bg },
+	Folded = { fg = fg, bg = bg },
 	-- visual selection: uniform fg over the dim surface (kills syntax-color noise)
 	Visual = { fg = selection_fg, bg = selection_bg }, VisualNOS = { fg = selection_fg, bg = selection_bg },
 	-- search: current match under cursor = yellow; other matches = dim grey bg
-	Search = { bg = dim_fg }, IncSearch = { fg = fg, bg = yellow_bg }, CurSearch = { fg = fg, bg = yellow_bg },
+	Search = { fg = yellow, bg = bg, bold = true },
+	IncSearch = { fg = yellow, bg = yellow_bg, bold = true },
+	CurSearch = { fg = yellow, bg = yellow_bg, bold = true },
 	MatchParen = { fg = accent, bold = true, underline = true },
 	Pmenu = { fg = dim_fg, bg = dim_bg }, PmenuSel = { fg = fg, bg = bg, bold = true },
 	PmenuSbar = { bg = bg }, PmenuThumb = { bg = dim_fg },

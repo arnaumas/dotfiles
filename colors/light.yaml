@@ -19,10 +19,10 @@ ansi:
   6:  "#3a8b84"  # cyan
   7:  "#dfe0d9"  # white         
   8:  "#aaa9a4"  # dim black
-  9:  "#d89c99"  # dim red
-  10: "#a0b786"  # dim green
-  11: "#cfaf6f"  # dim yellow
-  12: "#98adcc"  # dim blue
-  13: "#c89ed3"  # dim magenta
-  14: "#8db6af"  # dim cyan
+  9:  "#edc9c7"  # dim red
+  10: "#ccd9bc"  # dim green
+  11: "#e8d4ae"  # dim yellow
+  12: "#c7d3e6"  # dim blue
+  13: "#e4caea"  # dim magenta
+  14: "#c0d8d5"  # dim cyan
   15: "#eeedea"  # dim white
