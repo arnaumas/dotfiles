@@ -27,6 +27,7 @@ does not know.
 - For any task involving edits, present a brief plan first and wait for explicit approval.
 - Clearly signal the transition: state "Proceeding to edit." before making any changes.
 - Never begin editing during the planning phase.
+- Default to PROPOSING lines/diffs in chat rather than editing files directly. ONly edit files when the user  explicitly says to apply changes.
 
 ## Token Efficiency
 - Prefer concise output. Skip boilerplate, summaries, and restating what was just said.
