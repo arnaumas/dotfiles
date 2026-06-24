@@ -5,7 +5,7 @@ font-thicken = true
 font-thicken-strength = 60
 adjust-underline-position = 3
 # adjust-cell-width = -1
-adjust-cell-height = 2
+adjust-cell-height = -1
 
 theme = light:light,dark:dark
 # background-opacity = 0.95
