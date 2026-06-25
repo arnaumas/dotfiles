@@ -79,7 +79,7 @@ require('lualine').setup {
     globalstatus = true,
     refresh = {
       statusline = 1000,
-      tabline = 1000,
+      buffers = 1000,
       winbar = 1000,
       refresh_time = 16, -- ~60fps
       events = {
@@ -103,14 +103,18 @@ require('lualine').setup {
     lualine_b = {},
     lualine_c = {
 			{
-				'tabs',
-				mode = 1,
-				path = 1,
-				tab_max_length = 30,
-				tabs_color = {
+				'buffers',
+				mode = 0,
+				show_filename_only = false,
+				buffers_color = {
 					active   = 'StlTabActive',
 					inactive = 'StlTabInactive',
 				},
+				symbols = {
+					modified = ' [+]',
+					alterante_file = '#',
+					directory = '/',
+				}
 			}
 		},
     lualine_x = {},
