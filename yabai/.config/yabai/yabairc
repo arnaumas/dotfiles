@@ -8,11 +8,12 @@ yabai -m config window_placement second_child
 yabai -m config split_ratio 0.5
 yabai -m config auto_balance off
 
-yabai -m config top_padding    0
-yabai -m config bottom_padding 2
-yabai -m config left_padding   2
-yabai -m config right_padding  2
-yabai -m config window_gap     2
+yabai -m config top_padding    5
+yabai -m config bottom_padding 5
+yabai -m config left_padding   5
+yabai -m config right_padding  5
+yabai -m config window_gap     6
+yabai -m config window_shadow float
 
 # yabai -m config mouse_follows_focus on
 yabai -m config mouse_modifier       fn
@@ -58,3 +59,5 @@ yabai -m signal --add event=window_created action='
 
 yabai -m signal --add event=space_changed   action="sketchybar --trigger space_focus"
 yabai -m signal --add event=display_changed action="sketchybar --trigger space_focus"
+
+borders &

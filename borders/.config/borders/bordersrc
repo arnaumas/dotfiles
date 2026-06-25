@@ -1,0 +1,10 @@
+#!/bin/bash
+# faint grey outline on the active window, none on inactive
+options=(
+	style=round
+	width=4.0
+	hidpi=on
+	active_color=0xffbe7e05
+	inactive_color=0xffeeedea
+)
+borders "${options[@]}"
