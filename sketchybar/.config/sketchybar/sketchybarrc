@@ -5,12 +5,13 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 source "$CONFIG_DIR/colors.sh"
 
 FONT="Liga SFMono Nerd Font"
+HEIGHT=32
 
 # -- bar -->
-sketchybar --bar height=32 position=top color=$BG \
+sketchybar --bar height=$HEIGHT position=top color=0x00000000 \
                  padding_left=6 padding_right=6 \
-                 corner_radius=2 border_width=0 \
-                 y_offset=0 margin=0 sticky=on
+                 corner_radius=0 border_width=0 \
+                 y_offset=6 margin=6 sticky=on
 # -- <--
 
 # -- defaults -->
@@ -20,26 +21,31 @@ sketchybar --default \
   padding_left=4 padding_right=4 \
   icon.padding_left=4 icon.padding_right=2 \
   label.padding_left=2 label.padding_right=4 \
-  background.corner_radius=5 background.height=24
+  background.corner_radius=16 background.height=24 background.drawing=off
 # -- <--
 
 # -- spaces (driven by yabai signal space_focus) -->
 sketchybar --add event space_focus
 
 add_space () {
-  sketchybar --add item space.$1 left \
+  sketchybar --add item space.$1 $2 \
              --set space.$1 label="$1" \
                    click_script="yabai -m space --focus $1" \
                    script="$PLUGIN_DIR/space.sh" \
              --subscribe space.$1 space_focus
 }
 
-for sp in mail web chat misc; do add_space $sp; done
+for sp in mail web chat misc; do add_space $sp q; done
+for sp in term latex read;   do add_space $sp e; done
 
-sketchybar --add item space.sep left \
-           --set space.sep label="|" icon.drawing=off label.color=$DIM
+# -- brackets: one rounded block per side -->
+sketchybar --add bracket left_group  space.mail space.web space.chat space.misc \
+           --set left_group  background.color=$BG \
+                             background.corner_radius=5 background.height=$HEIGHT
 
-for sp in term latex read; do add_space $sp; done
+sketchybar --add bracket right_group space.term space.latex space.read \
+           --set right_group background.color=$BG \
+                             background.corner_radius=5 background.height=$HEIGHT
 # -- <--
 
 # -- right cluster: media vol wifi bat clock (add order = left→right) -->
