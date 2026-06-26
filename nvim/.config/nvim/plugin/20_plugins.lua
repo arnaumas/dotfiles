@@ -50,9 +50,6 @@ notify.setup({ window = { config = win_config, winblend = 0 }, lsp_progress = { 
 vim.notify = notify.make_notify()
 -- <--
 -- lualine -->
--- sections reference colorscheme groups by name (colors defined in colors/ansi.lua),
--- so no slot numbers live here. Mode block (a) is a per-mode StlMode* group; b/c
--- inherit StatusLine.
 local theme = {
 	normal   = { a = 'StlModeNormal',   b = 'StatusLine', c = 'StatusLine' },
 	insert   = { a = 'StlModeInsert',   b = 'StatusLine', c = 'StatusLine' },
@@ -105,7 +102,6 @@ require('lualine').setup {
 			{
 				'buffers',
 				mode = 0,
-				show_filename_only = false,
 				buffers_color = {
 					active   = 'StlTabActive',
 					inactive = 'StlTabInactive',
