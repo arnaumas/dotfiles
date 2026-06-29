@@ -5,6 +5,10 @@ return {
 	root_markers = { '.latexmkrc', '.git' },
 	settings = {
 		texlab = {
+			-- Suppress noisy ChkTeX warnings by message regex.
+			diagnostics = {
+				ignoredPatterns = { 'Command terminated with space' },
+			},
 			-- LaTeX linting via chktex -> inline diagnostics (TeXstudio-like).
 			chktex = {
 				onOpenAndSave = true,   -- lint on open + save (quiet, recommended)

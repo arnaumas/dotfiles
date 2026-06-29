@@ -34,3 +34,8 @@ call vimtex#imaps#add_map({ 'lhs' : 'o', 'rhs' : '\in', 'wrapper' : 'vimtex#imap
 let g:vimtex_imaps_disabled = ['jj', 'jJ', 'jk', 'jK', 'jh', 'jH', 'jl', 'jL']
 ]]
 
+vim.g.vimtex_quickfix_open_on_warning = 0
+vim.g.vimtex_fold_enabled = 1
+vim.g.vimtex_indent_on_ampersands = 0
+vim.g.vimtex_indent_tikz_commands = 0
+
