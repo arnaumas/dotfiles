@@ -5,11 +5,11 @@ set.cursorlineopt = 'screenline' -- highlight cursor position
 set.ruler = false
 
 -- remap screen motions to text motions
-map({ 'n', 'o', 'v' }, 'gj', 'j', { silent = true , buffer = true }) -- move down one text line
-map({ 'n', 'o', 'v' }, 'gk', 'k', { silent = true , buffer = true }) -- move up one text line
-map({ 'n', 'o', 'v' }, 'g0', '0', { silent = true , buffer = true }) -- go to beginning of text line
-map({ 'n', 'o', 'v' }, 'g$', '$', { silent = true , buffer = true }) -- go to end of text line
-map('o', 'g_', '_', { silent = true , buffer = true })
+-- map({ 'n', 'o', 'v' }, 'gj', 'j', { silent = true , buffer = true }) -- move down one text line
+-- map({ 'n', 'o', 'v' }, 'gk', 'k', { silent = true , buffer = true }) -- move up one text line
+-- map({ 'n', 'o', 'v' }, 'g0', '0', { silent = true , buffer = true }) -- go to beginning of text line
+-- map({ 'n', 'o', 'v' }, 'g$', '$', { silent = true , buffer = true }) -- go to end of text line
+-- map('o', 'g_', '_', { silent = true , buffer = true })
 
 map('n', 'o', 'g$a<cr><esc>')
 
@@ -20,8 +20,8 @@ map({ 'n', 'o', 'v' }, '0', 'g0', { silent = true , buffer = true }) -- go to be
 map({ 'n', 'o', 'v' }, '$', 'g$', { silent = true , buffer = true }) -- go to end of screen line
 map('o', '_', 'g_', { silent = true , buffer = true })
 
-map('n', 'A', 'g$a', { silent = true , buffer = true }) -- append to end of screen line
-map('n', 'cc', 'g0c$', { silent = true , buffer = true }) -- change full line
+-- map('n', 'A', 'g$a', { silent = true , buffer = true }) -- append to end of screen line
+-- map('n', 'cc', 'g0c$', { silent = true , buffer = true }) -- change full line
 
 -- vim.opt_local.cmdheight = 1 -- don't hide the cmd line to avoid getting the press Enter prompt when compiling
 
@@ -36,6 +36,6 @@ let g:vimtex_imaps_disabled = ['jj', 'jJ', 'jk', 'jK', 'jh', 'jH', 'jl', 'jL']
 
 vim.g.vimtex_quickfix_open_on_warning = 0
 vim.g.vimtex_fold_enabled = 1
-vim.g.vimtex_indent_on_ampersands = 0
+vim.g.vimtex_indent_on_ampersands = 1
 vim.g.vimtex_indent_tikz_commands = 0
 
