@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-
+#!/usr/bin/env bash
 CONFIG_DIR="$HOME/.config/sketchybar"
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 source "$CONFIG_DIR/colors.sh"
@@ -7,67 +6,101 @@ source "$CONFIG_DIR/colors.sh"
 FONT="Liga SFMono Nerd Font"
 HEIGHT=32
 
-# -- bar -->
-sketchybar --bar height=$HEIGHT position=top color=0x00000000 \
-                 padding_left=6 padding_right=6 \
-                 corner_radius=0 border_width=0 \
-                 y_offset=6 margin=6 sticky=on
-# -- <--
+# bar -->
+bar=(
+height=$HEIGHT
+position=top
+color=0x00000000
+padding_left=0
+padding_right=0
+corner_radius=0
+border_width=0
+y_offset=6
+margin=6
+sticky=on
+)
+sketchybar --bar "${bar[@]}"
+# <--
 
-# -- defaults -->
-sketchybar --default \
-  icon.font="$FONT:Regular:14.0"  icon.color=$FG \
-  label.font="$FONT:Regular:13.0" label.color=$FG \
-  padding_left=4 padding_right=4 \
-  icon.padding_left=4 icon.padding_right=2 \
-  label.padding_left=2 label.padding_right=4 \
-  background.corner_radius=16 background.height=24 background.drawing=off
-# -- <--
+# defaults -->
+default=(
+icon.font="$FONT:Regular:14.0"
+icon.color=$FG
+label.font="$FONT:Regular:13.0"
+label.color=$FG
+padding_left=4
+padding_right=4
+icon.padding_left=4
+icon.padding_right=2
+label.padding_left=2
+label.padding_right=4
+background.corner_radius=16
+background.height=24
+background.drawing=off
+)
+sketchybar --default "${default[@]}"
+# <--
 
-# -- spaces (driven by yabai signal space_focus) -->
+# spaces (driven by yabai signal space_focus) -->
 sketchybar --add event space_focus
 
-add_space () {
-  sketchybar --add item space.$1 $2 \
-             --set space.$1 label="$1" \
-                   click_script="yabai -m space --focus $1" \
-                   script="$PLUGIN_DIR/space.sh" \
-             --subscribe space.$1 space_focus
+add_space () { # $1=label
+space=(
+label="$1"
+click_script="yabai -m space --focus $1"
+script="$PLUGIN_DIR/space.sh"
+)
+sketchybar --add item space."$1" left \
+--set space."$1" "${space[@]}" \
+--subscribe space."$1" space_focus
 }
 
-for sp in mail web chat misc; do add_space $sp q; done
-for sp in term latex read;   do add_space $sp e; done
+for sp in mail web chat misc term latex read; do add_space "$sp"; done
+# -- <--
 
-# -- brackets: one rounded block per side -->
-sketchybar --add bracket left_group  space.mail space.web space.chat space.misc \
-           --set left_group  background.color=$BG \
-                             background.corner_radius=5 background.height=$HEIGHT
-
-sketchybar --add bracket right_group space.term space.latex space.read \
-           --set right_group background.color=$BG \
-                             background.corner_radius=5 background.height=$HEIGHT
+# spaces bracket: rounded block hugging the left -->
+spaces=(
+background.color=$BG
+background.corner_radius=20
+background.height=$HEIGHT
+background.border_color=$DIM
+background.border_width=2
+)
+sketchybar --add bracket spaces '/space\..*/' \
+--set spaces "${spaces[@]}"
 # -- <--
 
 # -- right cluster: media vol wifi bat clock (add order = left→right) -->
+# media=(
+# icon=󰝚
+# label.max_chars=28
+# scroll_texts=on
+# label.color=$FG
+# drawing=off
+# script="$PLUGIN_DIR/media.sh"
+# )
 # sketchybar --add item media right \
-#            --set media icon=󰝚 label.max_chars=28 scroll_texts=on \
-#                  label.color=$FG drawing=off \
-#                  script="$PLUGIN_DIR/media.sh" \
-#            --subscribe media media_change
+# --set media "${media[@]}" \
+# --subscribe media media_change
 #
-# sketchybar --add item volume right \
-#            --set volume script="$PLUGIN_DIR/volume.sh" \
-#            --subscribe volume volume_change
-#
-# sketchybar --add item wifi right \
-#            --set wifi update_freq=10 script="$PLUGIN_DIR/wifi.sh"
-#
-# sketchybar --add item battery right \
-#            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
-#            --subscribe battery power_source_change
-#
+# clock=(
+# icon=󰥔
+# update_freq=10
+# script="$PLUGIN_DIR/clock.sh"
+# )
 # sketchybar --add item clock right \
-#            --set clock icon=󰥔 update_freq=10 script="$PLUGIN_DIR/clock.sh"
+# --set clock "${clock[@]}"
+#
+# right-aligned data block, mirrors the spaces bracket
+# data=(
+# background.color=$BG
+# background.corner_radius=5
+# background.height=$HEIGHT
+# background.border_color=$DIM
+# background.border_width=2
+# )
+# sketchybar --add bracket data '/clock|volume|wifi|battery/' \
+# --set data "${data[@]}"
 # -- <--
 
 sketchybar --update
