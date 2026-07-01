@@ -108,7 +108,7 @@ require('lualine').setup {
 				},
 				symbols = {
 					modified = ' [+]',
-					alterante_file = '#',
+					alternate_file = '',
 					directory = '/',
 				}
 			}
