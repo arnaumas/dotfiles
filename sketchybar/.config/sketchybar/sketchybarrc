@@ -32,7 +32,7 @@ padding_left=4
 padding_right=4
 icon.padding_left=4
 icon.padding_right=2
-label.padding_left=2
+label.padding_left=4
 label.padding_right=4
 background.corner_radius=16
 background.height=24
@@ -42,65 +42,65 @@ sketchybar --default "${default[@]}"
 # <--
 
 # spaces (driven by yabai signal space_focus) -->
-sketchybar --add event space_focus
+sketchybar --add event yabai_spaces_change
+sketchybar --add event yabai_windows_change
 
-add_space () { # $1=label
-space=(
-label="$1"
-click_script="yabai -m space --focus $1"
-script="$PLUGIN_DIR/space.sh"
-)
-sketchybar --add item space."$1" left \
---set space."$1" "${space[@]}" \
---subscribe space."$1" space_focus
-}
-
-for sp in mail web chat misc term latex read; do add_space "$sp"; done
+# hidden driver: reconciles space items from yabai on every relevant change
+sketchybar --add item spaces_driver left \
+--set spaces_driver drawing=off updates=on script="$PLUGIN_DIR/spaces.sh" \
+--subscribe spaces_driver yabai_spaces_change yabai_windows_change
 # -- <--
 
 # spaces bracket: rounded block hugging the left -->
-spaces=(
-background.color=$BG
-background.corner_radius=20
-background.height=$HEIGHT
-background.border_color=$DIM
-background.border_width=2
-)
-sketchybar --add bracket spaces '/space\..*/' \
---set spaces "${spaces[@]}"
+# the spaces bracket is built dynamically in plugins/spaces.sh
 # -- <--
 
-# -- right cluster: media vol wifi bat clock (add order = left→right) -->
-# media=(
-# icon=󰝚
-# label.max_chars=28
-# scroll_texts=on
-# label.color=$FG
-# drawing=off
-# script="$PLUGIN_DIR/media.sh"
-# )
-# sketchybar --add item media right \
-# --set media "${media[@]}" \
-# --subscribe media media_change
-#
-# clock=(
-# icon=󰥔
-# update_freq=10
-# script="$PLUGIN_DIR/clock.sh"
-# )
-# sketchybar --add item clock right \
-# --set clock "${clock[@]}"
-#
-# right-aligned data block, mirrors the spaces bracket
-# data=(
-# background.color=$BG
-# background.corner_radius=5
-# background.height=$HEIGHT
-# background.border_color=$DIM
-# background.border_width=2
-# )
-# sketchybar --add bracket data '/clock|volume|wifi|battery/' \
-# --set data "${data[@]}"
+# right cluster: data block, mirrors the spaces bracket -->
+clock=(
+icon.drawing=off
+update_freq=10
+script="$PLUGIN_DIR/clock.sh"
+)
+sketchybar --add item clock right \
+--set clock "${clock[@]}"
+
+date=(
+icon.drawing=off
+update_freq=30
+script="$PLUGIN_DIR/date.sh"
+)
+sketchybar --add item date right \
+--set date "${date[@]}"
+
+battery=(
+update_freq=120
+script="$PLUGIN_DIR/battery.sh"
+)
+sketchybar --add item battery right \
+--set battery "${battery[@]}" \
+--subscribe battery power_source_change
+
+wifi=(
+update_freq=10
+script="$PLUGIN_DIR/wifi.sh"
+)
+sketchybar --add item wifi right \
+--set wifi "${wifi[@]}"
+
+data=(
+background.color=$BASE
+background.corner_radius=20
+background.height=$HEIGHT
+background.border_color=$BG
+background.border_width=2
+background.padding_left=8
+background.padding_right=8
+)
+sketchybar --add bracket data clock date battery wifi \
+--set data "${data[@]}"
 # -- <--
+
+# initial render
+"$PLUGIN_DIR/spaces.sh"
 
 sketchybar --update

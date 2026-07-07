@@ -1,10 +1,11 @@
 #!/usr/bin/env sh
 # Mirrors colors/light.yaml. Format: 0xAARRGGBB, AA=ff opaque.
 
-export BG=0xffeeedea     
-export HL_BG=0xffdfe0d9 
-export FG=0xff4b505b   
-export DIM=0xffaaa9a4  
+export BASE=0xfffaf9f7   # true background (special role, not an ANSI slot)
+export BG=0xffeeedea     # slot 15 (dim_bg) / inactive surface + border
+export HL_BG=0xffdfe0d9  # slot 7  (bg)     / active surface (focused space)
+export FG=0xff4b505b     # slot 0  (fg)
+export DIM=0xffaaa9a4    # slot 8  (dim_fg) / active window border
 
 export RED=0xffd05858     
 export GREEN=0xff608e32   
