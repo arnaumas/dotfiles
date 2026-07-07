@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 CONFIG_DIR="$HOME/.config/sketchybar"
 PLUGIN_DIR="$CONFIG_DIR/plugins"
-source "$CONFIG_DIR/colors.sh"
+source "$CONFIG_DIR/style.sh"
 
 FONT="Liga SFMono Nerd Font"
-HEIGHT=32
 
-# bar -->
+# bar
 bar=(
 height=$HEIGHT
 position=top
@@ -20,9 +19,8 @@ margin=6
 sticky=on
 )
 sketchybar --bar "${bar[@]}"
-# <--
 
-# defaults -->
+# defaults
 default=(
 icon.font="$FONT:Regular:14.0"
 icon.color=$FG
@@ -30,18 +28,17 @@ label.font="$FONT:Regular:13.0"
 label.color=$FG
 padding_left=4
 padding_right=4
-icon.padding_left=4
+icon.padding_left=8
 icon.padding_right=2
-label.padding_left=4
-label.padding_right=4
+label.padding_left=8
+label.padding_right=8
 background.corner_radius=16
 background.height=24
 background.drawing=off
 )
 sketchybar --default "${default[@]}"
-# <--
 
-# spaces (driven by yabai signal space_focus) -->
+# spaces (driven by yabai signal space_focus)
 sketchybar --add event yabai_spaces_change
 sketchybar --add event yabai_windows_change
 
@@ -49,11 +46,6 @@ sketchybar --add event yabai_windows_change
 sketchybar --add item spaces_driver left \
 --set spaces_driver drawing=off updates=on script="$PLUGIN_DIR/spaces.sh" \
 --subscribe spaces_driver yabai_spaces_change yabai_windows_change
-# -- <--
-
-# spaces bracket: rounded block hugging the left -->
-# the spaces bracket is built dynamically in plugins/spaces.sh
-# -- <--
 
 # right cluster: data block, mirrors the spaces bracket -->
 clock=(
@@ -82,23 +74,16 @@ sketchybar --add item battery right \
 
 wifi=(
 update_freq=10
+icon.padding_right=8
 script="$PLUGIN_DIR/wifi.sh"
+click_script="$PLUGIN_DIR/wifi.sh click"
 )
 sketchybar --add item wifi right \
---set wifi "${wifi[@]}"
+--set wifi "${wifi[@]}" \
+--subscribe wifi mouse.entered mouse.exited
 
-data=(
-background.color=$BASE
-background.corner_radius=20
-background.height=$HEIGHT
-background.border_color=$BG
-background.border_width=2
-background.padding_left=8
-background.padding_right=8
-)
 sketchybar --add bracket data clock date battery wifi \
---set data "${data[@]}"
-# -- <--
+--set data "${bracket[@]}"
 
 # initial render
 "$PLUGIN_DIR/spaces.sh"

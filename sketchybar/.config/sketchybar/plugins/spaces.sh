@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
-# Dumb renderer: mirror yabai's spaces into sketchybar items. yabai is the
-# source of truth (labels come from the topic script); sketchybar knows nothing
-# about topics. Run on every yabai_spaces_change / yabai_windows_change trigger.
 
 CONFIG="$HOME/.config/sketchybar"
-source "$CONFIG/colors.sh"
+source "$CONFIG/style.sh"
 source "$CONFIG/plugins/icon_map.sh"
-
-HEIGHT=32
 
 # items sketchybar currently has
 all_items=$(sketchybar --query bar | jq -r '.items[]')
@@ -63,10 +58,7 @@ if [ "$new_members" != "$old_members" ] || ! grep -qx spaces <<<"$all_items"; th
 	sketchybar --remove spaces 2>/dev/null
 	if [ ${#desired[@]} -gt 0 ]; then
 		sketchybar --add bracket spaces "${desired[@]}" \
-			--set spaces background.color="$BASE" background.corner_radius=20 \
-				background.height="$HEIGHT" background.border_color="$BG" \
-				background.border_width=2 \
-				background.padding_left=8 background.padding_right=8
+			--set spaces "${bracket[@]}"
 	fi
 	printf '%s' "$new_members" >"$state"
 fi

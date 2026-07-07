@@ -1,5 +1,6 @@
-#!/usr/bin/env sh
-# Mirrors colors/light.yaml. Format: 0xAARRGGBB, AA=ff opaque.
+#!/usr/bin/env bash
+# Shared style: colors (mirror colors/light.yaml) + bar geometry.
+# Format: 0xAARRGGBB, AA=ff opaque.
 
 export BASE=0xfffaf9f7   # true background (special role, not an ANSI slot)
 export BG=0xffeeedea     # slot 15 (dim_bg) / inactive surface + border
@@ -15,3 +16,16 @@ export MAGENTA=0xffb05ccc
 export CYAN=0xff3a8b84    
 
 export TRANSPARENT=0x00000000
+
+HEIGHT=32
+
+# shared bracket style
+bracket=(
+background.color=$BASE
+background.corner_radius=20
+background.height=$HEIGHT
+background.border_color=$BG
+background.border_width=2
+background.padding_left=8
+background.padding_right=8
+)
