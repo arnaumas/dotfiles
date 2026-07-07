@@ -1,22 +1,12 @@
 #!/usr/bin/env bash
-source "$HOME/.config/sketchybar/style.sh"
+source "$HOME/.config/sketchybar/plugins/hover.sh"
+hover && exit 0
 
-# click ($1): open Wi-Fi settings. hover (SENDER): highlight the focused-space pill.
+# click ($1): open the Wi-Fi settings pane.
 if [ "$1" = "click" ]; then
 	open "x-apple.systempreferences:com.apple.wifi-settings-extension"
 	exit 0
 fi
-
-case "$SENDER" in
-mouse.entered)
-	sketchybar --set "$NAME" background.drawing=on background.color="$HL_BG"
-	exit 0
-	;;
-mouse.exited)
-	sketchybar --set "$NAME" background.drawing=off
-	exit 0
-	;;
-esac
 
 if [ -n "$(ipconfig getifaddr en0)" ]; then
 	icon=󰖩

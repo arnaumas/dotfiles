@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+source "$HOME/.config/sketchybar/plugins/hover.sh"
+hover && exit 0
+
 info=$(pmset -g batt)
 pct=$(grep -Eo "[0-9]+%" <<<"$info" | tr -d '%')
 [ -z "$pct" ] && exit 0

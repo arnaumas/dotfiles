@@ -47,22 +47,15 @@ sketchybar --add item spaces_driver left \
 --set spaces_driver drawing=off updates=on script="$PLUGIN_DIR/spaces.sh" \
 --subscribe spaces_driver yabai_spaces_change yabai_windows_change
 
-# right cluster: data block, mirrors the spaces bracket -->
-clock=(
+# right cluster: data block, mirrors the spaces bracket
+datetime=(
 icon.drawing=off
 update_freq=10
-script="$PLUGIN_DIR/clock.sh"
+script="$PLUGIN_DIR/datetime.sh"
 )
-sketchybar --add item clock right \
---set clock "${clock[@]}"
-
-date=(
-icon.drawing=off
-update_freq=30
-script="$PLUGIN_DIR/date.sh"
-)
-sketchybar --add item date right \
---set date "${date[@]}"
+sketchybar --add item datetime right \
+--set datetime "${datetime[@]}" \
+--subscribe datetime mouse.entered mouse.exited
 
 battery=(
 update_freq=120
@@ -70,7 +63,7 @@ script="$PLUGIN_DIR/battery.sh"
 )
 sketchybar --add item battery right \
 --set battery "${battery[@]}" \
---subscribe battery power_source_change
+--subscribe battery power_source_change mouse.entered mouse.exited
 
 wifi=(
 update_freq=10
@@ -82,7 +75,7 @@ sketchybar --add item wifi right \
 --set wifi "${wifi[@]}" \
 --subscribe wifi mouse.entered mouse.exited
 
-sketchybar --add bracket data clock date battery wifi \
+sketchybar --add bracket data datetime battery wifi \
 --set data "${bracket[@]}"
 
 # initial render

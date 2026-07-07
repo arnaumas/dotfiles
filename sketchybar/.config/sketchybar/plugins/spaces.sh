@@ -30,7 +30,9 @@ while IFS=$'\t' read -r index label focus; do
 		sketchybar --add item "$name" left \
 			--set "$name" icon.drawing=off \
 				label.padding_left=8 label.padding_right=8 \
-				click_script="yabai -m space --focus $index"
+				script="$CONFIG/plugins/hover.sh" \
+				click_script="yabai -m space --focus $index" \
+			--subscribe "$name" mouse.entered mouse.exited
 	fi
 
 	# label + focus highlight
