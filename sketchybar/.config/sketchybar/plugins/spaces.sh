@@ -2,65 +2,86 @@
 
 CONFIG="$HOME/.config/sketchybar"
 source "$CONFIG/style.sh"
-source "$CONFIG/plugins/icon_map.sh"
 
-# items sketchybar currently has
-all_items=$(sketchybar --query bar | jq -r '.items[]')
-existing=$(grep '^space\.' <<<"$all_items" || true)
+spaces=$(yabai -m query --spaces)
+windows=$(yabai -m query --windows)
+bar=$(sketchybar --query bar)
+existing=$(jq -c '[.items[] | select(startswith("space."))]' <<<"$bar")
 
-desired=()
+# app name (yabai .app) -> nerd font glyph; default 󰣆
+icons='{
+	"Safari":"󰖟","Helium":"󰖟","Google Chrome":"󰖟","Firefox":"󰖟",
+	"Mail":"󰇮",
+	"Calendar":"󰃭",
+	"WhatsApp":"󰖣",
+	"Ghostty":"","Terminal":"","iTerm2":"","kitty":"","Alacritty":"",
+	"sioyek":"󰈦","Preview":"󰈦","Skim":"󰈦",
+	"JabRef":"󱉟",
+	"Obsidian":"󰠮",
+	"Claude":"󰚩",
+	"Numbers":"󰄨",
+	"Music":"󰎈","Música":"󰎈","Spotify":"󰎈",
+	"Finder":"󰀶",
+	"Calculator":"󰪚",
+	"System Settings":"󰒓","Configuració del Sistema":"󰒓"
+}'
 
-while IFS=$'\t' read -r index label focus; do
-	name="space.$index"
-	desired+=("$name")
-
-	# app-icon glyphs for the windows on this space
-	glyphs=""
-	while IFS= read -r app; do
-		[ -n "$app" ] && glyphs+="$(icon_for_app "$app") "
-	done < <(yabai -m query --windows --space "$index" | jq -r '.[].app' | sort -u)
-	glyphs="${glyphs% }"
-
-	# label = topic name (fallback to index) + app glyphs
-	text="${label:-$index}"
-	[ -n "$glyphs" ] && text="$text $glyphs"
-
-	# create on first sight
-	if ! grep -qx "$name" <<<"$existing"; then
-		sketchybar --add item "$name" left \
-			--set "$name" icon.drawing=off \
-				label.padding_left=8 label.padding_right=8 \
-				script="$CONFIG/plugins/hover.sh" \
-				click_script="yabai -m space --focus $index" \
-			--subscribe "$name" mouse.entered mouse.exited
-	fi
-
-	# label + focus highlight
-	if [ "$focus" = "true" ]; then
-		sketchybar --set "$name" label="$text" \
-			background.drawing=on background.color="$HL_BG"
-	else
-		sketchybar --set "$name" label="$text" background.drawing=off
-	fi
-done < <(yabai -m query --spaces | jq -r '.[] | "\(.index)\t\(.label)\t\(.["has-focus"])"')
-
-# drop items for spaces that no longer exist
-while IFS= read -r name; do
-	[ -z "$name" ] && continue
-	keep=false
-	for d in "${desired[@]}"; do [ "$d" = "$name" ] && keep=true && break; done
-	$keep || sketchybar --remove "$name"
-done <<<"$existing"
+args=()
+while IFS= read -r -d '' a; do args+=("$a"); done < <(
+	jq -nj \
+		--argjson spaces  "$spaces" \
+		--argjson windows "$windows" \
+		--argjson existing "$existing" \
+		--argjson icons   "$icons" \
+		--arg hl  "$HL_BG" \
+		--arg cfg "$CONFIG" '
+		# glyphs per space index (only real standard windows, not phantom bg ones)
+		( [ $windows[] | select(.subrole == "AXStandardWindow") ]
+			| group_by(.space)
+			| map({ (.[0].space|tostring):
+				(map(.app) | unique | map($icons[.] // "󰣆")) })
+			| add // {} ) as $byspace
+		| [ $spaces[].index | "space.\(.)" ] as $desired
+		| ( [ $spaces[]
+				| .index as $i
+				| "space.\($i)" as $name
+				| (.label // "") as $lbl
+				| (($byspace[$i|tostring] // []) | join(" ")) as $g
+				| ((if $lbl == "" then ($i|tostring) else $lbl end)
+						+ (if $g == "" then "" else " " + $g end)) as $text
+				| (
+						if ($existing | index($name)) then empty
+						else "--add","item",$name,"left",
+							"--set",$name,"icon.drawing=off",
+								"label.padding_left=8","label.padding_right=8",
+								"script=\($cfg)/plugins/hover.sh",
+								"click_script=yabai -m space --focus \($i)",
+							"--subscribe",$name,"mouse.entered","mouse.exited"
+						end
+					),
+					"--set",$name,"label=\($text)",
+					"padding_left=\(if .index ==$spaces[0].index then 4 else 1 end)",
+					"padding_right=\(if .index ==$spaces[-1].index then 4 else 1 end)",
+					( if .["has-focus"]
+						then "background.drawing=on","background.color=\($hl)"
+						else "background.drawing=off" end )
+			]
+			+ [ ($existing - $desired)[] | ("--remove", .) ]
+			)
+		| .[] + "\u0000"
+	'
+)
+[ ${#args[@]} -gt 0 ] && sketchybar "${args[@]}"
 
 # rebuild the bracket only when membership changes (avoids flicker)
+desired=$(jq -r '[.[].index | "space.\(.)"] | join(" ")' <<<"$spaces")
 state="${TMPDIR:-/tmp}/sketchybar_spaces_members"
-new_members="${desired[*]}"
-old_members=$(cat "$state" 2>/dev/null || true)
-if [ "$new_members" != "$old_members" ] || ! grep -qx spaces <<<"$all_items"; then
+old=$(cat "$state" 2>/dev/null || true)
+if [ "$desired" != "$old" ] || ! jq -e '.items | index("spaces")' <<<"$bar" >/dev/null; then
 	sketchybar --remove spaces 2>/dev/null
-	if [ ${#desired[@]} -gt 0 ]; then
-		sketchybar --add bracket spaces "${desired[@]}" \
-			--set spaces "${bracket[@]}"
+	if [ -n "$desired" ]; then
+		# shellcheck disable=SC2086
+		sketchybar --add bracket spaces $desired --set spaces "${bracket[@]}"
 	fi
-	printf '%s' "$new_members" >"$state"
+	printf '%s' "$desired" >"$state"
 fi

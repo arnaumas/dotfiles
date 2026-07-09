@@ -23,20 +23,6 @@ yabai -m config mouse_action1        move
 yabai -m config mouse_action2        resize
 yabai -m config mouse_drop_action    swap
 
-_spaces=$(yabai -m query --spaces | jq 'length')
-while [ "$_spaces" -lt 7 ]; do
-  yabai -m space --create
-  _spaces=$((_spaces + 1))
-done
-yabai -m space 1 --label mail
-yabai -m space 2 --label web
-yabai -m space 3 --label chat
-yabai -m space 4 --label misc
-yabai -m space 5 --label term
-yabai -m space 6 --label latex
-yabai -m space 7 --label read
-
-
 yabai -m rule --add app="^Configuració del Sistema$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
@@ -52,7 +38,6 @@ yabai -m signal --add event=window_title_changed app="^JabRef$" action='
   title="$(yabai -m query --windows --window $YABAI_WINDOW_ID | jq -r .title)"
   [ "$title" = "New entry" ] && yabai -m window $YABAI_WINDOW_ID --toggle float
 '
-# yabai -m rule --add app="^JabRef$" title!="^.*\.bib - JabRef" manage=off
 
 # float child window
 yabai -m signal --add event=window_created action='

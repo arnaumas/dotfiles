@@ -26,11 +26,11 @@ icon.font="$FONT:Regular:14.0"
 icon.color=$FG
 label.font="$FONT:Regular:13.0"
 label.color=$FG
-padding_left=4
-padding_right=4
+padding_left=1
+padding_right=1
 icon.padding_left=8
-icon.padding_right=2
-label.padding_left=8
+icon.padding_right=1
+label.padding_left=4
 label.padding_right=8
 background.corner_radius=16
 background.height=24
@@ -50,8 +50,10 @@ sketchybar --add item spaces_driver left \
 # right cluster: data block, mirrors the spaces bracket
 datetime=(
 icon.drawing=off
+label.padding_left=8
 update_freq=10
 script="$PLUGIN_DIR/datetime.sh"
+padding_right=4
 )
 sketchybar --add item datetime right \
 --set datetime "${datetime[@]}" \
@@ -70,6 +72,7 @@ update_freq=10
 icon.padding_right=8
 script="$PLUGIN_DIR/wifi.sh"
 click_script="$PLUGIN_DIR/wifi.sh click"
+padding_left=4
 )
 sketchybar --add item wifi right \
 --set wifi "${wifi[@]}" \

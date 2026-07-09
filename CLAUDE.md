@@ -89,8 +89,9 @@ Things the user intends to do eventually — not yet implemented:
 
 ## Conventions
 
-- Sections within config files are wrapped in fold markers: `-- foo -->` … `-- <--`
-  (`# foo -->` in zsh). Keep using them.
+- Fold markers are used **only in Lua files and zsh config**: `-- foo -->` … `-- <--`
+  in Lua, `# foo -->` … `# <--` in zsh. Do **not** add them to other config
+  (sketchybar/yabai shell scripts, etc.) — use plain comments there.
 - Indentation is **hard tabs**, `shiftwidth=2` (`expandtab` is off).
 - Disabled-but-kept config is left commented in place with a note on how to re-enable
   (see the bottom of `20_plugins.lua`); follow that pattern instead of deleting.

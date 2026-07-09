@@ -26,6 +26,6 @@ background.corner_radius=20
 background.height=$HEIGHT
 background.border_color=$BG
 background.border_width=2
-background.padding_left=8
-background.padding_right=8
+background.padding_left=2
+background.padding_right=2
 )
