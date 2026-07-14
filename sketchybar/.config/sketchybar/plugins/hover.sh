@@ -25,8 +25,13 @@ if [ "${BASH_SOURCE[0]}" = "$0" ]; then
 		sketchybar --set "$NAME" background.drawing=on background.color="$HL_BG"
 		;;
 	mouse.exited)
-		focused=$(yabai -m query --spaces --space "${NAME#space.}" | jq -r '.["has-focus"]')
-		[ "$focused" = "true" ] || sketchybar --set "$NAME" background.drawing=off
+		state=$(yabai -m query --spaces --space "${NAME#space.}" |
+			jq -r 'if .["has-focus"] then "focused" elif .["is-visible"] then "visible" else "off" end')
+		case "$state" in
+		focused) ;; # leaving the focused pill keeps it lit
+		visible) sketchybar --set "$NAME" background.drawing=on background.color="$BG" ;;
+		*) sketchybar --set "$NAME" background.drawing=off ;;
+		esac
 		;;
 	esac
 fi
