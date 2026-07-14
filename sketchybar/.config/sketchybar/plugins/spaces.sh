@@ -26,8 +26,15 @@ icons='{
 	"System Settings":"󰒓","Configuració del Sistema":"󰒓"
 }'
 
-# desired item list, in display order (drives the adds, removals, --reorder and the bracket)
-desired_json=$(jq -c '[ .[].index | "space.\(.)" ]' <<<"$spaces")
+# desired item list, in display order: a "|" separator before the first space of each new
+# display. Drives the adds, removals, --reorder and the bracket.
+desired_json=$(jq -c '
+	[ .[] ] as $sp
+	| [ range(0; $sp|length) as $k
+			| (if $k > 0 and $sp[$k].display != $sp[$k-1].display
+				then ["space.sep.\($sp[$k].display)"] else [] end)
+				+ ["space.\($sp[$k].index)"] ]
+	| add // []' <<<"$spaces")
 
 args=()
 while IFS= read -r -d '' a; do args+=("$a"); done < <(
@@ -39,6 +46,7 @@ while IFS= read -r -d '' a; do args+=("$a"); done < <(
 		--argjson icons   "$icons" \
 		--arg hl  "$HL_BG" \
 		--arg bg  "$BG" \
+		--arg dim "$DIM" \
 		--arg cfg "$CONFIG" '
 		# glyphs per space index (only real standard windows; skip sticky panels like browser PIP)
 		( [ $windows[] | select(.subrole == "AXStandardWindow" and (."is-sticky" | not)) ]
@@ -46,7 +54,20 @@ while IFS= read -r -d '' a; do args+=("$a"); done < <(
 			| map({ (.[0].space|tostring):
 				(map(.app) | unique | map($icons[.] // "󰣆")) })
 			| add // {} ) as $byspace
-		| ( [ $spaces[]
+		| ( [ $desired[]
+				| select(startswith("space.sep.")) as $sep
+				| select(($existing | index($sep)) | not)
+				| "--add","item",$sep,"left",
+					"--set",$sep,"icon.drawing=off",
+						# icon.drawing=off still reserves the default icon padding (8 left / 1
+						# right), which shoves the label right; zero it so the pipe centers
+						"icon.padding_left=0","icon.padding_right=0",
+						# sketchybar measures "|" as ~2pt but the font advances ~8pt, so the ink
+						# lands right of the reserved box; the lopsided padding re-centers it
+						"label=|","label.color=\($dim)",
+						"label.padding_left=2","label.padding_right=8"
+			]
+			+ [ $spaces[]
 				| .index as $i
 				| "space.\($i)" as $name
 				| (.label // "") as $lbl
