@@ -67,6 +67,16 @@ sketchybar --add item battery right \
 --set battery "${battery[@]}" \
 --subscribe battery power_source_change mouse.entered mouse.exited
 
+volume=(
+update_freq=10
+icon.padding_right=8
+script="$PLUGIN_DIR/volume.sh"
+click_script="$PLUGIN_DIR/volume.sh click"
+)
+sketchybar --add item volume right \
+--set volume "${volume[@]}" \
+--subscribe volume volume_change mouse.entered mouse.exited
+
 wifi=(
 update_freq=10
 icon.padding_right=8
@@ -78,7 +88,7 @@ sketchybar --add item wifi right \
 --set wifi "${wifi[@]}" \
 --subscribe wifi mouse.entered mouse.exited
 
-sketchybar --add bracket data datetime battery wifi \
+sketchybar --add bracket data datetime battery volume wifi \
 --set data "${bracket[@]}"
 
 # initial render

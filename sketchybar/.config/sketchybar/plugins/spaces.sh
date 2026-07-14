@@ -14,8 +14,8 @@ icons='{
 	"Mail":"󰇮",
 	"Calendar":"󰃭",
 	"WhatsApp":"󰖣",
-	"Ghostty":"","Terminal":"","iTerm2":"","kitty":"","Alacritty":"",
-	"sioyek":"󰈦","Preview":"󰈦","Skim":"󰈦",
+	"Ghostty":"","Terminal":"","iTerm2":"","kitty":"","Alacritty":"",
+	"sioyek":"","Preview":"","Skim":"",
 	"JabRef":"󱉟",
 	"Obsidian":"󰠮",
 	"Claude":"󰚩",
@@ -35,8 +35,8 @@ while IFS= read -r -d '' a; do args+=("$a"); done < <(
 		--argjson icons   "$icons" \
 		--arg hl  "$HL_BG" \
 		--arg cfg "$CONFIG" '
-		# glyphs per space index (only real standard windows, not phantom bg ones)
-		( [ $windows[] | select(.subrole == "AXStandardWindow") ]
+		# glyphs per space index (only real standard windows; skip sticky panels like browser PIP)
+		( [ $windows[] | select(.subrole == "AXStandardWindow" and (."is-sticky" | not)) ]
 			| group_by(.space)
 			| map({ (.[0].space|tostring):
 				(map(.app) | unique | map($icons[.] // "󰣆")) })
