@@ -20,6 +20,20 @@
                                 ],
                                 "to_if_alone": [{ "key_code": "backslash" }],
                                 "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "non_us_pound",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_command",
+                                        "modifiers": ["left_control", "left_option"]
+                                    }
+                                ],
+                                "to_if_alone": [{ "key_code": "non_us_pound" }],
+                                "type": "basic"
                             }
                         ]
                     },
@@ -309,7 +323,8 @@
                         "product_id": 2324,
                         "vendor_id": 13364
                     },
-                    "ignore": false
+                    "ignore": false,
+                    "treat_as_built_in_keyboard": true
                 }
             ],
             "fn_function_keys": [
