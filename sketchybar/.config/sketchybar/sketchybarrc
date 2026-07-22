@@ -3,7 +3,7 @@ CONFIG_DIR="$HOME/.config/sketchybar"
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 source "$CONFIG_DIR/style.sh"
 
-FONT="Geist Mono"
+FONT="GeistMono Nerd Font"
 
 # bar
 bar=(
