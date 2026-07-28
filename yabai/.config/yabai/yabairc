@@ -1,6 +1,6 @@
 # set ft=sh
 
-yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa; yabai -m config window_shadow float"
 sudo yabai --load-sa
 
 yabai -m config layout bsp
@@ -19,7 +19,7 @@ yabai -m config window_shadow float
 yabai -m config external_bar all:32:0
 
 # yabai -m config mouse_follows_focus on
-yabai -m config mouse_modifier       fn
+yabai -m config mouse_modifier       ctrl
 yabai -m config mouse_action1        move
 yabai -m config mouse_action2        resize
 yabai -m config mouse_drop_action    swap
@@ -30,12 +30,17 @@ yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^Karabiner-EventViewer$" manage=off
 yabai -m rule --add app="^QuickTime Player$" manage=off
-yabai -m rule --add app="WhatsApp" manage=off
 yabai -m rule --add app="^Monitor d'Activitat$" manage=off
 yabai -m rule --add app="^Logi Options\+$" manage=off
 yabai -m rule --add app="^Monitor" manage=off
-yabai -m rule --add app="^Música$" manage=off
 yabai -m rule --add app="^Raycast Beta$" manage=off
+
+# scratchpads: floating, parked off-screen, summoned onto the current space.
+# toggled from skhd via ~/.config/yabai/scratchpad.sh <label>.
+# the ghostty rule is title-scoped so it only catches the scratchpad window.
+yabai -m rule --add app="^Ghostty$" title="^scratchpad$" scratchpad=ghostty
+yabai -m rule --add app="WhatsApp"                       scratchpad=whatsapp
+yabai -m rule --add app="^Música$"                       scratchpad=music
 yabai -m signal --add event=window_title_changed app="^JabRef$" action='
   title="$(yabai -m query --windows --window $YABAI_WINDOW_ID | jq -r .title)"
   [ "$title" = "New entry" ] && yabai -m window $YABAI_WINDOW_ID --toggle float
@@ -48,7 +53,7 @@ yabai -m signal --add event=window_created action='
 '
 
 PADDING="$HOME/.config/yabai/padding.sh"
-for ev in window_created window_destroyed window_moved space_created display_changed; do
+for ev in window_created window_destroyed space_created space_changed display_changed; do
 	yabai -m signal --add event=$ev action="$PADDING"
 done
 "$PADDING"

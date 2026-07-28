@@ -22,8 +22,8 @@ ctrl + cmd + alt + shift - l : \
 # ctrl + cmd + alt + shift - l : yabai -m window --warp east || (yabai -m window --display east --focus && yabai -m window --warp first) || yabai -m window --move rel:10:0
 
 # swap displays
-ctrl + cmd + alt - m : yabai -m display --focus recent
-ctrl + cmd + alt + shift - m : yabai -m space --display recent
+ctrl + cmd + alt - m : yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
+ctrl + cmd + alt + shift - m : ~/.config/yabai/send_space.sh
 
 ctrl + cmd + alt - n : info=$(yabai -m query --spaces --display); last=$(echo $info | jq '.[-1]."has-focus"'); if [[ $last == "false" ]]; then yabai -m space --focus next; else yabai -m space --focus $(echo $info | jq '.[0].index'); fi
 ctrl + cmd + alt - p : info=$(yabai -m query --spaces --display); first=$(echo $info | jq '.[0]."has-focus"'); if [[ $first == "false" ]]; then yabai -m space --focus prev; else yabai -m space --focus $(echo $info | jq '.[-1].index'); fi
@@ -31,15 +31,17 @@ ctrl + cmd + alt - p : info=$(yabai -m query --spaces --display); first=$(echo $
 ctrl + cmd + alt + shift  - n : info=$(yabai -m query --spaces --display); last=$(echo $info | jq '.[-1]."has-focus"'); if [[ $last == "false" ]]; then yabai -m window --space next --focus; else yabai -m window --space $(echo $info | jq '.[0].index') --focus; fi
 ctrl + cmd + alt + shift  - p : info=$(yabai -m query --spaces --display); first=$(echo $info | jq '.[0]."has-focus"'); if [[ $first == "false" ]]; then yabai -m window --space prev --focus; else yabai -m window --space $(echo $info | jq '.[-1].index') --focus; fi
 
+ctrl + cmd + alt - tab : yabai -m space --focus recent || yabai -m space --focus next || yabai -m space --focus first
+
 # ctrl + cmd + alt - f : yabai -m window --toggle split
 # ctrl + cmd + alt - b : yabai -m space --balance
 ctrl + cmd + alt - v : yabai -m window --toggle float && yabai -m window --layer normal
 
-# create desktop, move window and follow focus
-ctrl + cmd + alt - t : yabai -m space --create
-ctrl + cmd + alt - x : yabai -m space --destroy
+# create and destroy desktop
+ctrl + cmd + alt - t : yabai -m space --create && yabai -m space --focus last
+ctrl + cmd + alt - x : yabai -m space --destroy && yabai -m space --focus recent
 
-# -- window state -->
+# window state
 ctrl + cmd + alt - f          : yabai -m window --toggle float
 # ctrl + cmd + alt - .     : yabai -m window --toggle split
 
@@ -55,8 +57,9 @@ ctrl + cmd + alt - s          : if [ "$(yabai -m query --windows --window | jq -
 # ctrl + cmd + alt - bracketright : yabai -m window --focus stack.next || yabai -m window --focus next
 # -- <--
 
-# -- scratchpads -->
-ctrl + cmd + alt - return : yabai -m window --toggle ghostty_scratch 2>/dev/null || /Applications/Ghostty.app/Contents/MacOS/ghostty --title=scratchpad -e tmux new-session -A -s scratch &
-# -- <--
+# scratchpads
+ctrl + cmd + alt - g : ~/.config/yabai/scratchpad.sh ghostty /Applications/Ghostty.app/Contents/MacOS/ghostty --title=scratchpad -e tmux new-session -A -s scratch
+ctrl + cmd + alt - d : ~/.config/yabai/scratchpad.sh music open -b com.apple.Music
+ctrl + cmd + alt - w : ~/.config/yabai/scratchpad.sh whatsapp open -a "WhatsApp"
 
-ctrl + cmd + alt - r : skhd -r && yabai --restart-service
+ctrl + cmd + alt - r : yabai --restart-service; skhd --restart-service

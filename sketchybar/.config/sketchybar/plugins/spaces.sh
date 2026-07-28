@@ -49,7 +49,8 @@ while IFS= read -r -d '' a; do args+=("$a"); done < <(
 		--arg dim "$DIM" \
 		--arg cfg "$CONFIG" '
 		# glyphs per space index (only real standard windows; skip sticky panels like browser PIP)
-		( [ $windows[] | select(.subrole == "AXStandardWindow" and (."is-sticky" | not)) ]
+		( [ $windows[] | select(.subrole == "AXStandardWindow" and (."is-sticky" | not)
+			and (.scratchpad == "" or .["is-visible"])) ]
 			| group_by(.space)
 			| map({ (.[0].space|tostring):
 				(map(.app) | unique | map($icons[.] // "󰣆")) })
