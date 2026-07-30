@@ -53,7 +53,7 @@ while IFS= read -r -d '' a; do args+=("$a"); done < <(
 			and (.scratchpad == "" or .["is-visible"])) ]
 			| group_by(.space)
 			| map({ (.[0].space|tostring):
-				(map(.app) | unique | map($icons[.] // "󰣆")) })
+				(map(.app | gsub("\\p{Cf}"; "")) | sort | map($icons[.] // "󰣆")) })
 			| add // {} ) as $byspace
 		| ( [ $desired[]
 				| select(startswith("space.sep.")) as $sep
