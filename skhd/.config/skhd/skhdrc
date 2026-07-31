@@ -25,24 +25,16 @@ ctrl + cmd + alt + shift  - p : info=$(yabai -m query --spaces --display); first
 
 ctrl + cmd + alt - tab : yabai -m space --focus recent || yabai -m space --focus next || yabai -m space --focus first
 
-# ctrl + cmd + alt - f : yabai -m window --toggle split
 # ctrl + cmd + alt - b : yabai -m space --balance
-ctrl + cmd + alt - v : yabai -m window --toggle float && yabai -m window --layer normal
 
 # create and destroy desktop
 ctrl + cmd + alt - t : yabai -m space --create && yabai -m space --focus last
 ctrl + cmd + alt - x : yabai -m space --destroy && yabai -m space --focus recent
 
-# window state
-ctrl + cmd + alt - f          : yabai -m window --toggle float
-# ctrl + cmd + alt - .     : yabai -m window --toggle split
-
-# raise to above layer (toggle); works on any window, most useful when floating
-ctrl + cmd + alt - a          : if [ "$(yabai -m query --windows --window | jq -r '.layer')" = "above" ]; then yabai -m window --layer normal; else yabai -m window --layer above; fi
-
-# sticky float: visible on all spaces (implies float + above layer)
-ctrl + cmd + alt - s          : if [ "$(yabai -m query --windows --window | jq -r '."is-sticky"')" = "true" ]; then yabai -m window --toggle sticky && yabai -m window --layer normal; else yabai -m window --toggle float && yabai -m window --layer above && yabai -m window --toggle sticky; fi
-# -- <--
+# window state. no layer juggling: yabai tiles windows to the below layer, so a
+# float at normal already sits on top of everything tiled.
+ctrl + cmd + alt - f : yabai -m window --toggle float
+ctrl + cmd + alt - s : yabai -m window --toggle sticky
 
 # -- stacks -->
 # ctrl + cmd + alt - bracketleft  : yabai -m window --focus stack.prev || yabai -m window --focus prev
