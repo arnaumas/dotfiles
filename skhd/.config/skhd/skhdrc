@@ -1,56 +1,61 @@
 # vim: filetype=sh
+#
+# base chord is ctrl + cmd + alt (hyper). adding shift acts on the window
+# instead of just moving focus. sections group by what a binding acts on.
 
-# navigation
+# windows
 ctrl + cmd + alt - j : yabai -m window --focus south || yabai -m display --focus south
 ctrl + cmd + alt - k : yabai -m window --focus north || yabai -m display --focus north
 ctrl + cmd + alt - h : yabai -m window --focus west || yabai -m display --focus west
 ctrl + cmd + alt - l : yabai -m window --focus east || yabai -m display --focus east
 
-# window movement (warp in-display; at the edge, cross to the adjacent
-# display landing against the shared edge; float windows nudge instead)
+# warp in-display; at the edge, cross to the adjacent display landing against
+# the shared edge; float windows nudge instead
 ctrl + cmd + alt + shift - j : ~/.config/yabai/warp.sh south
 ctrl + cmd + alt + shift - k : ~/.config/yabai/warp.sh north
 ctrl + cmd + alt + shift - h : ~/.config/yabai/warp.sh west
 ctrl + cmd + alt + shift - l : ~/.config/yabai/warp.sh east
 
-# swap displays
-ctrl + cmd + alt - m : yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
-ctrl + cmd + alt + shift - m : ~/.config/yabai/send_space.sh
-
+# spaces
 ctrl + cmd + alt - n : info=$(yabai -m query --spaces --display); last=$(echo $info | jq '.[-1]."has-focus"'); if [[ $last == "false" ]]; then yabai -m space --focus next; else yabai -m space --focus $(echo $info | jq '.[0].index'); fi
 ctrl + cmd + alt - p : info=$(yabai -m query --spaces --display); first=$(echo $info | jq '.[0]."has-focus"'); if [[ $first == "false" ]]; then yabai -m space --focus prev; else yabai -m space --focus $(echo $info | jq '.[-1].index'); fi
+ctrl + cmd + alt - tab : yabai -m space --focus recent || yabai -m space --focus next || yabai -m space --focus first
 
 ctrl + cmd + alt + shift  - n : info=$(yabai -m query --spaces --display); last=$(echo $info | jq '.[-1]."has-focus"'); if [[ $last == "false" ]]; then yabai -m window --space next --focus; else yabai -m window --space $(echo $info | jq '.[0].index') --focus; fi
 ctrl + cmd + alt + shift  - p : info=$(yabai -m query --spaces --display); first=$(echo $info | jq '.[0]."has-focus"'); if [[ $first == "false" ]]; then yabai -m window --space prev --focus; else yabai -m window --space $(echo $info | jq '.[-1].index') --focus; fi
 
-ctrl + cmd + alt - tab : yabai -m space --focus recent || yabai -m space --focus next || yabai -m space --focus first
-
-# ctrl + cmd + alt - b : yabai -m space --balance
-
-# create and destroy desktop
+# create and destroy
 ctrl + cmd + alt - t : yabai -m space --create && yabai -m space --focus last
 ctrl + cmd + alt - x : yabai -m space --destroy && yabai -m space --focus recent
 
-# window state. no layer juggling: yabai tiles windows to the below layer, so a
-# float at normal already sits on top of everything tiled.
-ctrl + cmd + alt - f : yabai -m window --toggle float
-ctrl + cmd + alt - s : yabai -m window --toggle sticky
+# displays
+ctrl + cmd + alt - m : yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
+ctrl + cmd + alt + shift - m : ~/.config/yabai/send_space.sh
 
-# resize: split ratio when tiled, centered grow/shrink when floating
+# layout
+ctrl + cmd + alt - b : yabai -m space --balance
+
+# resize: split ratio when tiled, centered grow/shrink when floating.
+# note --ratio grows the split's first child, not necessarily the focused window
 ctrl + cmd + alt - i : yabai -m window --ratio rel:0.05 || (yabai -m window --resize top_left:-20:-20 && yabai -m window --resize bottom_right:20:20)
 ctrl + cmd + alt - u : yabai -m window --ratio rel:-0.05 || (yabai -m window --resize top_left:20:20 && yabai -m window --resize bottom_right:-20:-20)
 
 # center a floating window at half size
 ctrl + cmd + alt - c : yabai -m window --grid 4:4:1:1:2:2
 
-# -- stacks -->
+# no layer juggling: yabai tiles windows to the below layer, so a float at
+# normal already sits on top of everything tiled
+ctrl + cmd + alt - f : yabai -m window --toggle float
+ctrl + cmd + alt - s : yabai -m window --toggle sticky
+
+# stacks (disabled; re-enable by uncommenting)
 # ctrl + cmd + alt - bracketleft  : yabai -m window --focus stack.prev || yabai -m window --focus prev
 # ctrl + cmd + alt - bracketright : yabai -m window --focus stack.next || yabai -m window --focus next
-# -- <--
 
 # scratchpads
 ctrl + cmd + alt - g : ~/.config/yabai/scratchpad.sh ghostty /Applications/Ghostty.app/Contents/MacOS/ghostty --title=scratchpad -e tmux new-session -A -s scratch
 ctrl + cmd + alt - d : ~/.config/yabai/scratchpad.sh music open -b com.apple.Music
 ctrl + cmd + alt - w : ~/.config/yabai/scratchpad.sh whatsapp open -a "WhatsApp"
 
+# service
 ctrl + cmd + alt - r : yabai --restart-service; skhd --restart-service
