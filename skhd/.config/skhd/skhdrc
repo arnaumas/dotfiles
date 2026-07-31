@@ -6,20 +6,12 @@ ctrl + cmd + alt - k : yabai -m window --focus north || yabai -m display --focus
 ctrl + cmd + alt - h : yabai -m window --focus west || yabai -m display --focus west
 ctrl + cmd + alt - l : yabai -m window --focus east || yabai -m display --focus east
 
-# window movement
-ctrl + cmd + alt + shift - j : yabai -m window --warp south || yabai -m window --display south --focus || yabai -m window --move rel:0:10
-ctrl + cmd + alt + shift - k : yabai -m window --warp north || yabai -m window --display north --focus || yabai -m window --move rel:0:-10
-ctrl + cmd + alt + shift - h : \
-  yabai -m window --warp west || \
-  (yabai -m window --warp "$(yabai -m query --windows --display west | jq 'sort_by(.frame.x + .frame.w) | last | .id')" && yabai -m display --focus west) || \
-  yabai -m window --move rel:-10:0
-ctrl + cmd + alt + shift - l : \
-  yabai -m window --warp east || \
-  (yabai -m window --warp "$(yabai -m query --windows --display east | jq 'sort_by(.frame.x) | first | .id')" && yabai -m display --focus east) || \
-  yabai -m window --move rel:10:0
-
-# ctrl + cmd + alt + shift - h : yabai -m window --warp west || (yabai -m window --display west --focus && yabai -m window --warp last) || yabai -m window --move rel:-10:0
-# ctrl + cmd + alt + shift - l : yabai -m window --warp east || (yabai -m window --display east --focus && yabai -m window --warp first) || yabai -m window --move rel:10:0
+# window movement (warp in-display; at the edge, cross to the adjacent
+# display landing against the shared edge; float windows nudge instead)
+ctrl + cmd + alt + shift - j : ~/.config/yabai/warp.sh south
+ctrl + cmd + alt + shift - k : ~/.config/yabai/warp.sh north
+ctrl + cmd + alt + shift - h : ~/.config/yabai/warp.sh west
+ctrl + cmd + alt + shift - l : ~/.config/yabai/warp.sh east
 
 # swap displays
 ctrl + cmd + alt - m : yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
