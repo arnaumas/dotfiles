@@ -36,6 +36,13 @@ ctrl + cmd + alt - x : yabai -m space --destroy && yabai -m space --focus recent
 ctrl + cmd + alt - f : yabai -m window --toggle float
 ctrl + cmd + alt - s : yabai -m window --toggle sticky
 
+# resize: split ratio when tiled, centered grow/shrink when floating
+ctrl + cmd + alt - i : yabai -m window --ratio rel:0.05 || (yabai -m window --resize top_left:-20:-20 && yabai -m window --resize bottom_right:20:20)
+ctrl + cmd + alt - u : yabai -m window --ratio rel:-0.05 || (yabai -m window --resize top_left:20:20 && yabai -m window --resize bottom_right:-20:-20)
+
+# center a floating window at half size
+ctrl + cmd + alt - c : yabai -m window --grid 4:4:1:1:2:2
+
 # -- stacks -->
 # ctrl + cmd + alt - bracketleft  : yabai -m window --focus stack.prev || yabai -m window --focus prev
 # ctrl + cmd + alt - bracketright : yabai -m window --focus stack.next || yabai -m window --focus next
