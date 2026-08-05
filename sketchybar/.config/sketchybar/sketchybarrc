@@ -88,7 +88,21 @@ sketchybar --add item wifi right \
 --set wifi "${wifi[@]}" \
 --subscribe wifi mouse.entered mouse.exited
 
-sketchybar --add bracket data datetime battery volume wifi \
+media=(
+update_freq=1
+icon.padding_right=8
+label.width=220
+label.align=left
+script="$PLUGIN_DIR/media.sh"
+click_script="$PLUGIN_DIR/media.sh click"
+drawing=off
+padding_left=4
+)
+sketchybar --add item media right \
+--set media "${media[@]}" \
+--subscribe media mouse.entered mouse.exited
+
+sketchybar --add bracket data media datetime battery volume wifi \
 --set data "${bracket[@]}"
 
 # initial render
