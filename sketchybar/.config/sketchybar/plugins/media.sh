@@ -32,17 +32,29 @@ hide() {
 # Never launch Music just to ask it what is playing.
 pgrep -xq Music || hide
 
-# click ($1): toggle playback, then fall through to redraw immediately.
-if [ "$1" = "click" ]; then
-	osascript -e 'tell application "Music" to playpause' >/dev/null 2>&1
-	rm -f "$STATE"
-fi
-
 # cache: state<TAB>text<TAB>offset<TAB>ticks_since_fetch
 tick=$REFRESH
 if [ -f "$STATE" ]; then
 	IFS=$'\t' read -r pstate text offset tick <"$STATE"
 	tick=$((tick + 1))
+fi
+
+# click ($1): toggle playback. Music does not commit the new player state
+# before an immediate re-query returns, so flip the cached state locally and
+# redraw from that; the next scheduled refresh confirms it against Music.
+if [ "$1" = "click" ]; then
+	osascript -e 'tell application "Music" to playpause' >/dev/null 2>&1
+	if [ -n "$text" ]; then
+		case "$pstate" in
+		playing) pstate=paused ;;
+		*) pstate=playing ;;
+		esac
+		tick=0
+	else
+		# Nothing cached to flip: let the settle finish, then query.
+		sleep 0.3
+		tick=$REFRESH
+	fi
 fi
 
 if [ "$tick" -ge "$REFRESH" ]; then
