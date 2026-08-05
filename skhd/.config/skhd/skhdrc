@@ -60,5 +60,12 @@ ctrl + cmd + alt - g : ~/.config/yabai/scratchpad.sh ghostty /Applications/Ghost
 ctrl + cmd + alt - d : ~/.config/yabai/scratchpad.sh music open -b com.apple.Music
 ctrl + cmd + alt - w : ~/.config/yabai/scratchpad.sh whatsapp open -a "WhatsApp"
 
+# media keys drive Music only, never whatever played audio last (browsers).
+# skhd swallows the matched event, so the system routing never sees it.
+# guarded on "is running" so a stray keypress does not launch Music.
+play     : osascript -e 'if application "Music" is running then tell application "Music" to playpause'
+next     : osascript -e 'if application "Music" is running then tell application "Music" to next track'
+previous : osascript -e 'if application "Music" is running then tell application "Music" to previous track'
+
 # service
 ctrl + cmd + alt - r : yabai --restart-service; skhd --restart-service
