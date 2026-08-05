@@ -194,8 +194,6 @@ function zsh-update-plugins() {
 # fzf-tab -->
 zsh-add-plugin "Aloxaf/fzf-tab"
 
-bindkey -M viins '^I' fzf-tab-complete
-
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 zstyle ':fzf-tab:*' switch-group '^' '+'
 zstyle ':fzf-tab:*' continuous-trigger '/'
@@ -207,12 +205,28 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview \
 # zsh-autosuggestions -->
 zsh-add-plugin "zsh-users/zsh-autosuggestions"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"          # recessive grey (matches the editor palette)
-ZSH_AUTOSUGGEST_STRATEGY=(completion history)
+ZSH_AUTOSUGGEST_STRATEGY=(unique_completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30              # no suggestions on very long lines
 
-# accept with <C-Y>
-bindkey -M viins '^Y' autosuggest-accept
+# suggest only unambiguous completions (upstream inserts the first match blindly)
+_zsh_autosuggest_capture_postcompletion() {
+	(( compstate[nmatches] == 1 )) && compstate[insert]=1 || unset 'compstate[insert]'
+	unset 'compstate[list]'
+}
+
+# an untouched buffer means nothing was inserted
+_zsh_autosuggest_strategy_unique_completion() {
+	_zsh_autosuggest_strategy_completion "$@"
+	[[ "$suggestion" == "$1" ]] && unset suggestion
+}
+
+# <Tab> accepts the suggestion if there is one, else opens fzf-tab
+tab-accept-or-complete() {
+	[[ -n "$POSTDISPLAY" ]] && zle autosuggest-accept || zle fzf-tab-complete
+}
+zle -N tab-accept-or-complete
+bindkey -M viins '^I' tab-accept-or-complete
 # <--
 
 # zsh-syntax-highlighting -->
