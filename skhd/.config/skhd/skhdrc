@@ -35,6 +35,9 @@ ctrl + cmd + alt + shift - m : ~/.config/yabai/send_space.sh
 # layout
 ctrl + cmd + alt - b : yabai -m space --balance
 
+# toggle the split orientation of the focused window's node
+ctrl + cmd + alt - v : yabai -m window --toggle split
+
 # resize: split ratio when tiled, centered grow/shrink when floating.
 # note --ratio grows the split's first child, not necessarily the focused window
 ctrl + cmd + alt - i : yabai -m window --ratio rel:0.05 || (yabai -m window --resize top_left:-20:-20 && yabai -m window --resize bottom_right:20:20)
