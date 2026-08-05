@@ -3,6 +3,13 @@ source "$HOME/.config/sketchybar/style.sh"
 
 # Sourced by item scripts: highlight the focused-space pill on hover.
 # Returns 0 (handled) on a mouse event so the caller can `hover && exit 0`.
+#
+# Never call this from a click_script. sketchybar sets only INFO/BUTTON/MODIFIER
+# for a click, never SENDER, and since it forks with vfork the setenv of the
+# preceding run leaks into its own environment: at click time SENDER is still
+# mouse.entered from the hover that necessarily came first. hover() would then
+# report the click as handled and the script would exit before doing anything.
+# Click actions live in sketchybarrc or popover.sh, which never source this.
 hover() {
 	case "$SENDER" in
 	mouse.entered)

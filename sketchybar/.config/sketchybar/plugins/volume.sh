@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 source "$HOME/.config/sketchybar/plugins/hover.sh"
-hover && exit 0
 
-# click ($1): open the Control Center Sound popover.
-# Needs Accessibility permission for sketchybar and Sound pinned to the menu bar.
-# NAME_MATCH is the localized Sound module description (verify with the enumerate
-# one-liner once Accessibility is granted).
-if [ "$1" = "click" ]; then
-	osascript -e 'tell application "System Events" to tell process "ControlCenter" to click (menu bar item 1 of menu bar 1 whose description contains "So")'
+# dismiss the output picker once the pointer leaves the bar
+if [ "$SENDER" = "mouse.exited.global" ]; then
+	sketchybar --set "$NAME" popup.drawing=off
 	exit 0
 fi
+
+hover && exit 0
 
 # Speaker glyphs are nf-fa (BMP private-use); paste them in below, tooling strips them.
 # spkr=nf-fa-volume_high  spkr_mute=nf-fa-volume_xmark
@@ -19,10 +17,12 @@ spkr_mute=
 phones=󰋋
 phones_mute=󰟎
 
-# Internal speakers report "... Speakers"; anything else counts as headphones.
+# Headphones only for AirPods; every other output (built-in speakers, the AOC
+# monitor over HDMI) gets the speaker glyph. Matched on the device name because
+# system_profiler's Transport field is far too slow for a 10s update.
 case "$(SwitchAudioSource -c)" in
-*Speakers) on=$spkr off=$spkr_mute ;;
-*) on=$phones off=$phones_mute ;;
+*AirPods*) on=$phones off=$phones_mute ;;
+*) on=$spkr off=$spkr_mute ;;
 esac
 
 if [ "$(osascript -e 'output muted of (get volume settings)')" = "true" ]; then
