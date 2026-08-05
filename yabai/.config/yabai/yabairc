@@ -64,6 +64,14 @@ for ev in window_created window_destroyed space_created space_changed display_ch
 done
 "$PADDING"
 
+# mirror the external layout to disk; replay it on unplug (see the scripts)
+SNAPSHOT="$HOME/.config/yabai/snapshot.sh"
+for ev in window_created window_destroyed space_created space_destroyed space_changed display_added; do
+	yabai -m signal --add event=$ev action="$SNAPSHOT"
+done
+yabai -m signal --add event=display_removed action="$HOME/.config/yabai/on_display_removed.sh"
+"$SNAPSHOT"
+
 # sketchybar mirrors yabai's spaces/windows
 yabai -m signal --add event=space_changed              action="sketchybar --trigger yabai_spaces_change"
 yabai -m signal --add event=display_changed            action="sketchybar --trigger yabai_spaces_change"
