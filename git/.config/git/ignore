@@ -22,3 +22,6 @@
 
 # Claude files
 .claude/
+
+# topic-manager manifests
+project.toml
