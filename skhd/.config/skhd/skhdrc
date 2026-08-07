@@ -39,15 +39,12 @@ ctrl + cmd + alt - b : yabai -m space --balance
 ctrl + cmd + alt - v : yabai -m window --toggle split
 
 # resize: split ratio when tiled, centered grow/shrink when floating.
-# note --ratio grows the split's first child, not necessarily the focused window
 ctrl + cmd + alt - i : yabai -m window --ratio rel:0.05 || (yabai -m window --resize top_left:-20:-20 && yabai -m window --resize bottom_right:20:20)
 ctrl + cmd + alt - u : yabai -m window --ratio rel:-0.05 || (yabai -m window --resize top_left:20:20 && yabai -m window --resize bottom_right:-20:-20)
 
 # center a floating window at half size
 ctrl + cmd + alt - c : yabai -m window --grid 4:4:1:1:2:2
 
-# no layer juggling: yabai tiles windows to the below layer, so a float at
-# normal already sits on top of everything tiled
 ctrl + cmd + alt - f : yabai -m window --toggle float
 ctrl + cmd + alt - s : yabai -m window --toggle sticky
 
@@ -60,12 +57,14 @@ ctrl + cmd + alt - g : ~/.config/yabai/scratchpad.sh ghostty /Applications/Ghost
 ctrl + cmd + alt - d : ~/.config/yabai/scratchpad.sh music open -b com.apple.Music
 ctrl + cmd + alt - w : ~/.config/yabai/scratchpad.sh whatsapp open -a "WhatsApp"
 
-# media keys drive Music only, never whatever played audio last (browsers).
-# skhd swallows the matched event, so the system routing never sees it.
-# guarded on "is running" so a stray keypress does not launch Music.
+# media keys
 play     : osascript -e 'if application "Music" is running then tell application "Music" to playpause'
 next     : osascript -e 'if application "Music" is running then tell application "Music" to next track'
 previous : osascript -e 'if application "Music" is running then tell application "Music" to previous track'
+
+# topic manager
+ctrl + cmd + alt - a : ~/.local/bin/topic
+ctrl + cmd + alt + shift - a : ~/.local/bin/topic new
 
 # service
 ctrl + cmd + alt - r : yabai --restart-service; skhd --restart-service
