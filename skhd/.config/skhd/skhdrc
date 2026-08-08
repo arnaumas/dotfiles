@@ -16,6 +16,10 @@ ctrl + cmd + alt + shift - k : ~/.config/yabai/warp.sh north
 ctrl + cmd + alt + shift - h : ~/.config/yabai/warp.sh west
 ctrl + cmd + alt + shift - l : ~/.config/yabai/warp.sh east
 
+# hop focus between the floating and the tiled windows of the space; the
+# directional binds above only walk the bsp tree, so they cannot reach a
+# floating window, nor get back out of one
+
 # spaces
 ctrl + cmd + alt - n : info=$(yabai -m query --spaces --display); last=$(echo $info | jq '.[-1]."has-focus"'); if [[ $last == "false" ]]; then yabai -m space --focus next; else yabai -m space --focus $(echo $info | jq '.[0].index'); fi
 ctrl + cmd + alt - p : info=$(yabai -m query --spaces --display); first=$(echo $info | jq '.[0]."has-focus"'); if [[ $first == "false" ]]; then yabai -m space --focus prev; else yabai -m space --focus $(echo $info | jq '.[-1].index'); fi
@@ -31,6 +35,8 @@ ctrl + cmd + alt - x : yabai -m space --destroy && yabai -m space --focus recent
 # displays
 ctrl + cmd + alt - m : yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
 ctrl + cmd + alt + shift - m : ~/.config/yabai/send_space.sh
+# send just the focused window over, floating ones included
+ctrl + cmd + alt + shift - e : ~/.config/yabai/send_display.sh
 
 # layout
 ctrl + cmd + alt - b : yabai -m space --balance
@@ -45,7 +51,8 @@ ctrl + cmd + alt - u : yabai -m window --ratio rel:-0.05 || (yabai -m window --r
 # center a floating window at half size
 ctrl + cmd + alt - c : yabai -m window --grid 4:4:1:1:2:2
 
-ctrl + cmd + alt - f : yabai -m window --toggle float
+ctrl + cmd + alt - z : ~/.config/yabai/layer.sh
+ctrl + cmd + alt + shift - z : yabai -m window --toggle float
 ctrl + cmd + alt - s : yabai -m window --toggle sticky
 
 # stacks (disabled; re-enable by uncommenting)
