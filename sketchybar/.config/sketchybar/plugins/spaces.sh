@@ -100,15 +100,17 @@ while IFS= read -r -d '' a; do args+=("$a"); done < <(
 )
 [ ${#args[@]} -gt 0 ] && sketchybar "${args[@]}"
 
-# rebuild the bracket only when membership changes (avoids flicker)
+# rebuild the bracket whenever its real membership diverges from the desired list.
+# comparing against the live bracket (not a cached file) is self-healing: concurrent
+# runs from yabai_spaces_change + yabai_windows_change can create the bracket before
+# the other run has added a new item, and --add bracket silently drops missing names.
 desired=$(jq -r 'join(" ")' <<<"$desired_json")
-state="${TMPDIR:-/tmp}/sketchybar_spaces_members"
-old=$(cat "$state" 2>/dev/null || true)
-if [ "$desired" != "$old" ] || ! jq -e '.items | index("spaces")' <<<"$bar" >/dev/null; then
+current=$(sketchybar --query spaces 2>/dev/null \
+	| jq -r '.bracket // [] | join(" ")' 2>/dev/null || true)
+if [ "$desired" != "$current" ]; then
 	sketchybar --remove spaces 2>/dev/null
 	if [ -n "$desired" ]; then
 		# shellcheck disable=SC2086
 		sketchybar --add bracket spaces $desired --set spaces "${bracket[@]}"
 	fi
-	printf '%s' "$desired" >"$state"
 fi
