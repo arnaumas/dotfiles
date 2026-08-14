@@ -9,11 +9,15 @@ Companion to handoff. Reads a handoff checkpoint and reconstructs working contex
 
 ## Locate the Handoff
 
-Files in `.claude/checkpoints/` are named `yyyy-mm-ddTHH:mm.md`. List them with:
+Files in `/tmp/claude-checkpoints/` are named `yyyy-mm-ddTHH:mm.md`. List them with:
 
 ```bash
-ls -1 .claude/checkpoints/ | sort
+ls -1 /tmp/claude-checkpoints/ | sort
 ```
+
+`/tmp` is volatile: the directory may be missing or empty after a reboot. If so, say
+so once and stop. Checkpoints from all projects share this directory, so confirm the
+selected one matches the current repo before using it.
 
 Then select based on user input:
 

@@ -37,7 +37,18 @@
     "type": "command",
     "command": "sh ~/.config/claude/statusline-command.sh"
   },
+  "extraKnownMarketplaces": {
+    "simple-english": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/AminBlg/SimpleEnglish.git"
+      }
+    }
+  },
   "effortLevel": "medium",
   "theme": "auto",
-  "inputNeededNotifEnabled": true
+  "inputNeededNotifEnabled": true,
+  "enabledPlugins": {
+    "simple-english@simple-english": true
+  }
 }

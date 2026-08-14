@@ -26,7 +26,7 @@ git branch --show-current
 ```
 
 ## Output
-Generate a markdown file with the following structure. The name of the file should be a yyyy-mm-ddTHH:mm.md, and store it inside of the project .claude/checkpoints/ directory (create it if it does not exist).
+Generate a markdown file with the following structure. The name of the file should be a yyyy-mm-ddTHH:mm.md, and store it inside of `/tmp/claude-checkpoints/` (run `mkdir -p /tmp/claude-checkpoints` first if it does not exist).
 ```markdown
 # Session Handoff — [date] [time]
 
