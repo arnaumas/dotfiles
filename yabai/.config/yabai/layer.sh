@@ -1,12 +1,11 @@
 #!/usr/bin/env sh
-# skhd runs bindings under launchd PATH (no /opt/homebrew/bin), same as yabai signals.
-export PATH="/opt/homebrew/bin:$PATH"
+. "$HOME/.config/yabai/lib.sh"
 # toggle focus between the floating and the tiled windows of the current space.
 # directional focus only walks the bsp tree, so a floating window is otherwise
 # unreachable from the keyboard, and there is no way back out of one either.
 
-CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/yabai"
 mkdir -p "$CACHE"
+STATE="$CACHE/layer"
 
 windows=$(yabai -m query --windows --space)
 cur=$(printf '%s' "$windows" | jq -r '.[] | select(."has-focus") | .id')
@@ -24,11 +23,15 @@ targets=$(printf '%s' "$windows" | jq -r --argjson t "$to" \
 [ -z "$targets" ] && exit 0
 
 # remember where each side was left, so pressing again lands back on the same
-# window instead of on whichever one happens to come first
+# window instead of on whichever one happens to come first.
+# one file of "<space> <is-floating> <id>" lines; a file per space leaked on destroy.
 space=$(printf '%s' "$windows" | jq -r --argjson c "$cur" '.[] | select(.id == $c) | .space')
-printf '%s\n' "$cur" > "$CACHE/layer.$space.$from"
+touch "$STATE"
+want=$(awk -v s="$space" -v f="$to" '$1 == s && $2 == f { print $3 }' "$STATE")
+awk -v s="$space" -v f="$from" '!($1 == s && $2 == f)' "$STATE" > "$STATE.tmp"
+printf '%s %s %s\n' "$space" "$from" "$cur" >> "$STATE.tmp"
+mv "$STATE.tmp" "$STATE"
 
-want=$(cat "$CACHE/layer.$space.$to" 2>/dev/null)
 printf '%s\n' "$targets" | grep -qx "$want" || want=$(printf '%s\n' "$targets" | head -n1)
 
 yabai -m window --focus "$want"

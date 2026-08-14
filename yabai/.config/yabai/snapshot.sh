@@ -1,21 +1,24 @@
 #!/usr/bin/env sh
-# launchd PATH lacks /opt/homebrew/bin
-export PATH="/opt/homebrew/bin:$PATH"
+. "$HOME/.config/yabai/lib.sh"
 # Mirror the external display's space layout to disk; on_display_removed.sh
 # replays it (macOS destroys the spaces before yabai can read them).
 
-CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/yabai"
 FILE="$CACHE/layout.json"
 
 displays=$(yabai -m query --displays)
 # with <2 displays the external is gone; writing would clobber the snapshot
 [ "$(printf '%s' "$displays" | jq 'length')" -lt 2 ] && exit 0
 
-ext=$(printf '%s' "$displays" | jq -r '[.[] | select(.frame.x != 0 or .frame.y != 0)][0].index')
-[ -z "$ext" ] || [ "$ext" = "null" ] && exit 0
+main=$(yabai_main_index "$displays")
+case "$main" in ''|null) exit 0 ;; esac
+ext=$(yabai_other_index "$displays" "$main")
+case "$ext" in ''|null) exit 0 ;; esac
 
-# external spaces in order, each an array of window ids
-layout=$(yabai -m query --spaces --display "$ext" | jq -c '[.[] | .windows]')
+# external spaces in order, each an array of window ids. Hidden scratchpads sit in a
+# space's window list but belong to no space; recording one drags it into a rebuilt space.
+keep=$(yabai -m query --windows | jq -c '[.[] | select(.scratchpad == "") | .id]')
+layout=$(yabai -m query --spaces --display "$ext" | jq -c --argjson keep "$keep" \
+	'[.[] | [.windows[] | select(IN($keep[]))]]')
 
 mkdir -p "$CACHE"
 printf '%s\n' "$layout" > "$FILE"

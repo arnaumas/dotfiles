@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-export PATH="/opt/homebrew/bin:$PATH"
+. "$HOME/.config/yabai/lib.sh"
 dir="$1"
 
 # 1. reposition within the current display

@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
-# yabai runs signal/script actions under launchd PATH (no /opt/homebrew/bin),
-# so yabai/jq/osascript are not found unless we add it here.
-export PATH="/opt/homebrew/bin:$PATH"
+. "$HOME/.config/yabai/lib.sh"
 
 # Per-display auto-padding, two independent concerns.
 #
@@ -28,16 +26,28 @@ BASE=8
 ANCHOR=46
 SECONDARY=14
 
+MBFILE="$CACHE/menubar"
+
 # menu-bar height per display, keyed by CGDirectDisplayID (== yabai display .id).
 # NSScreen.frame vs .visibleFrame differ by the menu bar at the top edge (and the
 # taller notch reservation); the top-edge delta is exactly what we want.
-MB=$(osascript -l JavaScript -e '
-ObjC.import("AppKit");
-$.NSScreen.screens.js.map(s => {
-  const id = s.deviceDescription.objectForKey($("NSScreenNumber")).unsignedIntValue;
-  const f = s.frame, v = s.visibleFrame;
-  return id + " " + Math.round((f.origin.y + f.size.height) - (v.origin.y + v.size.height));
-}).join("\n")')
+# ~80ms of the ~130ms total, and only display geometry changes it: cached, and only
+# yabairc's display signals pass --refresh.
+if [ "$1" = "--refresh" ] || [ ! -s "$MBFILE" ]; then
+	mkdir -p "$CACHE"
+	out=$(osascript -l JavaScript -e '
+	ObjC.import("AppKit");
+	$.NSScreen.screens.js.map(s => {
+	  const id = s.deviceDescription.objectForKey($("NSScreenNumber")).unsignedIntValue;
+	  const f = s.frame, v = s.visibleFrame;
+	  return id + " " + Math.round((f.origin.y + f.size.height) - (v.origin.y + v.size.height));
+	}).join("\n")')
+	# never clobber a good cache with a failed measurement
+	[ -n "$out" ] && printf '%s\n' "$out" > "$MBFILE"
+fi
+MB=$(cat "$MBFILE" 2>/dev/null)
+# no heights would make every display look secondary; leave padding alone instead
+[ -z "$MB" ] && exit 0
 
 displays=$(yabai -m query --displays)
 wins=$(yabai -m query --windows)
@@ -46,7 +56,7 @@ wide=$(printf '%s' "$displays" | jq -r ".[] | select(.frame.w==$W) | .index")
 yabai -m query --spaces | jq -r '.[] | "\(.index) \(.display)"' | while read -r sid did; do
 	# top: main display scales with its menu-bar height; secondary uses a constant
 	id=$(printf '%s' "$displays" | jq -r ".[] | select(.index==$did) | .id")
-	mb=$(printf '%s\n' "$MB" | while read -r mid mh; do [ "$mid" = "$id" ] && echo "$mh"; done)
+	mb=$(printf '%s\n' "$MB" | awk -v id="$id" '$1 == id { print $2 }')
 	if [ -n "$mb" ] && [ "$mb" -gt 0 ]; then
 		top=$(( ANCHOR - mb ))
 	else

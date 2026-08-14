@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
-# skhd runs bindings under launchd PATH (no /opt/homebrew/bin), same as yabai signals.
-export PATH="/opt/homebrew/bin:$PATH"
+. "$HOME/.config/yabai/lib.sh"
 # send the focused window to the other display and follow it.
 # hyper + shift - m sends the whole space; this sends just the window.
 
@@ -10,8 +9,8 @@ displays=$(yabai -m query --displays)
 win=$(yabai -m query --windows --window) || exit 0
 [ -z "$win" ] && exit 0
 
-cur=$(printf '%s' "$displays" | jq -r '.[] | select(."has-focus") | .index')
-target=$(printf '%s' "$displays" | jq -r --argjson c "$cur" '[.[] | select(.index != $c)] | first | .index')
+cur=$(yabai_focused_index "$displays")
+target=$(yabai_other_index "$displays" "$cur")
 
 if [ "$(printf '%s' "$win" | jq -r '."is-floating"')" != "true" ]; then
 	# warp.sh leaves window_insertion_point/window_placement set to whatever the

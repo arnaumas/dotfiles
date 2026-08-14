@@ -1,14 +1,12 @@
 #!/usr/bin/env sh
-# yabai runs signal/script actions under launchd PATH (no /opt/homebrew/bin),
-# so yabai/jq are not found unless we add it here.
-export PATH="/opt/homebrew/bin:$PATH"
+. "$HOME/.config/yabai/lib.sh"
 # send the focused space to the other display and follow it there.
 
 displays=$(yabai -m query --displays)
 [ "$(printf '%s' "$displays" | jq 'length')" -lt 2 ] && exit 0
 
-cur=$(printf '%s' "$displays" | jq -r '.[] | select(.["has-focus"]) | .index')
-target=$(printf '%s' "$displays" | jq -r --argjson c "$cur" '[.[] | select(.index != $c)] | first | .index')
+cur=$(yabai_focused_index "$displays")
+target=$(yabai_other_index "$displays" "$cur")
 
 # yabai refuses to move a display's last space, so leave a fresh one behind
 [ "$(yabai -m query --spaces --display "$cur" | jq 'length')" -eq 1 ] && yabai -m space --create

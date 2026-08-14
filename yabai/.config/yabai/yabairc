@@ -56,10 +56,15 @@ yabai -m signal --add event=window_created action='
 '
 
 PADDING="$HOME/.config/yabai/padding.sh"
-for ev in window_created window_destroyed space_created space_changed display_changed; do
+# --refresh re-measures the cached menu-bar heights (~80ms); only display geometry
+# changes them. display_added/removed are absent: their handlers call it themselves.
+for ev in window_created window_destroyed space_created space_changed; do
 	yabai -m signal --add event=$ev action="$PADDING"
 done
-"$PADDING"
+for ev in display_changed display_moved display_resized; do
+	yabai -m signal --add event=$ev action="$PADDING --refresh"
+done
+"$PADDING" --refresh
 
 # mirror the external layout to disk; replay it on unplug (see the scripts)
 SNAPSHOT="$HOME/.config/yabai/snapshot.sh"
@@ -67,6 +72,7 @@ for ev in window_created window_destroyed space_created space_destroyed space_ch
 	yabai -m signal --add event=$ev action="$SNAPSHOT"
 done
 yabai -m signal --add event=display_removed action="$HOME/.config/yabai/on_display_removed.sh"
+yabai -m signal --add event=display_added   action="$HOME/.config/yabai/on_display_added.sh"
 "$SNAPSHOT"
 
 # sketchybar mirrors yabai's spaces/windows
@@ -76,6 +82,6 @@ yabai -m signal --add event=space_created              action="sketchybar --trig
 yabai -m signal --add event=space_destroyed            action="sketchybar --trigger yabai_spaces_change"
 yabai -m signal --add event=window_created             action="sketchybar --trigger yabai_windows_change"
 yabai -m signal --add event=window_destroyed           action="sketchybar --trigger yabai_windows_change"
-yabai -m signal --add event=application_front_switched action="sketchybar --trigger yabai_windows_change"
+# no application_front_switched: it changes nothing the bar draws, and fired constantly
 
 borders &

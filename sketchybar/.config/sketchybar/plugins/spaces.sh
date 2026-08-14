@@ -3,6 +3,27 @@
 CONFIG="$HOME/.config/sketchybar"
 source "$CONFIG/style.sh"
 
+# Serialized: a run that finds the lock taken leaves a marker and exits, and the holder
+# re-runs for it. Otherwise a slow copy (1.5s+ during a display teardown, against 70ms
+# idle) finishes last and overwrites a newer render with its stale snapshot.
+LOCK="${TMPDIR:-/tmp}/sketchybar_spaces.lock"
+PENDING="${TMPDIR:-/tmp}/sketchybar_spaces.pending"
+
+: >"$PENDING"
+if ! mkdir "$LOCK" 2>/dev/null; then
+	# reclaim a lock orphaned by a killed run
+	if [ -n "$(find "$LOCK" -maxdepth 0 -mmin +1 2>/dev/null)" ]; then
+		rmdir "$LOCK" 2>/dev/null
+		mkdir "$LOCK" 2>/dev/null || exit 0
+	else
+		exit 0
+	fi
+fi
+trap 'rmdir "$LOCK" 2>/dev/null' EXIT INT TERM
+
+# clear before querying yabai: anything arriving from here on must force another pass
+rm -f "$PENDING"
+
 spaces=$(yabai -m query --spaces)
 windows=$(yabai -m query --windows)
 bar=$(sketchybar --query bar)
@@ -28,8 +49,10 @@ icons='{
 
 # desired item list, in display order: a "|" separator before the first space of each new
 # display. Drives the adds, removals, --reorder and the bracket.
+# Within a display: unlabelled spaces first, then labelled, each by index. Display stays
+# the primary key so the groups remain contiguous for the separator walk.
 desired_json=$(jq -c '
-	[ .[] ] as $sp
+	sort_by(.display, ((.label // "") != ""), .index) as $sp
 	| [ range(0; $sp|length) as $k
 			| (if $k > 0 and $sp[$k].display != $sp[$k-1].display
 				then ["space.sep.\($sp[$k].display)"] else [] end)
@@ -55,6 +78,8 @@ while IFS= read -r -d '' a; do args+=("$a"); done < <(
 			| map({ (.[0].space|tostring):
 				(map(.app | gsub("\\p{Cf}"; "")) | sort | map($icons[.] // "󰣆")) })
 			| add // {} ) as $byspace
+		# desired_json order: the rounded end padding goes on the visually first/last item
+		| ($spaces | sort_by(.display, ((.label // "") != ""), .index)) as $ord
 		| ( [ $desired[]
 				| select(startswith("space.sep.")) as $sep
 				| select(($existing | index($sep)) | not)
@@ -86,8 +111,8 @@ while IFS= read -r -d '' a; do args+=("$a"); done < <(
 						end
 					),
 					"--set",$name,"label=\($text)",
-					"padding_left=\(if .index ==$spaces[0].index then 4 else 1 end)",
-					"padding_right=\(if .index ==$spaces[-1].index then 4 else 1 end)",
+					"padding_left=\(if .index == $ord[0].index then 4 else 1 end)",
+					"padding_right=\(if .index == $ord[-1].index then 4 else 1 end)",
 					( if .["has-focus"] then "background.drawing=on","background.color=\($hl)"
 						elif .["is-visible"] then "background.drawing=on","background.color=\($bg)"
 						else "background.drawing=off" end )
@@ -100,10 +125,9 @@ while IFS= read -r -d '' a; do args+=("$a"); done < <(
 )
 [ ${#args[@]} -gt 0 ] && sketchybar "${args[@]}"
 
-# rebuild the bracket whenever its real membership diverges from the desired list.
-# comparing against the live bracket (not a cached file) is self-healing: concurrent
-# runs from yabai_spaces_change + yabai_windows_change can create the bracket before
-# the other run has added a new item, and --add bracket silently drops missing names.
+# rebuild when the live bracket diverges from the desired list. Comparing against the
+# bracket itself, not a cached file, self-heals: --add bracket silently drops names of
+# items that do not exist yet.
 desired=$(jq -r 'join(" ")' <<<"$desired_json")
 current=$(sketchybar --query spaces 2>/dev/null \
 	| jq -r '.bracket // [] | join(" ")' 2>/dev/null || true)
@@ -113,4 +137,13 @@ if [ "$desired" != "$current" ]; then
 		# shellcheck disable=SC2086
 		sketchybar --add bracket spaces $desired --set spaces "${bracket[@]}"
 	fi
+fi
+
+# requests that arrived while we rendered get a fresh pass, capped so an event storm
+# cannot recurse without bound
+if [ -e "$PENDING" ] && [ "${SP_DEPTH:-0}" -lt 5 ]; then
+	export SP_DEPTH=$((${SP_DEPTH:-0} + 1))
+	rmdir "$LOCK" 2>/dev/null
+	trap - EXIT INT TERM
+	exec "$0"
 fi
