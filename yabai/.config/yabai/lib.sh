@@ -3,6 +3,8 @@
 export PATH="/opt/homebrew/bin:$PATH"
 
 CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/yabai"
+# display count the bar is allowed to draw; sketchybar's spaces plugin freezes on mismatch
+GATE="$CACHE/bar_displays"
 
 # helpers take `yabai -m query --displays` output as $1, so callers query once
 

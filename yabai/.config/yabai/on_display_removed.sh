@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 . "$HOME/.config/yabai/lib.sh"
-# Replay snapshot.sh's layout onto the main display: one new space per recorded
-# external space, windows sorted back in. macOS has already dumped them onto one
-# main space. Reconnect is left to macOS.
+# macOS merges the external's windows into a main space; give them their own spaces back
+# and leave on_display_added.sh a restore file naming both uuids.
 
 FILE="$CACHE/layout.json"
+RESTORE="$CACHE/restore.json"
 PADDING="$HOME/.config/yabai/padding.sh"
 
 # signal actions discard output; keep the last run's trace for debugging
@@ -15,31 +15,63 @@ set -x
 
 [ -f "$FILE" ] || exit 0
 layout=$(cat "$FILE")
-n=$(printf '%s' "$layout" | jq 'length')
+n=$(printf '%s' "$layout" | jq '.ext | length')
 [ "$n" -gt 0 ] || exit 0
 
-# let yabai re-register the dumped windows first
+# let yabai re-register the merged windows first
 sleep 0.3
 
-# --create appends to the focused space's display; make it main
+# --create appends to the focused display
 main=$(yabai_main_index "$(yabai -m query --displays)")
 yabai -m display --focus "$main" 2>/dev/null
 
+rebuilt='[]'
 i=0
-moved=0
 while [ "$i" -lt "$n" ]; do
-	ids=$(printf '%s' "$layout" | jq -r ".[$i][]")
+	space=$(printf '%s' "$layout" | jq -c ".ext[$i]")
 	i=$((i + 1))
-	[ -z "$ids" ] && continue   # empty space: nothing to regroup
+	u=$(printf '%s' "$space" | jq -r .uuid)
 
-	yabai -m space --create
-	sid=$(yabai -m query --spaces --display "$main" | jq -r '.[-1].index')
-	for w in $ids; do
-		yabai -m window "$w" --space "$sid" 2>/dev/null && moved=1
+	# survivor: macOS carried the whole space over, windows included
+	if yabai -m query --spaces | jq -e --arg u "$u" 'any(.[].uuid; . == $u)' >/dev/null; then
+		rebuilt=$(printf '%s' "$rebuilt" | jq -c --argjson s "$space" \
+			'. + [{orig: $s.uuid, uuid: $s.uuid, windows: $s.windows}]')
+		continue
+	fi
+
+	yabai -m space --create || continue
+	last=$(yabai -m query --spaces --display "$main" | jq -c '.[-1]')
+	sid=$(printf '%s' "$last" | jq -r .index)
+	for w in $(printf '%s' "$space" | jq -r '.windows[]'); do
+		yabai -m window "$w" --space "$sid" 2>/dev/null
 	done
+	rebuilt=$(printf '%s' "$rebuilt" | jq -c --argjson s "$space" \
+		--arg u "$(printf '%s' "$last" | jq -r .uuid)" \
+		'. + [{orig: $s.uuid, uuid: $u, windows: $s.windows}]')
 done
+
+# survivors land wherever macOS dropped them; walk the external's order into the tail of main
+cnt=$(printf '%s' "$rebuilt" | jq 'length')
+k=0
+for u in $(printf '%s' "$rebuilt" | jq -r '.[].uuid'); do
+	k=$((k + 1))
+	spaces=$(yabai -m query --spaces --display "$main")
+	total=$(printf '%s' "$spaces" | jq 'length')
+	want=$((total - cnt + k))
+	[ "$want" -lt 1 ] && continue
+	at=$(printf '%s' "$spaces" | jq -r --arg u "$u" 'to_entries[] | select(.value.uuid == $u) | .key + 1')
+	[ -z "$at" ] && continue
+	[ "$at" -eq "$want" ] && continue
+	idx=$(printf '%s' "$spaces" | jq -r --arg u "$u" '.[] | select(.uuid == $u) | .index')
+	target=$(printf '%s' "$spaces" | jq -r --argjson w "$want" '.[$w - 1].index')
+	[ -n "$target" ] && yabai -m space "$idx" --move "$target"
+done
+
+# own file: snapshot.sh rewrites layout.json the moment the display returns
+printf '%s' "$layout" | jq -c --argjson e "$rebuilt" '.ext = $e' > "$RESTORE"
 
 "$PADDING" --refresh
 
-# window --space fires no yabai signal; only tell the bar if something actually moved
-[ "$moved" -eq 1 ] && sketchybar --trigger yabai_spaces_change 2>/dev/null
+# the bar is frozen until the count matches again: unfreeze, then draw once
+yabai -m query --displays | jq 'length' > "$GATE"
+sketchybar --trigger yabai_spaces_change 2>/dev/null

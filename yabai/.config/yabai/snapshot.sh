@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 . "$HOME/.config/yabai/lib.sh"
-# Mirror the external display's space layout to disk; on_display_removed.sh
-# replays it (macOS destroys the spaces before yabai can read them).
+# record space uuids per display; on_display_added.sh restores the external's
 
 FILE="$CACHE/layout.json"
 
@@ -14,11 +13,14 @@ case "$main" in ''|null) exit 0 ;; esac
 ext=$(yabai_other_index "$displays" "$main")
 case "$ext" in ''|null) exit 0 ;; esac
 
-# external spaces in order, each an array of window ids. Hidden scratchpads sit in a
-# space's window list but belong to no space; recording one drags it into a rebuilt space.
+# scratchpads sit in a space's window list but belong to no space
 keep=$(yabai -m query --windows | jq -c '[.[] | select(.scratchpad == "") | .id]')
-layout=$(yabai -m query --spaces --display "$ext" | jq -c --argjson keep "$keep" \
-	'[.[] | [.windows[] | select(IN($keep[]))]]')
+layout=$(yabai -m query --spaces | jq -c --argjson keep "$keep" \
+	--argjson main "$main" --argjson ext "$ext" '{
+		ext: [.[] | select(.display == $ext)
+			| {uuid, windows: [.windows[] | select(IN($keep[]))]}],
+		main: [.[] | select(.display == $main) | .uuid]
+	}')
 
 mkdir -p "$CACHE"
 printf '%s\n' "$layout" > "$FILE"

@@ -3,6 +3,13 @@
 CONFIG="$HOME/.config/sketchybar"
 source "$CONFIG/style.sh"
 
+# freeze mid display change: yabai's handlers write the count they finished rebuilding for
+GATE="${XDG_CACHE_HOME:-$HOME/.cache}/yabai/bar_displays"
+if [ -f "$GATE" ] \
+	&& [ "$(yabai -m query --displays | jq 'length')" != "$(cat "$GATE")" ]; then
+	exit 0
+fi
+
 # Serialized: a run that finds the lock taken leaves a marker and exits, and the holder
 # re-runs for it. Otherwise a slow copy (1.5s+ during a display teardown, against 70ms
 # idle) finishes last and overwrites a newer render with its stale snapshot.

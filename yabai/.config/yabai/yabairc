@@ -1,4 +1,7 @@
 # set ft=sh
+. "$HOME/.config/yabai/lib.sh"
+mkdir -p "$CACHE"
+yabai -m query --displays | jq 'length' > "$GATE"
 
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa; yabai -m config window_shadow float"
 sudo yabai --load-sa
@@ -76,12 +79,12 @@ yabai -m signal --add event=display_added   action="$HOME/.config/yabai/on_displ
 "$SNAPSHOT"
 
 # sketchybar mirrors yabai's spaces/windows
-yabai -m signal --add event=space_changed              action="sketchybar --trigger yabai_spaces_change"
-yabai -m signal --add event=display_changed            action="sketchybar --trigger yabai_spaces_change"
-yabai -m signal --add event=space_created              action="sketchybar --trigger yabai_spaces_change"
-yabai -m signal --add event=space_destroyed            action="sketchybar --trigger yabai_spaces_change"
-yabai -m signal --add event=window_created             action="sketchybar --trigger yabai_windows_change"
-yabai -m signal --add event=window_destroyed           action="sketchybar --trigger yabai_windows_change"
+for ev in space_changed display_changed space_created space_destroyed; do
+	yabai -m signal --add event=$ev action="sketchybar --trigger yabai_spaces_change"
+done
+for ev in window_created window_destroyed; do
+	yabai -m signal --add event=$ev action="sketchybar --trigger yabai_windows_change"
+done
 # no application_front_switched: it changes nothing the bar draws, and fired constantly
 
 borders &
