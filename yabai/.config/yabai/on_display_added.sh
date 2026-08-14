@@ -4,7 +4,6 @@
 # no restore file => first attach: hand it main's last space instead.
 
 FILE="$CACHE/layout.json"
-RESTORE="$CACHE/restore.json"
 PADDING="$HOME/.config/yabai/padding.sh"
 SNAPSHOT="$HOME/.config/yabai/snapshot.sh"
 
@@ -12,6 +11,7 @@ SNAPSHOT="$HOME/.config/yabai/snapshot.sh"
 mkdir -p "$CACHE"
 exec >"$CACHE/display_added.log" 2>&1
 echo "=== $(date '+%F %T') display_added"
+trap yabai_unfreeze EXIT INT TERM
 set -x
 
 # display_added can beat macOS to creating the space: poll instead of guessing a sleep
@@ -158,7 +158,5 @@ case "$focused" in ''|null) ;; *) yabai -m display --focus "$focused" 2>/dev/nul
 "$PADDING" --refresh
 "$SNAPSHOT"
 
-# the bar is frozen until the count matches again: unfreeze, then draw once
-yabai -m query --displays | jq 'length' > "$GATE"
-sketchybar --trigger yabai_spaces_change 2>/dev/null
+# the trap unfreezes the bar and draws once
 exit 0

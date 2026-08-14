@@ -4,14 +4,21 @@
 # and leave on_display_added.sh a restore file naming both uuids.
 
 FILE="$CACHE/layout.json"
-RESTORE="$CACHE/restore.json"
 PADDING="$HOME/.config/yabai/padding.sh"
 
 # signal actions discard output; keep the last run's trace for debugging
 mkdir -p "$CACHE"
 exec >"$CACHE/display_removed.log" 2>&1
 echo "=== $(date '+%F %T') display_removed"
+trap yabai_unfreeze EXIT INT TERM
 set -x
+
+# the end state is known: one display, so the separators go. Drawing it now means the bar
+# settles immediately instead of after the rebuild.
+for it in $(sketchybar --query bar 2>/dev/null \
+	| jq -r '.items[] | select(startswith("space.sep."))'); do
+	sketchybar --remove "$it" 2>/dev/null
+done
 
 [ -f "$FILE" ] || exit 0
 layout=$(cat "$FILE")
@@ -71,7 +78,4 @@ done
 printf '%s' "$layout" | jq -c --argjson e "$rebuilt" '.ext = $e' > "$RESTORE"
 
 "$PADDING" --refresh
-
-# the bar is frozen until the count matches again: unfreeze, then draw once
-yabai -m query --displays | jq 'length' > "$GATE"
-sketchybar --trigger yabai_spaces_change 2>/dev/null
+# the trap unfreezes the bar and draws once

@@ -5,6 +5,14 @@ export PATH="/opt/homebrew/bin:$PATH"
 CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/yabai"
 # display count the bar is allowed to draw; sketchybar's spaces plugin freezes on mismatch
 GATE="$CACHE/bar_displays"
+# pending restore, in tmp: a reboot invalidates the window ids and uuids it names
+RESTORE="${TMPDIR:-/tmp}/yabai_restore.json"
+
+# let the bar draw again, once, whatever exit path got us here
+yabai_unfreeze() {
+	yabai -m query --displays | jq 'length' > "$GATE"
+	sketchybar --trigger yabai_spaces_change 2>/dev/null
+}
 
 # helpers take `yabai -m query --displays` output as $1, so callers query once
 
