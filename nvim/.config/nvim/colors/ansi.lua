@@ -58,6 +58,7 @@ local groups = {
 	QuickFixLine = { bg = bg, bold = true },
 	ErrorMsg = { fg = red }, WarningMsg = { fg = yellow }, ModeMsg = { fg = dim_fg }, MoreMsg = { fg = green },
 	Question = { fg = green }, MsgSeparator = { fg = dim_fg },
+	NormalFloat = { bg = dim_bg },
 	FloatBorder = { fg = dim_fg }, FloatTitle = { fg = accent, bold = true },
 	WildMenu = { fg = fg, bg = accent_bg, bold = true },
 	SpellBad = { undercurl = true }, SpellCap = { undercurl = true },
@@ -129,7 +130,7 @@ local groups = {
 	DiffAdd = { fg = green }, DiffChange = { fg = yellow }, DiffDelete = { fg = red }, DiffText = { fg = fg, bg = blue_bg },
 	MiniDiffSignAdd = { fg = green }, MiniDiffSignChange = { fg = yellow }, MiniDiffSignDelete = { fg = red },
 
-	-- mini.pick / files / notify / icons
+	-- files / notify / icons
 	MiniFilesBorder = { fg = dim_fg }, MiniFilesBorderModified = { fg = yellow },
 	MiniFilesTitle = { fg = dim_fg }, MiniFilesTitleFocused = { fg = accent, bold = true },
 	MiniFilesDirectory = { fg = blue }, MiniFilesCursorLine = { bg = bg },
@@ -137,6 +138,10 @@ local groups = {
 	MiniIconsAzure = { fg = blue }, MiniIconsBlue = { fg = blue }, MiniIconsCyan = { fg = cyan },
 	MiniIconsGreen = { fg = green }, MiniIconsGrey = { fg = dim_fg }, MiniIconsOrange = { fg = yellow },
 	MiniIconsPurple = { fg = magenta }, MiniIconsRed = { fg = red }, MiniIconsYellow = { fg = yellow },
+
+	-- fzf-lua
+	FzfLuaNormal = { fg = fg, bg = dim_bg },
+	FzfLuaPreviewBorder = { fg = dim_fg, bg = dim_bg },
 
 	-- blink.cmp
 	BlinkCmpMenuBorder = { fg = dim_fg }, BlinkCmpScrollBarThumb = { bg = dim_fg }, BlinkCmpScrollBarGutter = { bg = bg },
@@ -181,7 +186,7 @@ local links = {
 	texStyleBoldUnder = 'Normal', texStyleItalUnder = 'Normal', texStyleBoldItalUnder = 'Normal',
 	texStyleArgConc = 'Normal',
 	texOpt = 'Normal', texEnvOpt = 'Normal', texRefConcealedOpt1 = 'Normal',
-	NormalFloat = 'Normal', MsgArea = 'Normal',
+	MsgArea = 'Normal',
 	DiagnosticSignError = 'DiagnosticError', DiagnosticSignWarn = 'DiagnosticWarn',
 	DiagnosticSignInfo = 'DiagnosticInfo', DiagnosticSignHint = 'DiagnosticHint',
 	DiagnosticVirtualTextError = 'DiagnosticError', DiagnosticVirtualTextWarn = 'DiagnosticWarn',

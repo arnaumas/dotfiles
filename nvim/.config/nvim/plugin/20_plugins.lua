@@ -18,8 +18,35 @@ require('mini.git').setup()
 -- <--
 -- fzf-lua -->
 local fzf_lua = require('fzf-lua')
-fzf_lua.setup({})
+fzf_lua.setup({
+	winopts = {
+		border = "none",
+		preview = { border = "border-top", title = false, scrollbar = false }
+	},
+	fzf_colors = {
+		['fg']     = { 'fg', 'FzfLuaNormal' },
+		['bg']     = { 'bg', 'FzfLuaNormal' },
+		['query']  = { 'fg', 'FzfLuaNormal' },
+		['fg+']    = { 'fg', 'PmenuSel', 'bold' },
+		['bg+']    = { 'bg', 'PmenuSel' },
+		['gutter'] = { 'bg', 'FzfLuaNormal' },
+	},
+	hls = {
+		normal         = 'FzfLuaNormal',
+		border         = 'FzfLuaNormal',
+		preview_normal = 'FzfLuaNormal',
+		preview_border = 'FzfLuaPreviewBorder',
+	},
+	files      = { prompt = 'files > ' },
+	buffers    = { prompt = 'buffers > ' },
+	grep       = { prompt = 'grep > ' },   -- covers live_grep
+	helptags   = { prompt = 'help > ' },
+	highlights = { prompt = 'highlights > ' },
+	blines     = { prompt = 'lines > ' },
+	lines      = { prompt = 'all lines > ' },
+})
 fzf_lua.register_ui_select()
+
 -- <--
 
 -- mini.icons -->
