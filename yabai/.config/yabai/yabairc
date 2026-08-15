@@ -48,8 +48,11 @@ yabai -m rule --add app="^Ghostty$" title="^scratchpad$" scratchpad=ghostty
 yabai -m rule --add app="WhatsApp"                       scratchpad=whatsapp
 yabai -m rule --add app="^Música$"                       scratchpad=music
 yabai -m signal --add event=window_title_changed app="^JabRef$" action='
-  title="$(yabai -m query --windows --window $YABAI_WINDOW_ID | jq -r .title)"
-  [ "$title" = "New entry" ] && yabai -m window $YABAI_WINDOW_ID --toggle float
+  . "$HOME/.config/yabai/lib.sh"
+  main=$(yabai -m query --windows | jq "[.[] | select(.app == \"JabRef\") | .id] | min")
+  [ "$YABAI_WINDOW_ID" = "$main" ] && exit
+  yabai -m query --windows --window "$YABAI_WINDOW_ID" | jq -e ".\"is-floating\"" >/dev/null && exit
+  yabai -m window "$YABAI_WINDOW_ID" --toggle float --grid 6:6:1:1:4:4
 '
 
 # float child window
