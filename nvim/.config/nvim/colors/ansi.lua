@@ -58,7 +58,7 @@ local groups = {
 	QuickFixLine = { bg = bg, bold = true },
 	ErrorMsg = { fg = red }, WarningMsg = { fg = yellow }, ModeMsg = { fg = dim_fg }, MoreMsg = { fg = green },
 	Question = { fg = green }, MsgSeparator = { fg = dim_fg },
-	NormalFloat = { bg = dim_bg },
+	NormalFloat = { fg = fg, bg = dim_bg },
 	FloatBorder = { fg = dim_fg }, FloatTitle = { fg = accent, bold = true },
 	WildMenu = { fg = fg, bg = accent_bg, bold = true },
 	SpellBad = { undercurl = true }, SpellCap = { undercurl = true },
@@ -134,7 +134,7 @@ local groups = {
 	MiniFilesBorder = { fg = dim_fg }, MiniFilesBorderModified = { fg = yellow },
 	MiniFilesTitle = { fg = dim_fg }, MiniFilesTitleFocused = { fg = accent, bold = true },
 	MiniFilesDirectory = { fg = blue }, MiniFilesCursorLine = { bg = bg },
-	MiniNotifyNormal = {}, MiniNotifyBorder = { fg = dim_fg }, MiniNotifyTitle = { fg = accent, bold = true },
+	MiniNotifyTitle = { fg = accent, bold = true },
 	MiniIconsAzure = { fg = blue }, MiniIconsBlue = { fg = blue }, MiniIconsCyan = { fg = cyan },
 	MiniIconsGreen = { fg = green }, MiniIconsGrey = { fg = dim_fg }, MiniIconsOrange = { fg = yellow },
 	MiniIconsPurple = { fg = magenta }, MiniIconsRed = { fg = red }, MiniIconsYellow = { fg = yellow },
@@ -193,6 +193,7 @@ local links = {
 	DiagnosticVirtualTextInfo = 'DiagnosticInfo', DiagnosticVirtualTextHint = 'DiagnosticHint',
 	DiagnosticFloatingError = 'DiagnosticError', DiagnosticFloatingWarn = 'DiagnosticWarn',
 	DiagnosticFloatingInfo = 'DiagnosticInfo', DiagnosticFloatingHint = 'DiagnosticHint',
+	MiniNotifyNormal = 'NormalFloat',
 	BlinkCmpMenu = 'Pmenu', BlinkCmpMenuSelection = 'PmenuSel', BlinkCmpDoc = 'Pmenu', BlinkCmpSignatureHelp = 'Pmenu',
 }
 for from, to in pairs(links) do link(from, to) end

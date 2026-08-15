@@ -45,7 +45,7 @@ fzf_lua.setup({
 	blines     = { prompt = 'lines > ' },
 	lines      = { prompt = 'all lines > ' },
 })
-fzf_lua.register_ui_select()
+fzf_lua.register_ui_select(nil,true)
 
 -- <--
 
@@ -69,12 +69,54 @@ local notify = require('mini.notify')
 local win_config = function()
 	local has_statusline = vim.o.laststatus > 0
 	local pad = vim.o.cmdheight + (has_statusline and 1 or 0)
-	return { anchor = 'SE', col = vim.o.columns, row = vim.o.lines - pad }
+	return { anchor = 'SE', col = vim.o.columns, row = vim.o.lines - pad, border = 'none' }
 end
+
+-- '● │ msg' in the popup, '● │ HH:MM:SS │ msg' in the history buffer.
+-- The dot is colored per level; mini highlights whole lines only, so the dot
+-- gets a higher-priority ephemeral extmark (see the decoration provider below).
+local dot, dot_ns = '●', vim.api.nvim_create_namespace('mini-notify-dot')
+local dot_hl = { ERROR = 'DiagnosticError', WARN = 'DiagnosticWarn', INFO = 'DiagnosticInfo',
+	DEBUG = 'DiagnosticHint', TRACE = 'DiagnosticOk', OFF = 'MiniNotifyNormal' }
+local line_hl, in_history = {}, false
+local format = function(notif)
+	local msg = notif.msg
+	if in_history then
+		msg = vim.fn.strftime('%H:%M:%S', math.floor(notif.ts_update)) .. ' ' .. msg
+	end
+	local res = ' ' .. dot .. ' ' .. msg
+	line_hl[vim.split(res, '\n')[1]] = dot_hl[notif.level] or dot_hl.INFO
+	return res
+end
+vim.api.nvim_set_decoration_provider(dot_ns, {
+	on_win = function(_, _, buf) return vim.bo[buf].filetype:find('^mininotify') ~= nil end,
+	on_line = function(_, _, buf, row)
+		local line = vim.api.nvim_buf_get_lines(buf, row, row + 1, false)[1]
+		local hl = line ~= nil and line_hl[line] or nil
+		if hl == nil then return end
+		vim.api.nvim_buf_set_extmark(buf, dot_ns, row, 1,
+			{ end_col = 1 + #dot, hl_group = hl, priority = 5000, ephemeral = true })
+	end,
+})
+
 -- lsp_progress off: lualine owns the LSP loading indicator (see lualine block).
 -- mini.notify stays as the general vim.notify backend.
-notify.setup({ window = { config = win_config, winblend = 0 }, lsp_progress = { enable = false } })
-vim.notify = notify.make_notify()
+notify.setup({
+	content = { format = format },
+	window = { config = win_config, winblend = 0 },
+	lsp_progress = { enable = false },
+})
+-- Levels keep the body at normal float colors; the level shows in the dot.
+local plain = { hl_group = 'MiniNotifyNormal' }
+vim.notify = notify.make_notify({
+	ERROR = plain, WARN = plain, INFO = plain, DEBUG = plain, TRACE = plain, OFF = plain,
+})
+-- show_history() reuses `format`, hence the flag (it is synchronous).
+vim.api.nvim_create_user_command('Notifications', function()
+	in_history = true
+	notify.show_history()
+	in_history = false
+end, { desc = 'mini.notify history' })
 -- <--
 -- lualine -->
 local theme = {
