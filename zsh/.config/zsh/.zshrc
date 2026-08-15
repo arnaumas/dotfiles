@@ -64,6 +64,8 @@ _comp_options+=(globdots)                  # autocomplete hidden files
 zstyle ':completion:*' list-colors \
   'di=34' 'ln=35' 'so=32' 'pi=33' 'ex=31' \
   'bd=34;46' 'cd=34;43' 'su=30;41' 'sg=30;46' 'tw=30;42' 'ow=30;43'
+export LS_COLORS='rs=0:no=0:fi=0:di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
+
 # group candidates by type, with headers fzf-tab can show/switch between
 # zstyle ':completion:*' group-name ''
 # zstyle ':completion:*:descriptions' format '[%d]'
@@ -92,12 +94,12 @@ export FZF_DEFAULT_OPTS='
 --color=fg:-1,list-fg:0,bg:-1     
 --color=fg+:-1:regular,bg+:7
 --color=hl:3:bold,hl+:3:bold
---color=query:-1:regular,prompt:4:regular,marker:2
+--color=query:-1:regular,prompt:4:regular,marker:3:bold
 --color=gutter:-1,pointer:4:regular
 --padding=0,0,0,1
 --border=none
 --pointer=" "
---marker=">"
+--marker="+"
 --cycle
 --no-scrollbar
 --no-info
@@ -113,7 +115,13 @@ export REFS_DIR="$HOME/documents/refs"
 
 refs() {
 	local -a papers
-	papers=(${(f)"$(printf '%s\n' $REFS_DIR/*.pdf | sed "s|^$REFS_DIR/||" | fzf --multi --prompt='refs > ')"})
+	papers=(${(f)"$(printf '%s\n' $REFS_DIR/*.pdf \
+		| sed "s|^$REFS_DIR/||" \
+		| fzf --multi \
+		  --prompt='refs > ' \
+			--preview='refs-bib {}' \
+			--preview-window='down,80%,wrap' \
+			--height=30)"})
 	[[ -z $papers ]] && return
 
 	local f first=1
