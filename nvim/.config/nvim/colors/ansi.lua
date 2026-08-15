@@ -131,9 +131,11 @@ local groups = {
 	MiniDiffSignAdd = { fg = green }, MiniDiffSignChange = { fg = yellow }, MiniDiffSignDelete = { fg = red },
 
 	-- files / notify / icons
-	MiniFilesBorder = { fg = dim_fg }, MiniFilesBorderModified = { fg = yellow },
-	MiniFilesTitle = { fg = dim_fg }, MiniFilesTitleFocused = { fg = accent, bold = true },
-	MiniFilesDirectory = { fg = blue }, MiniFilesCursorLine = { bg = bg },
+	OilDir = { fg = blue }, OilDirIcon = { fg = blue }, OilHidden = { fg = dim_fg },
+	OilLink = { fg = cyan }, OilLinkTarget = { fg = dim_fg },
+	OilCreate = { fg = green }, OilDelete = { fg = red },
+	OilMove = { fg = yellow }, OilCopy = { fg = cyan }, OilChange = { fg = yellow },
+	OilCursorLine = { fg = fg, bg = bg, bold = true },
 	MiniNotifyTitle = { fg = accent, bold = true },
 	MiniIconsAzure = { fg = blue }, MiniIconsBlue = { fg = blue }, MiniIconsCyan = { fg = cyan },
 	MiniIconsGreen = { fg = green }, MiniIconsGrey = { fg = dim_fg }, MiniIconsOrange = { fg = yellow },

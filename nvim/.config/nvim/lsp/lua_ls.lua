@@ -6,7 +6,7 @@ return {
 	settings = {
 		Lua = {
 			runtime     = { version = 'LuaJIT' },
-			diagnostics = { globals = { 'vim', 'MiniDeps', 'MiniPick', 'MiniFiles', 'MiniExtra', 'FoldText' } },
+			diagnostics = { globals = { 'vim', 'MiniDeps', 'MiniPick', 'MiniExtra', 'FoldText'} },
 			workspace   = {
 				library         = vim.api.nvim_get_runtime_file('', true),
 				checkThirdParty = false,

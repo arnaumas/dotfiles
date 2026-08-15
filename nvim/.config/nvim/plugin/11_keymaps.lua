@@ -64,10 +64,11 @@ end
 local dotfiles = '/Users/arnau/dotfiles'
 local config = function(tool) return '/Users/arnau/dotfiles/'.. tool .. '/.config/' .. tool end
 
-nmap_leader('ef', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end, '[e]xplore [f]ile directory' )
-nmap_leader('ed', function() MiniFiles.open(dotfiles, false) end,              '[e]xplore [d]otfiles' )
-nmap_leader('en', function() MiniFiles.open(config('nvim'), false) end,        '[e]xplore [n]eovim config' )
-nmap_leader('ez', function() MiniFiles.open(config('zsh'), false) end,         '[e]xplore [z]sh config' )
+local oil = require('oil')
+nmap_leader('ef', function() oil.open_float() end,                '[e]xplore [f]ile directory' )
+nmap_leader('ed', function() oil.open_float(dotfiles) end,        '[e]xplore [d]otfiles' )
+nmap_leader('en', function() oil.open_float(config('nvim')) end,  '[e]xplore [n]eovim config' )
+nmap_leader('ez', function() oil.open_float(config('zsh')) end,   '[e]xplore [z]sh config' )
 -- <-- 
 
 -- f is for [f]uzzyfind -->

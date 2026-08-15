@@ -7,10 +7,22 @@ require('mini.ai').setup()
 -- mini.surround -->
 require('mini.surround').setup({silent = true})
 -- <--
--- mini.files -->
-require('mini.files').setup({
-	options = { use_as_default_explorer = true },
-	content = { filter = function(fs_entry) return fs_entry.name ~= '.DS_Store' end }
+-- oil -->
+require('oil').setup({
+	default_file_explorer = true,
+	view_options = { is_always_hidden = function(name, _) return name == '.DS_Store' end },
+	win_options = { cursorline = true },
+	float = {
+		border = 'none',
+		max_width = 0.4,
+		max_height = 0.6,
+		win_options = { winhighlight = 'Normal:NormalFloat,CursorLine:OilCursorLine' },
+		-- oil subtracts a border column that does not exist
+		override = function(conf) conf.col = conf.col + 1 return conf end,
+	},
+	confirmation = { border = 'none' },
+	progress = { border = 'none' },
+	keymaps_help = { border = 'none' },
 })
 -- <--
 -- mini.git -->

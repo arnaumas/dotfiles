@@ -19,4 +19,5 @@ vim.pack.add({
 	{ src = 'https://github.com/lervag/vimtex' },
 	{ src = 'https://github.com/nvim-lualine/lualine.nvim' },             -- statusline + tabline (icons via mini.icons mock)
 	{ src = 'https://github.com/ibhagwan/fzf-lua' },
+	{ src = 'https://github.com/stevearc/oil.nvim' },
 })
