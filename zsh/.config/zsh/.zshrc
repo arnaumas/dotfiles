@@ -92,7 +92,7 @@ export FZF_DEFAULT_OPTS='
 --height=~8
 --layout=reverse
 --color=fg:-1,list-fg:0,bg:-1     
---color=fg+:-1:regular,bg+:7
+--color=fg+:-1:bold,bg+:7
 --color=hl:3:bold,hl+:3:bold
 --color=query:-1:regular,prompt:4:regular,marker:3:bold
 --color=gutter:-1,pointer:4:regular
@@ -141,6 +141,10 @@ zle -N refs-widget
 bindkey -M viins '^o' refs-widget
 bindkey -M vicmd '^o' refs-widget
 
+# <--
+
+# rg -->
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/zsh/rgconf"
 # <--
 
 # prompt -->
