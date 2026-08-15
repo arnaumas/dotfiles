@@ -30,15 +30,28 @@ fzf_lua.setup({
 		['fg+']    = { 'fg', 'PmenuSel', 'bold' },
 		['bg+']    = { 'bg', 'PmenuSel' },
 		['gutter'] = { 'bg', 'FzfLuaNormal' },
+		['header'] = { 'fg', 'Pmenu' }
 	},
 	hls = {
 		normal         = 'FzfLuaNormal',
 		border         = 'FzfLuaNormal',
 		preview_normal = 'FzfLuaNormal',
 		preview_border = 'FzfLuaPreviewBorder',
+		buf_flag_cur   = "PMenu"
 	},
 	files      = { prompt = 'files > ' },
-	buffers    = { prompt = 'buffers > ' },
+	buffers    = {
+		prompt = 'buffers > ',
+		headers = false,
+		winopts = {
+			row = 1,
+			col = 0,
+			height = 5,
+			width = 0.3,
+			preview = { hidden = true },
+		},
+		fzf_opts = { ['--layout'] = 'default' },
+	},
 	grep       = { prompt = 'grep > ' },   -- covers live_grep
 	helptags   = { prompt = 'help > ' },
 	highlights = { prompt = 'highlights > ' },
@@ -273,6 +286,25 @@ vim.g.vimtex_fold_enabled = 1
 -- Only affects the math-symbol *conceal* feature, which is dormant at
 -- conceallevel=0 anyway -- so no visual change, just consistent coloring.
 vim.g.vimtex_syntax_conceal = vim.tbl_extend('force', vim.g.vimtex_syntax_conceal or {}, { math_symbols = 0 })
+
+-- Compile messages as notifications. vimtex's own echo for these four is muted
+-- by g:vimtex_log_ignore in init.lua; :VimtexLog still records everything.
+local function tex_notify(msg, level)
+	vim.notify('VimTeX: ' .. msg, level)
+end
+
+local tex_events = {
+	VimtexEventCompileStarted = function() tex_notify('compiling ' .. vim.b.vimtex.base, vim.log.levels.INFO) end,
+	VimtexEventCompileSuccess = function() tex_notify('compiled ' .. vim.b.vimtex.base, vim.log.levels.INFO) end,
+	VimtexEventCompileStopped = function() tex_notify('compiler stopped', vim.log.levels.WARN) end,
+	VimtexEventCompileFailed = function()
+		tex_notify(('failed (%d qf entries)'):format(#vim.fn.getqflist()), vim.log.levels.ERROR)
+	end,
+}
+
+for pattern, callback in pairs(tex_events) do
+	vim.api.nvim_create_autocmd('User', { pattern = pattern, callback = callback })
+end
 -- <--
 
 -- disabled plugins

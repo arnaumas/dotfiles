@@ -8,6 +8,10 @@
 -- Lockfile: nvim-pack-lock.json in the config dir (commit it for reproducibility).
 -- See :h vim.pack
 
+-- Read once when autoload/vimtex/log.vim is sourced, so it must be set pre-add.
+-- Compile messages go through vim.notify instead (see 20_plugins.lua).
+vim.g.vimtex_log_ignore = { 'Compilation completed', 'Compilation failed', 'Compiler start', 'Compiler stopped' }
+
 vim.pack.add({
 	{ src = 'https://github.com/nvim-mini/mini.nvim', version = 'stable' },
 	{ src = 'https://github.com/L3MON4D3/LuaSnip' },                       -- before blink (its snippet source)
