@@ -60,6 +60,13 @@ compinit -d $XDG_CACHE_HOME/zsh/zcompdump  # create cache file in appropriate lo
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 _comp_options+=(globdots)                  # autocomplete hidden files
 
+# tried in order, each only if the previous found nothing; fuzzy is the last resort
+zstyle ':completion:*' matcher-list \
+	'' \
+	'm:{a-z}={A-Z}' \
+	'r:|[._-]=* r:|=*' \
+	'r:|?=**'
+
 # candidate colors in the picker — match ll: dir=blue, symlink=magenta (files stay default)
 zstyle ':completion:*' list-colors \
   'di=34' 'ln=35' 'so=32' 'pi=33' 'ex=31' \
