@@ -10,15 +10,21 @@ require('mini.surround').setup({silent = true})
 -- oil -->
 require('oil').setup({
 	default_file_explorer = true,
-	view_options = { is_always_hidden = function(name, _) return name == '.DS_Store' end },
-	win_options = { cursorline = true },
+	view_options = { show_hidden = true, is_always_hidden = function(name, _) return name == '.DS_Store' end },
+	win_options = {
+		cursorline = true,
+	},
 	float = {
-		border = 'none',
-		max_width = 0.4,
-		max_height = 0.6,
+		border = { ' ', ' ', '', '', '', '', '', ' ' },
+		-- padding = 10,
+		max_width = 50,
+		max_height = 10,
 		win_options = { winhighlight = 'Normal:NormalFloat,CursorLine:OilCursorLine' },
-		-- oil subtracts a border column that does not exist
-		override = function(conf) conf.col = conf.col + 1 return conf end,
+		override = function(conf)
+			conf.row = 1
+			conf.col = 1
+			return conf
+		end,
 	},
 	confirmation = { border = 'none' },
 	progress = { border = 'none' },
@@ -42,7 +48,8 @@ fzf_lua.setup({
 		['fg+']    = { 'fg', 'PmenuSel', 'bold' },
 		['bg+']    = { 'bg', 'PmenuSel' },
 		['gutter'] = { 'bg', 'FzfLuaNormal' },
-		['header'] = { 'fg', 'Pmenu' }
+		['header'] = { 'fg', 'Pmenu' },
+		['info']   = { 'fg', 'FzfLuaNormal', 'dim' }
 	},
 	hls = {
 		normal         = 'FzfLuaNormal',
@@ -124,12 +131,11 @@ vim.api.nvim_set_decoration_provider(dot_ns, {
 	end,
 })
 
--- lsp_progress off: lualine owns the LSP loading indicator (see lualine block).
--- mini.notify stays as the general vim.notify backend.
+-- LSP progress shows as a transient notification, not in the statusline.
 notify.setup({
 	content = { format = format },
 	window = { config = win_config, winblend = 0 },
-	lsp_progress = { enable = false },
+	lsp_progress = { enable = true },
 })
 -- Levels keep the body at normal float colors; the level shows in the dot.
 local plain = { hl_group = 'MiniNotifyNormal' }
