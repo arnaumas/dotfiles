@@ -21,22 +21,73 @@ set.splitbelow        = true          -- split new buffers below existing one
 set.splitright        = true          -- vsplit new buffers to the right of existing one
 set.smoothscroll      = true          -- enable smoothscrolling
 set.fillchars         = { eob = ' ', fold = ' ' }  -- no tildes past end of buffer, no fold dots
-set.signcolumn        = 'number'      -- show diagnostic signs in the number column (no separate column)
-set.numberwidth       = 4
-set.foldcolumn        = '0'           -- no fold column; the bar rides in the status column
+set.signcolumn        = 'no'          -- StatusColumn draws signs manually, in the number field
+set.foldcolumn        = '0'           -- no fold column; the marker rides in the status column
 set.statuscolumn      = '%{%v:lua.StatusColumn()%}'
 
+-- fold text -->
+-- the fold's own first line, plus an ellipsis. foldtext returning a list draws
+-- as virtual text, so the ellipsis stops at the text instead of painting the
+-- row; a decoration provider can't do this because foldclosed() is banned in
+-- the fast context those callbacks run in. The autocmd is what keeps plugins
+-- that set foldtext window-locally (vimtex, for tex and bib) from winning.
+-- rebuild the line's treesitter highlights as chunks; one pass over the line's
+-- captures, not one lookup per column, so a screen full of folds stays cheap
+local function line_chunks(lnum)
+	local buf = vim.api.nvim_get_current_buf()
+	local line = vim.fn.getline(lnum)
+	if line == '' then return nil end
+	local ok, parser = pcall(vim.treesitter.get_parser, buf)
+	if not ok or not parser then return nil end
+	local row = lnum - 1
+	parser:parse({ row, row + 1 })
+	local hls = {}
+	parser:for_each_tree(function(tree, ltree)
+		local query = vim.treesitter.query.get(ltree:lang(), 'highlights')
+		if not query then return end
+		for id, node in query:iter_captures(tree:root(), buf, row, row + 1) do
+			local srow, scol, erow, ecol = node:range()
+			if srow <= row and erow >= row then
+				local from = srow == row and scol or 0
+				local to = erow == row and ecol or #line
+				for col = from, to - 1 do
+					hls[col] = '@' .. query.captures[id] .. '.' .. ltree:lang()
+				end
+			end
+		end
+	end)
+	local chunks, current, start = {}, hls[0], 0
+	for col = 1, #line do
+		if hls[col] ~= current then
+			chunks[#chunks + 1] = { line:sub(start + 1, col), current or 'Normal' }
+			current, start = hls[col], col
+		end
+	end
+	return chunks
+end
+
+FoldText = function(lnum)
+	lnum = lnum or vim.v.foldstart
+	local chunks = line_chunks(lnum) or { { vim.fn.getline(lnum), 'Folded' } }
+	chunks[#chunks + 1] = { ' (···)', 'FoldEllipsis' }
+	return chunks
+end
+
+vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter' }, {
+	callback = function() vim.wo.foldtext = 'v:lua.FoldText()' end,
+})
+-- <--
+
 -- gutter -->
--- numbers, a gap, then a fold cell adjacent to the text; the cell is a plain
--- space when there is no fold. Replaces %l, so signcolumn='number' has to be
--- honoured by hand.
+-- <number field, sized to the buffer's line count><space><fold cell>. Signs
+-- replace the number field, right-aligned to the same width.
 local function fold_mark(lnum)
 	if vim.fn.foldlevel(lnum) == 0 then return ' ' end
-	if vim.fn.foldclosed(lnum) ~= -1 then return '%#FoldColumn#▸' end
+	if vim.fn.foldclosed(lnum) ~= -1 then return '%#FoldColumn#\u{F460}' end
 	if lnum == 1 or vim.fn.foldlevel(lnum) > vim.fn.foldlevel(lnum - 1) then
-		return '%#FoldColumn#▾'
+		return '%#FoldColumn#\u{F47C}'
 	end
-	return '%#FoldColumn#│'
+	return '%#FoldColumn#\u{23B9}'
 end
 
 local function sign(lnum)
@@ -47,7 +98,7 @@ local function sign(lnum)
 		local d = mark[4]
 		if d.sign_text and (not best or (d.priority or 0) > (best.priority or 0)) then best = d end
 	end
-	if best then return ('%%#%s#%s'):format(best.sign_hl_group or 'SignColumn', best.sign_text) end
+	if best then return best.sign_text, best.sign_hl_group or 'SignColumn' end
 end
 
 local function number(hl, n, cells)
@@ -56,30 +107,19 @@ end
 
 StatusColumn = function()
 	if vim.v.virtnum ~= 0 then return '' end
-	local lnum, width = vim.v.lnum, vim.o.numberwidth
-	local s = sign(lnum)
-	if s then return ' ' .. s .. fold_mark(lnum) .. ' ' end
+	local lnum = vim.v.lnum
+	local width = #tostring(vim.api.nvim_buf_line_count(0))
+	local text, hl = sign(lnum)
+	if text then
+		text = text:gsub('%s+$', '')
+		local pad = width - vim.fn.strdisplaywidth(text)
+		return ('%s%%#%s#%s%s '):format(pad > 0 and string.rep(' ', pad) or '', hl, text, fold_mark(lnum))
+	end
 	local cursor = vim.v.relnum == 0
 	local n = cursor and lnum or vim.v.relnum
-	-- a number too wide for its field eats the trailing gap rather than
-	-- widening the gutter; only the cursor line's absolute number gets there
-	local gap = #tostring(n) > width - 2 and '' or ' '
-	return number(cursor and 'CursorLineNr' or 'LineNr', n, width - 2) .. fold_mark(lnum) .. gap
+	return number(cursor and 'CursorLineNr' or 'LineNr', n, width) .. fold_mark(lnum) .. ' '
 end
 
--- ellipsis after a closed fold's text; foldtext='' leaves the row's own
--- syntax alone, so the marker has to be virtual text rather than a highlight
-local ellipsis_ns = vim.api.nvim_create_namespace('fold_ellipsis')
-vim.api.nvim_set_decoration_provider(ellipsis_ns, {
-	on_line = function(_, _, buf, row)
-		if vim.fn.foldclosed(row + 1) ~= row + 1 then return end
-		vim.api.nvim_buf_set_extmark(buf, ellipsis_ns, row, 0, {
-			virt_text = { { '…', 'FoldEllipsis' } },
-			virt_text_pos = 'eol',
-			ephemeral = true,
-		})
-	end,
-})
 -- <--
 global.have_nerd_font = true
 set.cmdheight         = 0             -- hide comandline when not in use
