@@ -101,12 +101,6 @@ require('nvim-web-devicons').setup({
 	override = {
 		default_icon = { icon = '󰈔', cterm_color = '0', name = 'Default' },
 	},
-	override_by_filename = {
-		['init.lua'] = { icon = '󰢱' },
-	},
-	override_by_extension = {
-		toml = { icon = '󰈔' },
-	},
 })
 -- <--
 -- mini.notify -->

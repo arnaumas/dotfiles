@@ -27,9 +27,9 @@ set.foldcolumn        = '0'           -- no fold column; the bar rides in the st
 set.statuscolumn      = '%{%v:lua.StatusColumn()%}'
 
 -- gutter -->
--- numbers right-aligned, then a fold cell adjacent to the text: the old
--- trailing gap now carries the marker, and is a plain space when there is no
--- fold. Replaces %l, so signcolumn='number' has to be honoured by hand.
+-- numbers, a gap, then a fold cell adjacent to the text; the cell is a plain
+-- space when there is no fold. Replaces %l, so signcolumn='number' has to be
+-- honoured by hand.
 local function fold_mark(lnum)
 	if vim.fn.foldlevel(lnum) == 0 then return ' ' end
 	if vim.fn.foldclosed(lnum) ~= -1 then return '%#FoldColumn#▸' end
@@ -58,10 +58,13 @@ StatusColumn = function()
 	if vim.v.virtnum ~= 0 then return '' end
 	local lnum, width = vim.v.lnum, vim.o.numberwidth
 	local s = sign(lnum)
-	if s then return ' ' .. s .. fold_mark(lnum) end
+	if s then return ' ' .. s .. fold_mark(lnum) .. ' ' end
 	local cursor = vim.v.relnum == 0
-	local n = number(cursor and 'CursorLineNr' or 'LineNr', cursor and lnum or vim.v.relnum, width - 1)
-	return n .. fold_mark(lnum)
+	local n = cursor and lnum or vim.v.relnum
+	-- a number too wide for its field eats the trailing gap rather than
+	-- widening the gutter; only the cursor line's absolute number gets there
+	local gap = #tostring(n) > width - 2 and '' or ' '
+	return number(cursor and 'CursorLineNr' or 'LineNr', n, width - 2) .. fold_mark(lnum) .. gap
 end
 
 -- ellipsis after a closed fold's text; foldtext='' leaves the row's own
