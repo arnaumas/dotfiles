@@ -37,9 +37,12 @@ require('mini.git').setup()
 -- fzf-lua -->
 local fzf_lua = require('fzf-lua')
 fzf_lua.setup({
+	{ 'default-prompt', 'hide' },
 	winopts = {
-		border = "none",
-		preview = { border = "border-top", title = false, scrollbar = false }
+		title = false,
+		border = { '', ' ', '', '', '', ' ', '', '' },
+		preview = { border = "border-top", title = false, scrollbar = false },
+		treesitter = { fzf_colors = false }
 	},
 	fzf_colors = {
 		['fg']     = { 'fg', 'FzfLuaNormal' },
@@ -74,8 +77,18 @@ fzf_lua.setup({
 	grep       = { prompt = 'grep > ' },   -- covers live_grep
 	helptags   = { prompt = 'help > ' },
 	highlights = { prompt = 'highlights > ' },
-	blines     = { prompt = 'lines > ' },
-	lines      = { prompt = 'all lines > ' },
+	blines     = {
+		prompt = 'all buffers > ',
+		winopts = {
+			preview = { hidden = true },
+		}
+	},
+	lines     = {
+		prompt = 'buffer > ',
+		winopts = {
+			preview = { hidden = true },
+		}
+	},
 })
 fzf_lua.register_ui_select(nil,true)
 
