@@ -25,58 +25,13 @@ set.signcolumn        = 'no'          -- StatusColumn draws signs manually, in t
 set.foldcolumn        = '0'           -- no fold column; the marker rides in the status column
 set.statuscolumn      = '%{%v:lua.StatusColumn()%}'
 
--- fold text -->
--- the fold's own first line, plus an ellipsis. foldtext returning a list draws
--- as virtual text, so the ellipsis stops at the text instead of painting the
--- row; a decoration provider can't do this because foldclosed() is banned in
--- the fast context those callbacks run in. The autocmd is what keeps plugins
--- that set foldtext window-locally (vimtex, for tex and bib) from winning.
--- rebuild the line's treesitter highlights as chunks; one pass over the line's
--- captures, not one lookup per column, so a screen full of folds stays cheap
-local function line_chunks(lnum)
-	local buf = vim.api.nvim_get_current_buf()
-	local line = vim.fn.getline(lnum)
-	if line == '' then return nil end
-	local ok, parser = pcall(vim.treesitter.get_parser, buf)
-	if not ok or not parser then return nil end
-	local row = lnum - 1
-	parser:parse({ row, row + 1 })
-	local hls = {}
-	parser:for_each_tree(function(tree, ltree)
-		local query = vim.treesitter.query.get(ltree:lang(), 'highlights')
-		if not query then return end
-		for id, node in query:iter_captures(tree:root(), buf, row, row + 1) do
-			local srow, scol, erow, ecol = node:range()
-			if srow <= row and erow >= row then
-				local from = srow == row and scol or 0
-				local to = erow == row and ecol or #line
-				for col = from, to - 1 do
-					hls[col] = '@' .. query.captures[id] .. '.' .. ltree:lang()
-				end
-			end
-		end
-	end)
-	local chunks, current, start = {}, hls[0], 0
-	for col = 1, #line do
-		if hls[col] ~= current then
-			chunks[#chunks + 1] = { line:sub(start + 1, col), current or 'Normal' }
-			current, start = hls[col], col
-		end
-	end
-	return chunks
-end
-
-FoldText = function(lnum)
-	lnum = lnum or vim.v.foldstart
-	local chunks = line_chunks(lnum) or { { vim.fn.getline(lnum), 'Folded' } }
-	chunks[#chunks + 1] = { ' (···)', 'FoldEllipsis' }
-	return chunks
-end
-
+-- empty foldtext = pass-through: fold's first line renders with its own
+-- treesitter highlights. The autocmd keeps plugins that set foldtext
+-- window-locally (vimtex) from winning.
+vim.opt.foldtext = ''
 vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter' }, {
-	callback = function() vim.wo.foldtext = 'v:lua.FoldText()' end,
+	callback = function() vim.wo.foldtext = '' end,
 })
--- <--
 
 -- gutter -->
 -- <number field, sized to the buffer's line count><space><fold cell>. Signs
@@ -106,9 +61,13 @@ local function number(hl, n, cells)
 end
 
 StatusColumn = function()
-	if vim.v.virtnum ~= 0 then return '' end
 	local lnum = vim.v.lnum
 	local width = #tostring(vim.api.nvim_buf_line_count(0))
+	if vim.v.virtnum > 0 then
+		local mark = vim.fn.foldlevel(lnum) > 0 and '%#FoldColumn#\u{23B9}' or ' '
+		return string.rep(' ', width) .. mark .. ' '
+	end
+	if vim.v.virtnum < 0 then return '' end
 	local text, hl = sign(lnum)
 	if text then
 		text = text:gsub('%s+$', '')
