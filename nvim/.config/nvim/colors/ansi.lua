@@ -40,7 +40,7 @@ local groups = {
 	CursorLine = { bg = dim_bg }, CursorLineNr = { fg = accent, bold = true },
 	CursorColumn = { bg = dim_bg }, ColorColumn = { bg = bg },
 	SignColumn = {}, FoldColumn = { fg = dim_fg },
-	Folded = {}, FoldEllipsis = { fg = dim_fg, bg = dim_bg },
+	Folded = {}, FoldEllipsis = { fg = dim_fg, bg = bg, bold = true },
 	-- visual selection: uniform fg over the dim surface (kills syntax-color noise)
 	Visual = { fg = selection_fg, bg = selection_bg }, VisualNOS = { fg = selection_fg, bg = selection_bg },
 	-- search: current match under cursor = yellow; other matches = dim grey bg

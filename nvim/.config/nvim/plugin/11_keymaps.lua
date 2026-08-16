@@ -12,7 +12,7 @@ map('n', '<esc>', '<cmd>nohlsearch<cr>', { desc = 'clear highlights' })
 
 -- remap macro recording
 map({ 'n', 'x' }, '<leader>r', 'q', { desc = '[r]ecord macro'} )
-map({ 'n', 'x' }, 'q', '<nop>')
+-- map({ 'n', 'x' }, 'q', '<nop>')
 
 -- use cmd window buffer by default
 map('n', ':', 'q:i')
