@@ -94,20 +94,20 @@ fzf_lua.register_ui_select(nil,true)
 
 -- <--
 
--- mini.icons -->
-local icons = require('mini.icons')
-icons.setup({
-	default = {
-		file = { glyph = '󰈔' }
+-- nvim-web-devicons -->
+require('nvim-web-devicons').setup({
+	color_icons = false,
+	default = true,
+	override = {
+		default_icon = { icon = '󰈔', cterm_color = '0', name = 'Default' },
 	},
-	file = {
-		['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' },
+	override_by_filename = {
+		['init.lua'] = { icon = '󰢱' },
 	},
-	extension = {
-		toml = { glyph = '󰈔' }
-	}
+	override_by_extension = {
+		toml = { icon = '󰈔' },
+	},
 })
-icons.mock_nvim_web_devicons()   -- route lualine's icon lookups through mini.icons
 -- <--
 -- mini.notify -->
 local notify = require('mini.notify')

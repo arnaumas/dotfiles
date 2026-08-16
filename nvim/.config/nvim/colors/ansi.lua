@@ -27,7 +27,8 @@ local function hl(group, s)
 	vim.api.nvim_set_hl(0, group, {
 		ctermfg = s.fg, ctermbg = s.bg,
 		bold = s.bold, italic = s.italic,
-		underline = s.underline, undercurl = s.undercurl, strikethrough = s.strike,
+		underline = s.underline, undercurl = s.undercurl, underdotted = s.underdotted,
+		strikethrough = s.strike,
 	})
 end
 local function link(from, to) vim.api.nvim_set_hl(0, from, { link = to }) end
@@ -39,7 +40,7 @@ local groups = {
 	CursorLine = { bg = dim_bg }, CursorLineNr = { fg = accent, bold = true },
 	CursorColumn = { bg = dim_bg }, ColorColumn = { bg = bg },
 	SignColumn = {}, FoldColumn = { fg = dim_fg },
-	Folded = { fg = fg, bg = bg },
+	Folded = {}, FoldEllipsis = { fg = dim_fg, bg = dim_bg },
 	-- visual selection: uniform fg over the dim surface (kills syntax-color noise)
 	Visual = { fg = selection_fg, bg = selection_bg }, VisualNOS = { fg = selection_fg, bg = selection_bg },
 	-- search: current match under cursor = yellow; other matches = dim grey bg
@@ -138,9 +139,6 @@ local groups = {
 	OilMove = { fg = yellow }, OilCopy = { fg = cyan }, OilChange = { fg = yellow },
 	OilCursorLine = { fg = fg, bg = bg, bold = true },
 	MiniNotifyTitle = { fg = accent, bold = true },
-	MiniIconsAzure = { fg = blue }, MiniIconsBlue = { fg = blue }, MiniIconsCyan = { fg = cyan },
-	MiniIconsGreen = { fg = green }, MiniIconsGrey = { fg = dim_fg }, MiniIconsOrange = { fg = yellow },
-	MiniIconsPurple = { fg = magenta }, MiniIconsRed = { fg = red }, MiniIconsYellow = { fg = yellow },
 
 	-- fzf-lua
 	FzfLuaNormal = { fg = fg, bg = dim_bg },
