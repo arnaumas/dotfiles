@@ -17,11 +17,10 @@
 		{
 			# `nix run .#default` builds and runs the whole config.
 			# NOTE: the ONLY nixvim-standalone-specific wiring is this block.
-			# migrating to home-manager = delete this, add `programs.nixvim.imports = [ ./nvim/modules ];`
-			# everything under ./nvim/modules moves over unchanged.
+			# migrating to home-manager = delete this, add `programs.nixvim.imports = [ ./nvim ];`
 			packages.${system}.default = nixvim.legacyPackages.${system}.makeNixvimWithModule {
 				inherit pkgs;
-				module = ./nvim/modules;
+				module = ./nvim;
 			};
 
 			# `nix flake check` evaluates the config without launching it.
