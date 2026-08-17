@@ -4,7 +4,7 @@
 		./fzf-lua.nix
 		./lualine.nix
 		./luasnip.nix
-		./vimtex.nix
+		./vimtex
 		./lsp.nix
 		./oil.nix
 		./devicons.nix

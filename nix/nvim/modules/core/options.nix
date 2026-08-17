@@ -1,5 +1,4 @@
 {
-	# ported from plugin/10_options.lua
 	opts = {
 		# general
 		swapfile = false;
@@ -26,13 +25,11 @@
 		showcmd = false;
 		shortmess = "ltToOCFscS";
 
-		# editing (hard tabs, shiftwidth 2)
+		# editing
 		expandtab = false;
 		shiftwidth = 2;
 		tabstop = 2;
 
-		# colorscheme is terminal-anchored: cterm indices map to the 16 ANSI slots.
-		# termguicolors OFF on purpose. colorscheme itself is set in colorscheme.nix.
 		termguicolors = false;
 	};
 
@@ -42,8 +39,6 @@
 		have_nerd_font = true;
 	};
 
-	# experimental internal UI. VERIFY: vim._core.ui2 may not exist on the nvim
-	# that nixpkgs/nixvim pins; guarded so a missing module does not abort startup.
 	extraConfigLua = ''
 	local function hl_at(info)
 		local ts = info.treesitter
