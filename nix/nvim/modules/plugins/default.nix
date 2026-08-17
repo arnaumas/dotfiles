@@ -7,6 +7,7 @@
     ./vimtex.nix
     ./lsp.nix
 		./oil.nix
+		./devicons.nix
     # blink.cmp intentionally NOT ported yet (undecided). see blink.nix.
   ];
 }

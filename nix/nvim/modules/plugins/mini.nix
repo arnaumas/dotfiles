@@ -11,14 +11,6 @@
 
       git = { };
 
-      icons = {
-        default = { file = { glyph = "󰈔"; }; };
-        file = {
-          "init.lua" = { glyph = "󰢱"; hl = "MiniIconsAzure"; };
-        };
-        extension = { toml = { glyph = "󰈔"; }; };
-      };
-
       notify = {
         window = {
           config.__raw = ''
