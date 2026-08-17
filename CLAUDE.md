@@ -41,9 +41,9 @@ The center of gravity. Architecture:
 - **`after/ftplugin/<ft>.lua`** hold filetype-local options/keymaps; **`snippets/<ft>.lua`** are
   LuaSnip snippets loaded lazily by filetype.
 
-Plugin stack (deliberately small): **mini.nvim** for most editor features (files, pick, git,
-statusline, tabline, ai/surround, icons, notify), **blink.cmp + LuaSnip** for completion and
-snippets, **vimtex** for LaTeX. Completion keymaps are split on purpose: Tab / `<C-l>` / `<C-h>`
+Plugin stack (deliberately small): **mini.nvim** for most editor features (files, git,
+statusline, tabline, ai/surround, icons, notify), **fzf-lua** as the fuzzy finder,
+**blink.cmp + LuaSnip** for completion and snippets, **vimtex** for LaTeX. Completion keymaps are split on purpose: Tab / `<C-l>` / `<C-h>`
 stay 100% LuaSnip (`preset = 'none'` in blink), blink owns `<C-n/p/y/e/space>`.
 
 **LaTeX is the design target.** vimtex previews via **sioyek**; tex completion is intentionally
@@ -80,12 +80,11 @@ punctuation greyed).
 
 Things the user intends to do eventually — not yet implemented:
 
-1. Set up **fzf + fzf-lua** in nvim to replace `mini.pick` as the fuzzy finder.
-2. Move the terminal to **ghostty** (currently kept but unused).
-3. Set up **yabai** as a keyboard-driven window manager.
-4. Properly configure **sioyek** (the main PDF reader, already wired as vimtex's previewer).
-5. Set up **Claude integration inside nvim**.
-6. Use a combination of **zoxide + fzf** for faster directory navigation in zsh.
+1. Move the terminal to **ghostty** (currently kept but unused).
+2. Set up **yabai** as a keyboard-driven window manager.
+3. Properly configure **sioyek** (the main PDF reader, already wired as vimtex's previewer).
+4. Set up **Claude integration inside nvim**.
+5. Use a combination of **zoxide + fzf** for faster directory navigation in zsh.
 
 ## Conventions
 
