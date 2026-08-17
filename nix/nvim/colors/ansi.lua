@@ -27,7 +27,8 @@ local function hl(group, s)
 	vim.api.nvim_set_hl(0, group, {
 		ctermfg = s.fg, ctermbg = s.bg,
 		bold = s.bold, italic = s.italic,
-		underline = s.underline, undercurl = s.undercurl, strikethrough = s.strike,
+		underline = s.underline, undercurl = s.undercurl, underdotted = s.underdotted,
+		strikethrough = s.strike,
 	})
 end
 local function link(from, to) vim.api.nvim_set_hl(0, from, { link = to }) end
@@ -39,7 +40,7 @@ local groups = {
 	CursorLine = { bg = dim_bg }, CursorLineNr = { fg = accent, bold = true },
 	CursorColumn = { bg = dim_bg }, ColorColumn = { bg = bg },
 	SignColumn = {}, FoldColumn = { fg = dim_fg },
-	Folded = { fg = fg, bg = bg },
+	Folded = {}, FoldEllipsis = { fg = dim_fg, bg = bg, bold = true },
 	-- visual selection: uniform fg over the dim surface (kills syntax-color noise)
 	Visual = { fg = selection_fg, bg = selection_bg }, VisualNOS = { fg = selection_fg, bg = selection_bg },
 	-- search: current match under cursor = yellow; other matches = dim grey bg
@@ -58,7 +59,9 @@ local groups = {
 	QuickFixLine = { bg = bg, bold = true },
 	ErrorMsg = { fg = red }, WarningMsg = { fg = yellow }, ModeMsg = { fg = dim_fg }, MoreMsg = { fg = green },
 	Question = { fg = green }, MsgSeparator = { fg = dim_fg },
-	FloatBorder = { fg = dim_fg }, FloatTitle = { fg = accent, bold = true },
+	NormalFloat = { fg = fg, bg = dim_bg },
+	FloatBorder = { bg = dim_bg }, FloatTitle = { bg = bg, bold = true },
+	WinBar = { bg = bg, bold = true }, WinBarNC = { fg = dim_fg, bg = bg },
 	WildMenu = { fg = fg, bg = accent_bg, bold = true },
 	SpellBad = { undercurl = true }, SpellCap = { undercurl = true },
 	SpellRare = { undercurl = true }, SpellLocal = { undercurl = true },
@@ -129,14 +132,17 @@ local groups = {
 	DiffAdd = { fg = green }, DiffChange = { fg = yellow }, DiffDelete = { fg = red }, DiffText = { fg = fg, bg = blue_bg },
 	MiniDiffSignAdd = { fg = green }, MiniDiffSignChange = { fg = yellow }, MiniDiffSignDelete = { fg = red },
 
-	-- mini.pick / files / notify / icons
-	MiniFilesBorder = { fg = dim_fg }, MiniFilesBorderModified = { fg = yellow },
-	MiniFilesTitle = { fg = dim_fg }, MiniFilesTitleFocused = { fg = accent, bold = true },
-	MiniFilesDirectory = { fg = blue }, MiniFilesCursorLine = { bg = bg },
-	MiniNotifyNormal = {}, MiniNotifyBorder = { fg = dim_fg }, MiniNotifyTitle = { fg = accent, bold = true },
-	MiniIconsAzure = { fg = blue }, MiniIconsBlue = { fg = blue }, MiniIconsCyan = { fg = cyan },
-	MiniIconsGreen = { fg = green }, MiniIconsGrey = { fg = dim_fg }, MiniIconsOrange = { fg = yellow },
-	MiniIconsPurple = { fg = magenta }, MiniIconsRed = { fg = red }, MiniIconsYellow = { fg = yellow },
+	-- files / notify / icons
+	OilDir = { fg = blue }, OilDirIcon = { fg = blue }, OilHidden = { fg = dim_fg },
+	OilLink = { fg = cyan }, OilLinkTarget = { fg = dim_fg },
+	OilCreate = { fg = green }, OilDelete = { fg = red },
+	OilMove = { fg = yellow }, OilCopy = { fg = cyan }, OilChange = { fg = yellow },
+	OilCursorLine = { fg = fg, bg = bg, bold = true },
+	MiniNotifyTitle = { fg = accent, bold = true },
+
+	-- fzf-lua
+	FzfLuaNormal = { fg = fg, bg = dim_bg },
+	FzfLuaPreviewBorder = { fg = dim_fg, bg = dim_bg },
 
 	-- blink.cmp
 	BlinkCmpMenuBorder = { fg = dim_fg }, BlinkCmpScrollBarThumb = { bg = dim_fg }, BlinkCmpScrollBarGutter = { bg = bg },
@@ -181,13 +187,14 @@ local links = {
 	texStyleBoldUnder = 'Normal', texStyleItalUnder = 'Normal', texStyleBoldItalUnder = 'Normal',
 	texStyleArgConc = 'Normal',
 	texOpt = 'Normal', texEnvOpt = 'Normal', texRefConcealedOpt1 = 'Normal',
-	NormalFloat = 'Normal', MsgArea = 'Normal',
+	MsgArea = 'Normal',
 	DiagnosticSignError = 'DiagnosticError', DiagnosticSignWarn = 'DiagnosticWarn',
 	DiagnosticSignInfo = 'DiagnosticInfo', DiagnosticSignHint = 'DiagnosticHint',
 	DiagnosticVirtualTextError = 'DiagnosticError', DiagnosticVirtualTextWarn = 'DiagnosticWarn',
 	DiagnosticVirtualTextInfo = 'DiagnosticInfo', DiagnosticVirtualTextHint = 'DiagnosticHint',
 	DiagnosticFloatingError = 'DiagnosticError', DiagnosticFloatingWarn = 'DiagnosticWarn',
 	DiagnosticFloatingInfo = 'DiagnosticInfo', DiagnosticFloatingHint = 'DiagnosticHint',
+	MiniNotifyNormal = 'NormalFloat',
 	BlinkCmpMenu = 'Pmenu', BlinkCmpMenuSelection = 'PmenuSel', BlinkCmpDoc = 'Pmenu', BlinkCmpSignatureHelp = 'Pmenu',
 }
 for from, to in pairs(links) do link(from, to) end
