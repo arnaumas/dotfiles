@@ -150,6 +150,10 @@ bindkey -M vicmd '^o' refs-widget
 
 # <--
 
+# bat -->
+export BAT_THEME="ansi16"
+# <--
+
 # rg -->
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/zsh/rgconf"
 # <--
@@ -244,7 +248,7 @@ zstyle ':fzf-tab:*' switch-group '^' '+'
 zstyle ':fzf-tab:*' continuous-trigger '/'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -p --color=always -- "$realpath" 2>/dev/null'
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
-	'[[ -d "$realpath" ]] && ls -p --color=always -- "$realpath" 2>/dev/null || bat --color=always --style=plain --theme=ansi -- "$realpath" 2>/dev/null || true'
+	'[[ -d "$realpath" ]] && ls -p --color=always -- "$realpath" 2>/dev/null || bat --color=always --style=plain --theme=ansi16 -- "$realpath" 2>/dev/null || true'
 # <--
 
 # zsh-autosuggestions -->
