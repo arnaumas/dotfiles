@@ -1,14 +1,60 @@
 {
-	# fuzzy finder. ported from plugin/20_plugins.lua fzf-lua block + the
-	# [f]uzzyfind keymaps in plugin/11_keymaps.lua.
 	plugins.fzf-lua = {
 		enable = true;
-		settings = { };
+		settings = {
+		# TODO: figure out how to make title disappear
+			winopts = {
+				title = false;
+				border = [ "" " " "" "" "" " " "" "" ];
+				preview = { border = "border-top"; title = false; scrollbar = false; };
+				treesitter = { fzf_colors = false; };
+			};
+			fzf_colors = {
+				fg = [ "fg" "FzfLuaNormal" ];
+				bg = [ "bg" "FzfLuaNormal" ];
+				query = [ "fg" "FzfLuaNormal" ];
+				"fg+" = [ "fg" "PmenuSel" "bold" ];
+				"bg+" = [ "bg" "PmenuSel" ];
+				gutter = [ "bg" "FzfLuaNormal" ];
+				header = [ "fg" "Pmenu" ];
+				info = [ "fg" "FzfLuaNormal" "dim" ];
+			};
+			hls = {
+				normal = "FzfLuaNormal";
+				border = "FzfLuaNormal";
+				preview_normal = "FzfLuaNormal";
+				preview_border = "FzfLuaPreviewBorder";
+				buf_flag_cur = "PMenu";
+			};
+			files = { prompt = "files > "; };
+			buffers = {
+				prompt = "buffers > ";
+				headers = false;
+				winopts = {
+					row = 1;
+					col = 0;
+					height = 5;
+					width = 0.3;
+					preview = { hidden = true; };
+				};
+				fzf_opts = { "--layout" = "default"; };
+			};
+			grep = { prompt = "grep > "; };
+			helptags = { prompt = "help > "; };
+			highlights = { prompt = "highlights > "; };
+			blines = {
+				prompt = "all buffers > ";
+				winopts = { preview = { hidden = true; }; };
+			};
+			lines = {
+				prompt = "buffer > ";
+				winopts = { preview = { hidden = true; }; };
+			};
+		};
 	};
 
-	# register_ui_select() has no nixvim option; wire it directly. VERIFY.
 	extraConfigLua = ''
-		require('fzf-lua').register_ui_select()
+		require('fzf-lua').register_ui_select(nil, true)
 	'';
 
 	keymaps = [
