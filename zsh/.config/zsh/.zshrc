@@ -49,9 +49,9 @@ alias vim=nvim
 alias python=python3
 
 # parent directories
-alias ...=../..
-alias ....=../../..
-alias .....=../../../..
+alias -g ...=../..
+alias -g ....=../../..
+alias -g .....=../../../..
 # <--
 
 # autocompletion -->
