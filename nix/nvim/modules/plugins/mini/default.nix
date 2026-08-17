@@ -13,12 +13,10 @@
 				};
 				lsp_progress.enable = true;
 			};
-			};
 		};
+		luaConfig.pre = builtins.readFile ./notify-defs.lua;
+		luaConfig.post = builtins.readFile ./notify-wire.lua;
 	};
-
-	luaConfig.pre = builtins.readFile ./notify-defs.lua;
-	luaConfig.post = builtins.readFile ./notify-wire.lua;
 
 	userCommands.Notifications = {
 		command.__raw = ''

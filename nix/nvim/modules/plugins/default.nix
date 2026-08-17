@@ -1,6 +1,6 @@
 {
 	imports = [
-		./mini.nix
+		./mini
 		./fzf-lua.nix
 		./lualine.nix
 		./luasnip.nix

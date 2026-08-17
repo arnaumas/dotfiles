@@ -27,5 +27,5 @@
 
 	extraFiles."after/syntax/tex.vim".source = ./tex.vim;
 
-	extraConfigLua = builtins.readFile .notify-compilation.lua;
+	extraConfigLua = builtins.readFile ./notify-compilation.lua;
 }

@@ -1,13 +1,9 @@
 {
-	# snippets. ported from plugin/20_plugins.lua LuaSnip block + the snippet
-	# jump keymaps in plugin/11_keymaps.lua. snippet definitions stay as a real
-	# Lua file (snippets/tex.lua), loaded from the nix-store copy.
 	plugins.luasnip = {
 		enable = true;
-		# VERIFY: fromLua option name + that `paths` accepts a nix path.
 		fromLua = [ { paths = ../../snippets; } ];
 		settings = {
-			cut_selection_keys = [ "<C-l>" "<tab>" ];
+			cut_selection_keys = "<Tab>";
 			enable_autosnippets = true;
 			update_events = "TextChanged, TextChangedI";
 		};

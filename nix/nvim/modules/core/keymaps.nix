@@ -1,7 +1,4 @@
 {
-	# ported from plugin/11_keymaps.lua (global, non-plugin maps only).
-	# plugin-specific maps live with their plugin: explore/git -> mini.nix,
-	# fuzzyfind -> fzf-lua.nix, snippet jumps -> luasnip.nix.
 	keymaps = [
 		# general
 		{ mode = "n"; key = "<esc>"; action = "<cmd>nohlsearch<cr>"; options.desc = "clear highlights"; }
