@@ -4,6 +4,6 @@
 		./zsh.nix
 		./help.nix
 		./tex.nix
-		./asy.nix
+		./asy
 	];
 }
