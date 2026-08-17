@@ -1,7 +1,7 @@
 {
-  imports = [
-    ./core
-    ./plugins
-    ./colorscheme.nix
-  ];
+	imports = [
+		./core
+		./plugins
+		./colorscheme.nix
+	];
 }
