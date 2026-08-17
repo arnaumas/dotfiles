@@ -3,6 +3,6 @@
 		./core
 		./plugins
 		./filetypes
-		./colorscheme.nix
+		./colors
 	];
 }
