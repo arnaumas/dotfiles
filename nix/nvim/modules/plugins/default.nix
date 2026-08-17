@@ -6,6 +6,7 @@
     ./luasnip.nix
     ./vimtex.nix
     ./lsp.nix
+		./oil.nix
     # blink.cmp intentionally NOT ported yet (undecided). see blink.nix.
   ];
 }

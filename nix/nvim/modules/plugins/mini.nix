@@ -9,13 +9,6 @@
       ai = { };
       surround = { silent = true; };
 
-      files = {
-        options = { use_as_default_explorer = true; };
-        content = {
-          filter.__raw = "function(fs_entry) return fs_entry.name ~= '.DS_Store' end";
-        };
-      };
-
       git = { };
 
       icons = {
@@ -50,12 +43,6 @@
   '';
 
   keymaps = [
-    # explore (mini.files)
-    { mode = "n"; key = "<leader>ef"; action.__raw = "function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end"; options.desc = "[e]xplore [f]ile directory"; }
-    { mode = "n"; key = "<leader>ed"; action.__raw = "function() MiniFiles.open('/Users/arnau/dotfiles', false) end"; options.desc = "[e]xplore [d]otfiles"; }
-    { mode = "n"; key = "<leader>en"; action.__raw = "function() MiniFiles.open('/Users/arnau/dotfiles/nvim/.config/nvim', false) end"; options.desc = "[e]xplore [n]eovim config"; }
-    { mode = "n"; key = "<leader>ez"; action.__raw = "function() MiniFiles.open('/Users/arnau/dotfiles/zsh/.config/zsh', false) end"; options.desc = "[e]xplore [z]sh config"; }
-
     # git (mini.git provides :Git)
     { mode = "n"; key = "<leader>gc"; action = "<cmd>Git commit<cr>"; options.desc = "[g]it [c]ommit"; }
     { mode = "n"; key = "<leader>ga"; action = "<cmd>Git diff --cached<cr>"; options.desc = "[g]it [a]dd"; }
