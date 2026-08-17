@@ -20,7 +20,7 @@
 			# migrating to home-manager = delete this, add `programs.nixvim.imports = [ ./nvim ];`
 			packages.${system}.default = nixvim.legacyPackages.${system}.makeNixvimWithModule {
 				inherit pkgs;
-				module = ./nvim;
+				module = ./.;
 			};
 
 			# `nix flake check` evaluates the config without launching it.
