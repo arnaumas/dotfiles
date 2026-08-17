@@ -7,7 +7,6 @@
 	# VERIFY (biggest unknown in the port): the exact shape of nixvim's native
 	# `lsp` module. If `lsp.servers.<name>.config` is wrong, the fallback is to
 	# carry lsp/*.lua verbatim via extraFiles + extraConfigLua "vim.lsp.enable{...}".
-	extraPackages = with pkgs; [ texlab lua-language-server ];
 
 	lsp = {
 		servers = {
@@ -20,9 +19,7 @@
 					settings = {
 						Lua = {
 							runtime.version = "LuaJIT";
-							# only globals actually referenced by the config (pruned from the
-							# original's stale MiniDeps/MiniPick/MiniExtra).
-							diagnostics.globals = [ "vim" "MiniFiles" "FoldText" ];
+							diagnostics.globals = [ "vim" "StatusColumn" "FoldText" ];
 							workspace = {
 								library.__raw = "vim.api.nvim_get_runtime_file('', true)";
 								checkThirdParty = false;
@@ -51,23 +48,9 @@
 		};
 	};
 
-	# buffer-local maps shared by every server (from plugin/21_lsp.lua).
-	autoGroups.lsp-attach = { clear = true; };
-	autoCmd = [
-		{
-			event = [ "LspAttach" ];
-			group = "lsp-attach";
-			desc = "LSP buffer-local keymaps";
-			callback.__raw = ''
-				function(ev)
-					local map = function(keys, fn, desc)
-						vim.keymap.set('n', keys, fn, { buffer = ev.buf, desc = 'LSP: ' .. desc })
-					end
-					map('gd', vim.lsp.buf.definition, '[g]oto [d]efinition')
-					map('gD', vim.lsp.buf.declaration, '[g]oto [D]eclaration')
-					map('<Leader>d', vim.diagnostic.open_float, 'show [d]iagnostic')
-				end
-			'';
-		}
+	lsp.keymaps = [
+		{ mode = "n"; key = "gd"; lspBufAction = "definition";  options.desc = "LSP: [g]oto [d]efinition"; }
+		{ mode = "n"; key = "gD"; lspBufAction = "declaration"; options.desc = "LSP: [g]oto [D]eclaration"; }
+		{ mode = "n"; key = "<leader>d"; action.__raw = "vim.diagnostic.open_float"; options.desc = "LSP: show [d]iagnostic"; }
 	];
 }
