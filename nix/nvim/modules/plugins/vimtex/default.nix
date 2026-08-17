@@ -9,9 +9,9 @@
 			fold_enabled = 1;
 			indent_on_ampersands = 1;
 			indent_tikz_commands = 0;
-			# keep \mathbb{R} etc. as command + arg (not one concealed symbol).
 			syntax_conceal = { math_symbols = 0; };
 			imaps_disabled = [ "jj" "jJ" "jk" "jK" "jh" "jH" "jl" "jL" ];
+			log_ignore = [ "Compilation completed" "Compilation failed" "Compiler start" "Compiler stopped" ];
 		};
 	};
 
@@ -25,6 +25,7 @@
 		]]
 	'';
 
-	# pipe-split syntax stays a real .vim file (no typed equivalent).
 	extraFiles."after/syntax/tex.vim".source = ./tex.vim;
+
+	extraConfigLua = builtins.readFile .notify-compilation.lua;
 }
