@@ -1,13 +1,5 @@
 { pkgs, ... }:
 {
-	# LSP via nixvim's native `lsp` module (matches your vim.lsp.enable + lsp/*.lua
-	# approach). ported from lsp/lua_ls.lua, lsp/texlab.lua, plugin/21_lsp.lua.
-	# servers were installed via Homebrew/Brewfile before; now via extraPackages.
-	#
-	# VERIFY (biggest unknown in the port): the exact shape of nixvim's native
-	# `lsp` module. If `lsp.servers.<name>.config` is wrong, the fallback is to
-	# carry lsp/*.lua verbatim via extraFiles + extraConfigLua "vim.lsp.enable{...}".
-
 	lsp = {
 		servers = {
 			lua_ls = {

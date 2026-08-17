@@ -1,7 +1,7 @@
 {
 	plugins.luasnip = {
 		enable = true;
-		fromLua = [ { paths = ../../snippets; } ];
+		fromLua = [ { paths = .; } ];
 		settings = {
 			cut_selection_keys = "<Tab>";
 			enable_autosnippets = true;

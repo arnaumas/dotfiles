@@ -1,5 +1,4 @@
 {
-	# ported from plugin/12_autocmds.lua
 	autoGroups = {
 		highlight-yank = { clear = true; };
 		restore_cursor = { clear = true; };

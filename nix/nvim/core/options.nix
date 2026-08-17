@@ -2,7 +2,6 @@
 	opts = {
 		# general
 		swapfile = false;
-		# was set inside vim.schedule() as a startup nicety; plain opt is equivalent.
 		clipboard = "unnamedplus";
 
 		# ui

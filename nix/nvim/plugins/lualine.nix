@@ -1,8 +1,4 @@
 {
-	# statusline + tabline. ported from plugin/20_plugins.lua lualine block.
-	# `options` (incl. the custom Stl* theme) is typed; `sections` is carried
-	# verbatim as __raw because it uses nerd-font \u{...} escapes and a fmt fn
-	# that are error-prone to re-encode as Nix.
 	plugins.lualine = {
 		enable = true;
 		settings = {
@@ -38,46 +34,39 @@
 				};
 			};
 
-			sections.__raw = ''
-				{
-					lualine_a = {
-						{ 'mode', fmt = function(s) return (s:gsub('(%a)%a*', '%1')) end }
-					},
-					lualine_b = {},
-					lualine_c = {
-						{
-							'buffers',
-							mode = 0,
-							buffers_color = {
-								active	 = 'StlTabActive',
-								inactive = 'StlTabInactive',
-							},
-							symbols = {
-								modified = ' [+]',
-								alternate_file = ''',
-								directory = '/',
-							}
-						}
-					},
-					lualine_x = {},
-					lualine_y = {
-						{
-							'diagnostics',
-							symbols = {
-								error = '\u{f015a} %#StatusLine#', warn = '\u{f002a} %#StatusLine#',
-								info	= '\u{f02fd} %#StatusLine#', hint = '\u{f0336} %#StatusLine#',
-							},
-							diagnostics_color = {
-								error = 'DiagnosticError', warn = 'DiagnosticWarn',
-								info	= 'DiagnosticInfo',	 hint = 'DiagnosticHint',
-							}
-						},
-						{ 'branch', icon = '\u{e725}' },
-						'filetype'
-					},
-					lualine_z = {'location'}
-				}
-			'';
+			sections = {
+				lualine_a = [
+					{ __unkeyed-1 = "mode"; fmt.__raw = "function(s) return (s:gsub('(%a)%a*', '%1')) end"; }
+				];
+				lualine_b = [ ];
+				lualine_c = [
+					{
+						__unkeyed-1 = "buffers";
+						mode = 0;
+						buffers_color = { active = "StlTabActive"; inactive = "StlTabInactive"; };
+						symbols = { modified = " [+]"; alternate_file = ""; directory = "/"; };
+					}
+				];
+				lualine_x = [ ];
+				lualine_y = [
+					{
+						__unkeyed-1 = "diagnostics";
+						symbols = {
+							error.__raw = ''"\u{f015a} %#StatusLine#"'';
+							warn.__raw  = ''"\u{f002a} %#StatusLine#"'';
+							info.__raw  = ''"\u{f02fd} %#StatusLine#"'';
+							hint.__raw  = ''"\u{f0336} %#StatusLine#"'';
+						};
+						diagnostics_color = {
+							error = "DiagnosticError"; warn = "DiagnosticWarn";
+							info  = "DiagnosticInfo";  hint = "DiagnosticHint";
+						};
+					}
+					{ __unkeyed-1 = "branch"; icon.__raw = ''"\u{e725}"''; }
+					"filetype"
+				];
+				lualine_z = [ "location" ];
+			};
 
 			extensions = [ ];
 		};
