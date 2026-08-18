@@ -6,8 +6,8 @@
 
 	programs.home-manager.enable = true;
 
-	# programs.nixvim = {
-		# enable = true;
-		# imports = [ ./nvim ];
-	# };
+	programs.nixvim = {
+		enable = true;
+		imports = [ ./nvim ];
+	};
 }
