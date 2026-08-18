@@ -11,5 +11,5 @@
 		imports = [ ./nvim ];
 	};
 
-	imports = [ .sioyek ];
+	imports = [ ./sioyek ];
 }
