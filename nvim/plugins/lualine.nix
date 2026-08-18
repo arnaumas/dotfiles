@@ -38,7 +38,7 @@
 				lualine_a = [
 					{ __unkeyed-1 = "mode"; fmt.__raw = "function(s) return (s:gsub('(%a)%a*', '%1')) end"; }
 				];
-				lualine_b = { __empty = null; };
+				lualine_b = [ ];
 				lualine_c = [
 					{
 						__unkeyed-1 = "buffers";
@@ -47,7 +47,7 @@
 						symbols = { modified = " [+]"; alternate_file = ""; directory = "/"; };
 					}
 				];
-				lualine_x = { __empty = null; };
+				lualine_x = [ ];
 				lualine_y = [
 					{
 						__unkeyed-1 = "diagnostics";
