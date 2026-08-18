@@ -2,9 +2,6 @@
 	# based on edge-light
 	light = rec {
 		termBg  = "#faf9f7";
-		termFg  = "#4b505b";
-		cursor      = "#5079be";
-		cursorText  = "#eeedea";
 
 		black = "#4b505b";
 		red = "#d05858";
@@ -24,8 +21,8 @@
 		whiteBg = "#eeedea";
 
 		uiFg = black;
-		dimUiFg = white;
-		uiBg = blackBg;
+		dimUiFg = blackBg;
+		uiBg = white;
 		uiDimBg = whiteBg;
 	};
 
@@ -53,9 +50,9 @@
 		cyanBg = "#2e4647";
 		whiteBg = "#1c1c24";
 
-		uiFg = white;
-		dimUiFg = black;
-		uiBg = whiteBg;
-		uiDimBg = blackBg;
+		uiFg = black;
+		dimUiFg = blackBg;
+		uiBg = white;
+		uiDimBg = whiteBg;
 	};
 }
