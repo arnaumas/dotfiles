@@ -1,14 +1,14 @@
-{ colors, lib, ... }:
+{ themes, lib, ... }:
 
 let
-	light = colors.light;
-	dark = colors.dark;
+	light = themes.light;
+	dark = themes.dark;
 
-	mkPalette = c: [
-		"0=${c.black}"   "1=${c.red}"      "2=${c.green}"   "3=${c.yellow}"
-		"4=${c.blue}"    "5=${c.magenta}"  "6=${c.cyan}"    "7=${c.white}"
-		"8=${c.blackBg}" "9=${c.redBg}"    "10=${c.greenBg}" "11=${c.yellowBg}"
-		"12=${c.blueBg}" "13=${c.magentaBg}" "14=${c.cyanBg}" "15=${c.whiteBg}"
+	mkPalette = theme: [
+		"0=${theme.black}"   "1=${theme.red}"      "2=${theme.green}"   "3=${theme.yellow}"
+		"4=${theme.blue}"    "5=${theme.magenta}"  "6=${theme.cyan}"    "7=${theme.white}"
+		"8=${theme.blackBg}" "9=${theme.redBg}"    "10=${theme.greenBg}" "11=${theme.yellowBg}"
+		"12=${theme.blueBg}" "13=${theme.magentaBg}" "14=${theme.cyanBg}" "15=${theme.whiteBg}"
 	];
 in
 {
@@ -62,7 +62,7 @@ in
 				selection-background = dark.uiBg;
 				selection-foreground = dark.uiBg;
 				selection-invert-fg-bg = false;
-				split-divider-color = "#878787";  # TODO: pull into colors.nix?
+				split-divider-color = "#878787";  
 				palette = mkPalette dark;
 			};
 		};

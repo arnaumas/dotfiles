@@ -18,7 +18,7 @@
 		in {
 			homeConfigurations.arnau = home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
-				extraSpecialArgs = { colors = import ./colors.nix; };
+				extraSpecialArgs = { themes = import ./themes.nix; };
 				modules = [ ./home.nix nixvim.homeModules.nixvim ];
 			};
 
