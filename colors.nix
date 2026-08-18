@@ -1,6 +1,5 @@
 {
 	# based on edge-light
-<<<<<<< HEAD
 	light = rec {
 		termBg  = "#faf9f7";
 		termFg  = "#4b505b";
@@ -30,40 +29,8 @@
 		uiDimBg = whiteBg;
 	};
 
+	# based on vague.nvim
 	dark = rec {
-=======
-	light = {
-			termBg  = "#faf9f7";
-			termFg  = "#4b505b";
-			cursor      = "#5079be";
-			cursorText  = "#eeedea";
-
-			black = "#4b505b";
-			red = "#d05858";
-			green = "#608e32";
-			yellow = "#be7e05"
-			blue = "#5079be";
-			magenta = "#b05ccc";
-			cyan = "#3a8b84";
-			white = "#dfe0d9";
-			blackBg = "#aaa9a4";
-			redBg = "#edc9c7";
-			greenBg = "#ccd9bc";
-			yellowBg = "#e8d4ae";
-			blueBg = "#c7d3e6";
-			magentaBg = "#e4caea";
-			cyanBg = "#c0d8d5";
-			whiteBg = "#eeedea";
-
-			uiFg = black;
-			dimUiFg = white;
-			uiBg = blackBg;
-			uiDimBg = whiteBg;
-		];
-	};
-
-	dark = {
->>>>>>> 0a904f8 (nix: color module)
 		termBg  = "#141415";
 		termFg  = "#cdcdcd";
 		cursor      = "#cdcdcd";
