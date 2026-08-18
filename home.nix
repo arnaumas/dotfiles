@@ -12,7 +12,7 @@
 	};
 
 	imports = [
-	./sioyek
-	./ghostty
+		./sioyek
+		./ghostty 
 	];
 }

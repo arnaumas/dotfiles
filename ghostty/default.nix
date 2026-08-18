@@ -4,7 +4,6 @@ let
 	light = colors.light;
 	dark = colors.dark;
 
-	# ghostty wants palette as repeated `N=#hex` lines -> list of strings.
 	mkPalette = c: [
 		"0=${c.black}"   "1=${c.red}"      "2=${c.green}"   "3=${c.yellow}"
 		"4=${c.blue}"    "5=${c.magenta}"  "6=${c.cyan}"    "7=${c.white}"
@@ -47,27 +46,22 @@ in
 			window-padding-y = "10,2";
 		};
 
-		# TODO(verify): themes schema. Each theme is a settings attrset;
-		# palette is the list form above. Confirm key name is `themes`.
 		themes = {
 			light = {
-				foreground = light.termFg;
+				foreground = light.uiFg;
 				background = light.termBg;
-				selection-background = light.white;
-				selection-foreground = light.termFg;
-				cursor-color = light.cursor;
-				cursor-text = light.cursorText;
+				selection-background = light.uiBg;
+				selection-foreground = light.uiFg;
+				selection-invert-fg-bg = false;
 				palette = mkPalette light;
 			};
 
 			dark = {
-				foreground = dark.termFg;
+				foreground = dark.uiFg;
 				background = dark.termBg;
-				selection-background = dark.white;
-				selection-foreground = dark.termFg;
+				selection-background = dark.uiBg;
+				selection-foreground = dark.uiBg;
 				selection-invert-fg-bg = false;
-				cursor-color = "cell-foreground";
-				cursor-text = "cell-background";
 				split-divider-color = "#878787";  # TODO: pull into colors.nix?
 				palette = mkPalette dark;
 			};
