@@ -10,4 +10,6 @@
 		enable = true;
 		imports = [ ./nvim ];
 	};
+
+	imports = [ .sioyek ];
 }
