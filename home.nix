@@ -4,12 +4,10 @@
 		username = "arnau";
 		homeDirectory = "/Users/arnau";
 		stateVersion = "26.05";
+		# fzf, ripgrep, bat are installed by their programs.* modules in ./zsh
 		packages = with pkgs; [
 			tmux
-			fzf
 			fd
-			ripgrep
-			bat
 		];
 	};
 
@@ -23,18 +21,13 @@
 	};
 
 	imports = [
-		./borders
 		./claude
 		./git
 		./ghostty
-		./karabiner
-		./sketchybar
-		./skhd
 		./sioyek
 		./svim
 		./tmux
 		./vim
-		./yabai
 		./zsh
 	];
 }
