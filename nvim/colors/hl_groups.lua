@@ -17,7 +17,7 @@ vim.g.colors_name = 'ansi'
 -- scheme slot 0 "black" holds a light color). Hues stay literal: normal (1-6)
 -- for foreground text, *_bg (9-14) as muted "transparency" backgrounds. The
 -- actual hex lives in colors/*.yaml, set by the terminal.
-local fg, dim_fg, bg, dim_bg = 0, 8, 7, 15
+local fg, dim_fg, bg, dim_bg = 0, 7, 8, 15
 local red, green, yellow, blue, magenta, cyan = 1, 2, 3, 4, 5, 6
 local red_bg, green_bg, yellow_bg, blue_bg, magenta_bg, cyan_bg = 9, 10, 11, 12, 13, 14
 local accent, accent_bg = green, green_bg          -- UI accent (titles, prompts, focused)

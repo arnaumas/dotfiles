@@ -5,10 +5,10 @@ let
 	dark = themes.dark;
 
 	mkPalette = theme: [
-		"0=${theme.black}"   "1=${theme.red}"      "2=${theme.green}"   "3=${theme.yellow}"
-		"4=${theme.blue}"    "5=${theme.magenta}"  "6=${theme.cyan}"    "7=${theme.white}"
-		"8=${theme.blackBg}" "9=${theme.redBg}"    "10=${theme.greenBg}" "11=${theme.yellowBg}"
-		"12=${theme.blueBg}" "13=${theme.magentaBg}" "14=${theme.cyanBg}" "15=${theme.whiteBg}"
+		"0=${theme.black or theme.white}"   "1=${theme.red}"      "2=${theme.green}"   "3=${theme.yellow}"
+		"4=${theme.blue}"    "5=${theme.magenta}"  "6=${theme.cyan}"    "7=${theme.grey}"
+		"8=${theme.blackBg or theme.whiteBg}" "9=${theme.redBg}"    "10=${theme.greenBg}" "11=${theme.yellowBg}"
+		"12=${theme.blueBg}" "13=${theme.magentaBg}" "14=${theme.cyanBg}" "15=${theme.greyBg}"
 	];
 in
 {
