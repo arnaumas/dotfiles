@@ -22,7 +22,7 @@
 
 		# buffer
 		{ mode = "n"; key = "<leader>w"; action.__raw = "function() vim.cmd[[ silent update ]] end"; options.desc = "[w]rite file"; }
-		{ mode = "n"; key = "<leader>q"; action.__raw = "vim.cmd.quit"; options.desc = "[q]uit file"; }
+		{ mode = "n"; key = "<leader>q"; action = "<cmd>quitall<CR>"; options.desc = "[q]uit file"; }
 		{ mode = "n"; key = "<leader>Q"; action.__raw = "function() vim.cmd.quit({ bang = true }) end"; options.desc = "force [q]uit file"; }
 		{ mode = "n"; key = "<leader>bn"; action.__raw = "vim.cmd.bn"; options.desc = "[b]uffer [n]ext"; }
 		{ mode = "n"; key = "<leader>bp"; action.__raw = "vim.cmd.bp"; options.desc = "[b]uffer [p]revious"; }
