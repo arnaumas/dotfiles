@@ -1,11 +1,13 @@
-{ config, lib, themes, ... }:
+{ config, lib, pkgs, themes, ... }:
 let
+	opaque = c: "${c}ff";
+
 	themeColors = theme: {
 		background_color                         = theme.termBg;
 		custom_color_mode_empty_background_color = theme.termBg;
 		page_separator_color                     = theme.termBg;
 		text_highlight_color                     = theme.uiBg;
-		visual_mark_color                        = theme.uiBg;
+		visual_mark_color                        = opaque theme.uiBg;
 		search_highlight_color                   = theme.yellow;
 		link_highlight_color                     = theme.blue;
 		synctex_highlight_color                  = theme.green;
@@ -16,8 +18,8 @@ let
 		highlight_color_e                        = theme.magenta;
 		highlight_color_f                        = theme.blue;
 		highlight_color_g                        = theme.yellow;
-		keyboard_select_background_color         = theme.green;
-		keyboard_select_text_color               = theme.uiFg;
+		keyboard_select_background_color         = opaque theme.green;
+		keyboard_select_text_color               = opaque theme.uiFg;
 		custom_background_color                  = theme.termBg;
 		custom_text_color                        = theme.uiFg;
 		ui_text_color                            = theme.uiFg;
@@ -37,6 +39,17 @@ in
 {
 	programs.sioyek = {
 		enable = true;
+		package = pkgs.sioyek.overrideAttrs (old: {
+    postInstall = old.postInstall + ''
+      res=$out/Applications/sioyek.app/Contents/Resources
+      mkdir -p $res
+      ln -s ../MacOS/shaders $res/shaders
+      for c in prefs prefs_user keys keys_user; do
+        ln -s ../MacOS/$c.config $res/$c.config
+      done
+      ln -s ../MacOS/tutorial.pdf $res/tutorial.pdf
+    '';
+		});
 
 		bindings = {
 			reload_config = "<C-r>";
