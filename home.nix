@@ -1,14 +1,25 @@
-{ ... }:
+{ pkgs, ... }:
 {
-	home.username = "arnau";
-	home.homeDirectory = "/Users/arnau";
-	home.stateVersion = "26.05";
+	home = {
+		username = "arnau";
+		homeDirectory = "/Users/arnau";
+		stateVersion = "26.05";
+		packages = with pkgs; [
+			tmux
+			fzf
+			fd
+			ripgrep
+			bat
+		];
+	}
 
-	programs.home-manager.enable = true;
+	programs = {
+		home-manager.enable = true;
 
-	programs.nixvim = {
-		enable = true;
-		imports = [ ./nvim ];
+    nixvim = {
+			enable = true;
+			imports = [ ./nvim ];
+		};
 	};
 
 	imports = [
