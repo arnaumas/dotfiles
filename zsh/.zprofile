@@ -12,6 +12,12 @@ path+=("$HOME/.local/bin")
 # obsidian
 path+=("/Applications/Obsidian.app/Contents/MacOS")
 typeset -U path
+path=(
+	$HOME/.local/state/nix/profiles/home-manager/home-path/bin  # standalone home-manager
+	/etc/profiles/per-user/$USER/bin                            # darwin home (useUserPackages)
+	/run/current-system/sw/bin                                  # darwin systemPackages
+	$path
+)
 
 # disable shell sesions
 export SHELL_SESSIONS_DISABLE=1
