@@ -2,11 +2,25 @@
 	description = "home-manager configuration";
 
 	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-		home-manager.url = "github:nix-community/home-manager";
-		home-manager.inputs.nixpkgs.follows = "nixpkgs";
+		nixpkgs = {
+			type = "github";
+			owner = "nixos";
+			repo = "nixpkgs";
+			ref = "nixos-unstable";
+		};
 
-		nvim.url = "path:./nvim";
+		home-manager = {
+			type = "github";
+			owner = "nix-community";
+			repo = "home-manager";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+		nvim = {
+			type = "path";
+			path = "./nvim";
+		};
+
 		nixvim.follows = "nvim/nixvim";
 	};
 
@@ -16,10 +30,14 @@
 			system = "aarch64-darwin";
 			pkgs = nixpkgs.legacyPackages.${system};
 		in {
+			homeModules.default = {
+				imports = [ ./home.nix nixvim.homeModules.nixvim ];
+				_module.args.themes = import ./themes.nix;
+			};
+
 			homeConfigurations.arnau = home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
-				extraSpecialArgs = { themes = import ./themes.nix; };
-				modules = [ ./home.nix nixvim.homeModules.nixvim ];
+				modules = [ self.homeModules.default ];
 			};
 
 			checks.${system}.home = self.homeConfigurations.arnau.activationPackage;
