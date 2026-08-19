@@ -12,7 +12,18 @@
 	};
 
 	imports = [
+		./borders
+		./claude
+		./git
+		./ghostty
+		./karabiner
+		./sketchybar
+		./skhd
 		./sioyek
-		./ghostty 
+		./svim
+		./tmux
+		./vim
+		./yabai
+		./zsh
 	];
 }
