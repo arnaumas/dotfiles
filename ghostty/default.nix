@@ -15,8 +15,6 @@ in
 	programs.ghostty = {
 		enable = true;
 
-		# TODO(verify): ghostty's nixpkgs package does not build on darwin.
-		# Set null and keep the brew-installed binary; module still writes config.
 		package = null;
 
 		settings = {
