@@ -1,7 +1,0 @@
-brew "lua-language-server"
-brew "texlab"
-brew "anomalyco/tap/opencode"
-brew "tmux"
-brew "switchaudio-osx"
-brew "cristianoliveira/tap/aerospace-scratchpad"
-cask "aerospace"

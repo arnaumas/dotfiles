@@ -1,9 +1,6 @@
 { pkgs, ... }:
 {
 	home = {
-		username = "arnau";
-		homeDirectory = "/Users/arnau";
-		stateVersion = "26.05";
 		# fzf, ripgrep, bat are installed by their programs.* modules in ./zsh
 		packages = with pkgs; [
 			tmux

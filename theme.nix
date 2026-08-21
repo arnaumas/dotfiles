@@ -29,9 +29,6 @@
 	# based on vague.nvim
 	dark = rec {
 		termBg  = "#141415";
-		termFg  = "#cdcdcd";
-		cursor      = "#cdcdcd";
-		cursorText  = "#141415";
 
 		white = "#cdcdcd";
 		red = "#d8647e";
