@@ -1,8 +1,8 @@
-{ config, lib, pkgs, themes, ... }:
+{ config, lib, pkgs, theme, ... }:
 let
 	opaque = c: "${c}ff";
 
-	themeColors = theme: {
+	mkPalette = theme: {
 		background_color                         = theme.termBg;
 		custom_color_mode_empty_background_color = theme.termBg;
 		page_separator_color                     = theme.termBg;
@@ -30,13 +30,12 @@ let
 		status_bar_text_color                    = theme.uiFg;
 	};
 
-	lightColors = themeColors themes.light // { custom_text_color = "#16191f"; };
-	darkColors = themeColors themes.dark;
+	lightPalette = mkPalette theme.light // { custom_text_color = "#16191f"; };
+	darkPalette = mkPalette theme.dark;
 
 	toMacro = colors: lib.concatStringsSep ";"
 		(lib.mapAttrsToList (k: v: "setconfig_${k}(${v})") (colors));
-in
-{
+in {
 	programs.sioyek = {
 		enable = true;
 		package = pkgs.sioyek.overrideAttrs (old: {
@@ -93,8 +92,8 @@ in
 			should_launch_new_window = "1";
 			open_last_file_on_startup = "1";
 			startup_commands = [ "toggle_custom_color" "toggle_statusbar" ];
-			"new_macro _set_light_theme" = toMacro lightColors;
-			"new_macro _set_dark_theme" = toMacro darkColors;
-		} // lightColors;
+			"new_macro _set_light_theme" = toMacro lightPalette;
+			"new_macro _set_dark_theme" = toMacro darkPalette;
+		} // darkPalette;
 	};
 }
