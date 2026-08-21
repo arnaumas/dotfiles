@@ -1,8 +1,8 @@
-{ themes, lib, ... }:
+{ theme, lib, ... }:
 
 let
-	light = themes.light;
-	dark = themes.dark;
+	light = theme.light;
+	dark = theme.dark;
 
 	mkPalette = theme: [
 		"0=${theme.black or theme.white}"   "1=${theme.red}"      "2=${theme.green}"   "3=${theme.yellow}"

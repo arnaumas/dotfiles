@@ -129,10 +129,6 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixvim": [
-          "nvim",
-          "nixvim"
-        ],
         "nvim": "nvim"
       }
     },

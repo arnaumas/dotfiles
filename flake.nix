@@ -1,5 +1,5 @@
 {
-	description = "home-manager configuration";
+	description = "dotfiles";
 
 	inputs = {
 		nixpkgs = {
@@ -20,26 +20,43 @@
 			type = "path";
 			path = "./nvim";
 		};
-
-		nixvim.follows = "nvim/nixvim";
 	};
 
-	outputs =
-		{ self, nixpkgs, home-manager, nixvim, nvim, ... }:
+	outputs = inputs@{ self, nixpkgs, home-manager, nvim, ... }:
 		let
-			system = "aarch64-darwin";
-			pkgs = nixpkgs.legacyPackages.${system};
+			lib = nixpkgs.lib;
+			systems = [ "aarch64-darwin" "x86_64-linux" ];
+			forEach = lib.genAttrs systems;
+			mkHomeFor = f: lib.listToAttrs (map (system: {
+				name = "arnau@${system}";
+				value = f system;
+			}) systems);
+			pkgsFor = system: nixpkgs.legacyPackages.${system};
+			homeDir = system: if lib.hasSuffix "darwin" system then "/Users/arnau" else "/home/arnau";
+
 		in {
+			# home-manager submodule
 			homeModules.default = {
-				imports = [ ./home.nix nixvim.homeModules.nixvim ];
-				_module.args.themes = import ./themes.nix;
+				imports = [ ./home.nix nvim.homeModules.default ];
 			};
 
-			homeConfigurations.arnau = home-manager.lib.homeManagerConfiguration {
-				inherit pkgs;
-				modules = [ self.homeModules.default ];
-			};
+			# standalone system agnostic home configs
+      homeConfigurations = mkHomeFor (system: home-manager.lib.homeManagerConfiguration {
+				pkgs = pkgsFor system;
+				extraSpecialArgs = { theme = import ./theme.nix; };
+				modules = [
+					{home = { username = "arnau"; homeDirectory = homeDir system; stateVersion = "26.05"; };}
+					self.homeModules.default
+				];
+			});
 
-			checks.${system}.home = self.homeConfigurations.arnau.activationPackage;
+			# checks
+			checks = forEach (system: {
+				home = (pkgsFor system).runCommandLocal "dotfiles-check" { } ''
+					echo ${self.homeConfigurations."arnau@${system}".activationPackage} > $out
+					echo ${nvim.checks.${system}.nvim} >> $out
+				'';
+			});
 		};
 }
+
