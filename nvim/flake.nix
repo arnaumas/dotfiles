@@ -1,26 +1,49 @@
 {
-	description = "nixvim configuration";
+	description = "nvim configuration";
 
 	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-		nixvim.url = "github:nix-community/nixvim";
+		nixpkgs = {
+			type = "github";
+			owner = "nixos";
+			repo = "nixpkgs";
+			ref = "nixos-unstable";
+		};
+
+		nixvim = {
+			type = "github";
+			owner = "nix-community";
+			repo = "nixvim";
+		};
 	};
 
-	outputs =
-		{ self, nixpkgs, nixvim }:
-		let
-			system = "aarch64-darwin";
-			pkgs = nixpkgs.legacyPackages.${system};
-		in
-		{
-			packages.${system}.default = nixvim.legacyPackages.${system}.makeNixvimWithModule {
-				inherit pkgs;
-				module = ./.;
-			};
+	outputs = { self, nixpkgs, nixvim, ... }:
+    let
+			lib = nixpkgs.lib;
+      systems = [ "aarch64-darwin" "x86_64-linux" ];
+      forEach = lib.genAttrs systems;
+			pkgsFor = system: nixpkgs.legacyPackages.${system};
 
-			checks.${system}.default = nixvim.lib.${system}.check.mkTestDerivationFromNvim {
-				nvim = self.packages.${system}.default;
-				name = "nvim-check";
-			};
+    in {
+      # home-manager submodule
+			homeModules.default = {
+        imports = [ nixvim.homeModules.nixvim ];
+        programs.nixvim.imports = [ ./. ] ;
+      };
+
+			# standalone system agnostic neovim package
+			packages = forEach (system: {
+				default = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+					pkgs = pkgsFor system;
+					module = ./.;
+				};
+			});
+
+			# checks
+			checks = forEach (system: {
+				nvim = nixvim.lib.${system}.check.mkTestDerivationFromNixvimModule {
+					pkgs = pkgsFor system;
+					module = ./.;
+				};
+			});
 		};
 }
