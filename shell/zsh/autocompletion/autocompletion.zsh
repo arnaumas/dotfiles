@@ -18,6 +18,7 @@ typeset -ga FZF_DEEP_CMDS=(vim nvim vi cd)
 tab-accept-or-complete() {
 	if [[ -n "$POSTDISPLAY" ]]; then
 		zle autosuggest-accept
+		region_highlight=( ${(M)region_highlight:#*memo=*} )
 		zle redisplay
 		return
 	fi

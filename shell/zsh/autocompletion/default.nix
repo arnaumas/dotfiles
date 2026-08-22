@@ -3,6 +3,7 @@
 	programs.zsh.autosuggestion = {
 		enable = true;
 		highlight = "fg=7";
+		strategy = [];
 	};
 
 	programs.zsh.localVariables = {
