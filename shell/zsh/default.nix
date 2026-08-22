@@ -38,7 +38,6 @@
 		};
 
 		# plugins, nix-managed (flake-locked) instead of git-cloned on demand
-		autosuggestion.enable = true;
 		syntaxHighlighting = {
 			enable = true;
 			highlighters = [ "main" "brackets" ];
@@ -223,64 +222,11 @@
 			bindkey -M visual '^[[3~' vi-delete
 			bindkey -M vicmd '^e' edit-command-line
 			# <--
-
-			# zsh-autosuggestions -->
-			ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=7"          # recessive grey (matches palette)
-			ZSH_AUTOSUGGEST_STRATEGY=(unique_completion)
-			ZSH_AUTOSUGGEST_USE_ASYNC=1
-			ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30              # no suggestions on very long lines
-
-			# suggest only unambiguous completions (upstream inserts the first blindly)
-			_zsh_autosuggest_capture_postcompletion() {
-				(( compstate[nmatches] == 1 )) && compstate[insert]=1 || unset 'compstate[insert]'
-				unset 'compstate[list]'
-			}
-
-			# an untouched buffer means nothing was inserted
-			_zsh_autosuggest_strategy_unique_completion() {
-				_zsh_autosuggest_strategy_completion "$@"
-				[[ "$suggestion" == "$1" ]] && unset suggestion
-			}
-
-			# <Tab> accepts the suggestion if there is one, else opens fzf-tab
-			typeset -ga FZF_DEEP_CMDS=(vim nvim vi cd)
-			tab-accept-or-complete() {
-				[[ -n "$POSTDISPLAY" ]] && { zle autosuggest-accept; return }
-
-				local words=(''${(z)LBUFFER}) cmd
-				cmd=$words[1]
-
-				# still on the first word -> command completion
-				if (( ''${#words} <= 1 )) && [[ ''${LBUFFER[-1]} != ' ' ]]; then
-					zle fzf-tab-complete; return
-				fi
-
-				if (( ''${FZF_DEEP_CMDS[(Ie)$cmd]} )) || [[ -z $_comps[$cmd] || $_comps[$cmd] == _default ]]; then
-					zle fzf-completion
-				else
-					zle fzf-tab-complete
-				fi
-			}
-			zle -N tab-accept-or-complete
-			bindkey -M viins '^I' tab-accept-or-complete
-
-			# misc -->
-			# clear half the screen
-			# TODO: Fix this
-			clear-half() {
-				CURSOR_PREV="$CURSOR"
-				HALFLINES=$(( (LINES-1)/2 ))
-				for i in {1..$HALFLINES}; do echo; done
-				if [[ $? -eq 0 ]]; then
-					tput cup $(( HALFLINES )) $((CURSOR_PREV + 2))
-				else
-					tput cup $(( LINES - HALFLINES )) $((CURSOR_PREV + 3 + $#?))
-				fi
-			}
-			zle -N clear-half
-			bindkey -M vicmd "zz" clear-half
-			# <--
 		'';
 	};
-	# <--
+
+	imports = [
+		./prompt
+		./autocompletion
+	];
 }

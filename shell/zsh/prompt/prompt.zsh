@@ -1,3 +1,4 @@
+autoload -Uz async && async
 autoload -Uz add-zsh-hook add-zle-hook-widget vcs_info
 zmodload zsh/datetime 2>/dev/null
 
@@ -136,3 +137,14 @@ _p_keymap() {
 zle -N _p_keymap
 add-zle-hook-widget zle-keymap-select _p_keymap
 add-zle-hook-widget zle-line-init _p_keymap
+
+new-line() {
+	if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
+		NEW_LINE_BEFORE_PROMPT=1
+	elif [ "$NEW_LINE_BEFORE_PROMPT" -eq 1 ]; then
+		echo ""
+	fi
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd new-line
+

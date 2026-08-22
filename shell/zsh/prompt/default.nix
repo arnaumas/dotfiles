@@ -11,17 +11,6 @@
 
 	programs.zsh.initContent = lib.mkAfter ''
 		fpath+=(${pkgs.pure-prompt}/share/zsh/site-functions)
-		autoload -Uz async && async
-		source ${./prompt.zsh}
-
-		new-line() {
-			if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
-				NEW_LINE_BEFORE_PROMPT=1
-			elif [ "$NEW_LINE_BEFORE_PROMPT" -eq 1 ]; then
-				echo ""
-			fi
-		}
-		autoload -Uz add-zsh-hook
-		add-zsh-hook precmd new-line
+		${builtins.readFile ./prompt.zsh}
 	'';
 }
