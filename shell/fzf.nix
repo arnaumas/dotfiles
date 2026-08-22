@@ -50,7 +50,7 @@ in {
 	programs.fzf = {
 		enable = true;
 		package = fzf;
-		enableZshIntegration = true;                 # replaces `source <(fzf --zsh)`
+		enableZshIntegration = true;
 	};
 
 	programs.zsh.plugins = [
@@ -60,28 +60,4 @@ in {
 			file = "share/fzf-tab/fzf-tab.plugin.zsh";
 		}
 	];
-
-	programs.zsh.initContent = lib.mkAfter ''
-		# fzf-tab -->
-		# empty (but set) trigger so `fzf-completion` fires on a bare Tab. the Tab
-		# widget in the zsh module decides when to call it.
-		export FZF_COMPLETION_TRIGGER=
-		zstyle ':fzf-tab:*' switch-group '^' '+'
-		zstyle ':fzf-tab:*' continuous-trigger '/'
-		zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -p --color=always -- "$realpath" 2>/dev/null'
-		zstyle ':fzf-tab:complete:*:*' fzf-preview \
-			'[[ -d "$realpath" ]] && ls -p --color=always -- "$realpath" 2>/dev/null || bat --color=always --style=plain --theme=ansi16 -- "$realpath" 2>/dev/null || true'
-		# <--
-
-		export FZF_COMPLETION_OPTS='--ansi --height=40%'
-		_fzf_compgen_path() { fd --strip-cwd-prefix --hidden --follow --color=always --exclude .git }
-		_fzf_compgen_dir()  { fd --strip-cwd-prefix --type d --hidden --follow --color=always --exclude .git }
-		_fzf_comprun() {
-			local command=$1; shift
-			case "$command" in
-				cd) fzf --preview 'ls -p --color=always -- {} 2>/dev/null' "$@" ;;
-				*)  fzf --preview '[[ -d {} ]] && ls -p --color=always -- {} 2>/dev/null || bat --color=always --style=plain -- {} 2>/dev/null || true' "$@" ;;
-			esac
-		}
-	'';
 }

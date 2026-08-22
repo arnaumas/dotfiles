@@ -9,27 +9,11 @@
 		"zsh/.inputrc".source = ./.inputrc;
 	};
 
-	# zsh -->
 	programs.zsh = {
 		enable = true;
 		dotDir = "${config.xdg.configHome}/zsh";
 
 		autocd = true;
-		defaultKeymap = "viins";                      # vi mode (was `bindkey -v`)
-
-		# match the old raw config exactly: no dedup, no share, incremental append
-		# (inc_append_history is set in initContent since hm only offers share).
-		history = {
-			path = "${config.xdg.cacheHome}/zsh/history";
-			size = 10000000;
-			save = 10000000;
-			share = false;
-			extended = false;
-			ignoreDups = false;
-			ignoreAllDups = false;
-			ignoreSpace = false;
-			expireDuplicatesFirst = false;
-		};
 
 		shellGlobalAliases = {
 			"..." = "../..";
@@ -37,119 +21,17 @@
 			"....." = "../../../..";
 		};
 
-		# plugins, nix-managed (flake-locked) instead of git-cloned on demand
-		syntaxHighlighting = {
-			enable = true;
-			highlighters = [ "main" "brackets" ];
-			# map onto the same ANSI slots as the editor: command position blue;
-			# strings green; comments yellow; existing paths underlined; globs cyan.
-			styles = {
-				command = "fg=4";
-				builtin = "fg=4";
-				function = "fg=4";
-				alias = "fg=4";
-				precommand = "fg=4";
-				single-quoted-argument = "fg=2";
-				double-quoted-argument = "fg=2";
-				dollar-quoted-argument = "fg=2";
-				comment = "fg=3";
-				path = "underline";
-				globbing = "fg=6";
-				unknown-token = "none";
-				single-hyphen-option = "none";
-				double-hyphen-option = "none";
-				commandseparator = "none";
-				redirection = "none";
-				reserved-word = "none";
-				default = "none";
-				cursor-matchingbracket = "fg=10,underline";
-				bracket-level-1 = "fg=7";
-				bracket-level-2 = "fg=7";
-				bracket-level-3 = "fg=7";
-				bracket-level-4 = "fg=7";
-				bracket-error = "fg=7";
-			};
-		};
-
-		# preserve the old compinit: hidden-file globbing, cache in XDG_CACHE_HOME
-		completionInit = ''
-			_comp_options+=(globdots)
-			autoload -U compinit
-			compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
-			zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
-		'';
-
-		# GNUPGHOME here (.zshenv) so gpg finds it in non-login shells too
-		envExtra = ''
-			export GNUPGHOME="${config.xdg.configHome}/gnupg"
-			export HOMEBREW_NO_AUTO_UPDATE=1
-		'';
-
-		# was ~/.config/zsh/.zprofile (raw)
-		profileExtra = ''
-			# homebrew: sets HOMEBREW_PREFIX, MANPATH, INFOPATH, fpath and prepends
-			# /opt/homebrew/{bin,sbin}. The nix block below prepends the nix profiles
-			# ahead of these, so nix wins; brew stays on PATH for not-yet-migrated tools.
-			eval "$(/opt/homebrew/bin/brew shellenv)"
-			path=("$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin" $path)
-			path+=("$HOME/.local/bin")                           # claude code
-			path+=("/Applications/Obsidian.app/Contents/MacOS")  # obsidian
-
-			# nix profiles win over homebrew -->
-			path=(
-				$HOME/.local/state/nix/profiles/home-manager/home-path/bin  # standalone home-manager
-				/etc/profiles/per-user/$USER/bin                            # darwin home (useUserPackages)
-				/run/current-system/sw/bin                                  # darwin systemPackages
-				$path
-			)
-			typeset -U path
-			# <--
-
-			export SHELL_SESSIONS_DISABLE=1
-		'';
 
 		# everything irreducibly imperative (custom widgets, zle hooks, zstyles,
 		# functions). mkAfter so it runs after hm's compinit + plugin sourcing, so
 		# our keybinds (e.g. Tab) win over fzf-tab's own.
 		initContent = lib.mkAfter ''
-			# general -->
-			autoload -U colors && colors            # enable colors
-			zle_highlight=('paste:none')            # don't highlight pasted text
-			setopt inc_append_history               # append to history without exiting
-			# <--
-
-			# history search: use existing string to search -->
-			autoload -Uz up-line-or-beginning-search
-			autoload -Uz down-line-or-beginning-search
-			zle -N up-line-or-beginning-search
-			zle -N down-line-or-beginning-search
-			bindkey -M viins "^[[A" up-line-or-beginning-search
-			bindkey -M viins "^[[B" down-line-or-beginning-search
-			# <--
-
 			# aliases -->
 			mkd() {
 				mkdir -pv -- "$1" && cd -- "$1"
 			}
 			# <--
 
-			# completion zstyles -->
-			# tried in order, each only if the previous found nothing; fuzzy last
-			zstyle ':completion:*' matcher-list \
-				''' \
-				'm:{a-z}={A-Z}' \
-				'r:|[._-]=* r:|=*' \
-				'r:|?=**'
-
-			# candidate colors: dir=blue, symlink=magenta (files stay default)
-			zstyle ':completion:*' list-colors \
-				'di=34' 'ln=35' 'so=32' 'pi=33' 'ex=31' \
-				'bd=34;46' 'cd=34;43' 'su=30;41' 'sg=30;46' 'tw=30;42' 'ow=30;43'
-
-			# cd: prefer real local dirs over $cdpath, and allow ../
-			zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack
-			zstyle ':completion:*' special-dirs false
-			# <--
 
 			# keybinds: free these for terminal navigation -->
 			bindkey -r ^J
@@ -190,43 +72,14 @@
 			bindkey -M vicmd '^o' refs-widget
 			# <--
 
-			# vi mode -->
-			export KEYTIMEOUT=1     # do not wait to enter vi mode
-
-			bindkey "^?" backward-delete-char
-			bindkey -M viins "^[[3~" delete-char
-
-			# change cursor shape for different vi modes
-			beam-cursor() { echo -ne '\e[6 q' }
-			block-cursor() { echo -ne '\e[2 q' }
-			function switch-cursor () {
-				case $KEYMAP in
-					vicmd) block-cursor;;             # block cursor in normal mode
-					viins|main) beam-cursor;;         # beam cursor in insert mode
-				esac
-			}
-			zle -N switch-cursor
-			zle -N beam-cursor
-			add-zle-hook-widget zle-keymap-select switch-cursor
-			add-zle-hook-widget zle-line-init beam-cursor
-			add-zsh-hook preexec beam-cursor
-
-			# use existing string to search history also in vi mode
-			bindkey -M vicmd "k" up-line-or-beginning-search
-			bindkey -M vicmd "j" down-line-or-beginning-search
-
-			# edit line in vim with ctrl-e
-			autoload edit-command-line; zle -N edit-command-line
-			bindkey '^e' edit-command-line
-			bindkey -M vicmd '^[[3~' vi-delete-char
-			bindkey -M visual '^[[3~' vi-delete
-			bindkey -M vicmd '^e' edit-command-line
-			# <--
 		'';
 	};
 
 	imports = [
 		./prompt
-		./autocompletion
+		./completion
+		./syntax.nix
+		./history.nix
+		./vi.nix
 	];
 }
