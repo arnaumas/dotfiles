@@ -51,12 +51,38 @@
 			});
 
 			# checks
-			checks = forEach (system: {
-				home = (pkgsFor system).runCommandLocal "dotfiles-check" { } ''
-					echo ${self.homeConfigurations."arnau@${system}".activationPackage} > $out
-					echo ${nvim.checks.${system}.nvim} >> $out
-				'';
-			});
+			checks = forEach (system:
+				let
+					pkgs = pkgsFor system;
+					zdotdir = "${self.homeConfigurations."arnau@${system}".config.home-files}/.config/zsh";
+
+					# headless zsh startup check: parse the generated rc and source it once,
+					# failing on real startup errors (benign sandbox noise is ignored).
+					zshCheck = pkgs.runCommandLocal "zsh-startup-check" {
+						nativeBuildInputs = [ pkgs.zsh ];
+					} ''
+						# parse-check every line we author (readFile-inlined -> all in .zshrc)
+						zsh -n ${zdotdir}/.zshrc
+
+						# source the real rc in an interactive shell; discard stdout, keep stderr
+						export HOME=$(mktemp -d)
+						export XDG_CACHE_HOME=$HOME/.cache XDG_CONFIG_HOME=$HOME/.config
+						mkdir -p $XDG_CACHE_HOME/zsh
+						export ZDOTDIR=${zdotdir} TERM=xterm
+
+						err=$(zsh -i -c exit 2>&1 1>/dev/null) || true
+						bad=$(printf '%s\n' "$err" | grep -Ei 'bad substitution|parse error|not found|no such file|syntax error' || true)
+						[ -z "$bad" ] || { printf 'zsh startup errors:\n%s\n' "$bad" >&2; exit 1; }
+
+						touch $out
+					'';
+				in {
+					home = pkgs.runCommandLocal "dotfiles-check" { } ''
+						echo ${self.homeConfigurations."arnau@${system}".activationPackage} > $out
+						echo ${nvim.checks.${system}.nvim} >> $out
+						echo ${zshCheck} >> $out
+					'';
+				});
 		};
 }
 
