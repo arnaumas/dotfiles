@@ -2,9 +2,9 @@
 	imports = [
 		./core.nix
 		./zsh
-		./prompt
 		./tmux
 		./bat
-		./fzf
+		./fzf.nix
+		./rg.nix
 	];
 }

@@ -9,29 +9,6 @@
 		"zsh/.inputrc".source = ./.inputrc;
 	};
 
-	# ripgrep -->
-	# replaces the raw rgconf + RIPGREP_CONFIG_PATH; hm writes the config file
-	# and points RIPGREP_CONFIG_PATH at it.
-	programs.ripgrep = {
-		enable = true;
-		arguments = [
-			"--colors=match:none"
-			"--colors=match:fg:yellow"
-			"--colors=match:style:bold"
-
-			"--colors=path:none"
-			"--colors=path:fg:blue"
-
-			"--colors=line:none"
-			"--colors=line:fg:black"
-			"--colors=line:style:intense"
-			"--colors=column:none"
-			"--colors=column:fg:black"
-			"--colors=column:style:intense"
-		];
-	};
-	# <--
-
 	# zsh -->
 	programs.zsh = {
 		enable = true;
