@@ -1,3 +1,8 @@
 { ... }: {
-	imports = [ ./zsh ./tmux ./bat ];
+	imports = [ 
+		./zsh
+		./tmux
+		./bat
+		./fzf
+	];
 }

@@ -40,32 +40,6 @@
 	};
 	# <--
 
-	# fzf -->
-	programs.fzf = {
-		enable = true;
-		enableZshIntegration = true;                 # replaces `source <(fzf --zsh)`
-		defaultOptions = [
-			"--height=~8"
-			"--layout=reverse"
-			"--color=fg:-1,list-fg:0,bg:-1"
-			"--color=fg+:-1:bold,bg+:8"
-			"--color=hl:3:bold,hl+:3:bold"
-			"--color=query:-1:regular,prompt:4:regular,marker:3:bold"
-			"--color=gutter:-1,pointer:4:regular"
-			"--padding=0,0,0,1"
-			"--border=none"
-			"--pointer=\" \""
-			"--marker=\"+\""
-			"--cycle"
-			"--no-scrollbar"
-			"--no-info"
-			"--no-separator"
-			"--preview-border=line"
-			"--color=preview-border:7"
-		];
-	};
-	# <--
-
 	# zsh -->
 	programs.zsh = {
 		enable = true;
@@ -136,14 +110,6 @@
 				bracket-error = "fg=7";
 			};
 		};
-
-		plugins = [
-			{
-				name = "fzf-tab";
-				src = pkgs.zsh-fzf-tab;
-				file = "share/fzf-tab/fzf-tab.plugin.zsh";
-			}
-		];
 
 		# preserve the old compinit: hidden-file globbing, cache in XDG_CACHE_HOME
 		completionInit = ''
@@ -346,15 +312,6 @@
 			bindkey -M vicmd '^e' edit-command-line
 			# <--
 
-			# fzf-tab -->
-			zstyle ':fzf-tab:*' use-fzf-default-opts yes
-			zstyle ':fzf-tab:*' switch-group '^' '+'
-			zstyle ':fzf-tab:*' continuous-trigger '/'
-			zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -p --color=always -- "$realpath" 2>/dev/null'
-			zstyle ':fzf-tab:complete:*:*' fzf-preview \
-				'[[ -d "$realpath" ]] && ls -p --color=always -- "$realpath" 2>/dev/null || bat --color=always --style=plain --theme=ansi16 -- "$realpath" 2>/dev/null || true'
-			# <--
-
 			# zsh-autosuggestions -->
 			ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=7"          # recessive grey (matches palette)
 			ZSH_AUTOSUGGEST_STRATEGY=(unique_completion)
@@ -374,12 +331,26 @@
 			}
 
 			# <Tab> accepts the suggestion if there is one, else opens fzf-tab
+			typeset -ga FZF_DEEP_CMDS=(vim nvim vi cd)
 			tab-accept-or-complete() {
-				[[ -n "$POSTDISPLAY" ]] && zle autosuggest-accept || zle fzf-tab-complete
+				[[ -n "$POSTDISPLAY" ]] && { zle autosuggest-accept; return }
+
+				local words=(''${(z)LBUFFER}) cmd
+				cmd=$words[1]
+
+				# still on the first word -> command completion
+				if (( ''${#words} <= 1 )) && [[ ''${LBUFFER[-1]} != ' ' ]]; then
+					zle fzf-tab-complete; return
+				fi
+
+				if (( ''${FZF_DEEP_CMDS[(Ie)$cmd]} )) || [[ -z $_comps[$cmd] || $_comps[$cmd] == _default ]]; then
+					zle fzf-completion
+				else
+					zle fzf-tab-complete
+				fi
 			}
 			zle -N tab-accept-or-complete
 			bindkey -M viins '^I' tab-accept-or-complete
-			# <--
 
 			# misc -->
 			# clear half the screen
