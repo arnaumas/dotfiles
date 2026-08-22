@@ -1,8 +1,7 @@
-{ pkgs, lib, config, ... }:
+{ lib, config, ... }:
 {
 	home.file = {
 		".editrc".source = ./.editrc;
-		# ensure the zsh cache dir exists for HISTFILE + zcompdump
 		".cache/zsh/.keep".text = "";
 	};
 
@@ -213,30 +212,6 @@
 			zle -N refs-widget
 			bindkey -M viins '^o' refs-widget
 			bindkey -M vicmd '^o' refs-widget
-			# <--
-
-			# prompt -->
-			fpath+=(${pkgs.pure-prompt}/share/zsh/site-functions)
-			autoload -Uz async && async
-			export PURE_PROMPT_SYMBOL='>'
-			export PURE_PROMPT_VICMD_SYMBOL='<'
-			export PURE_GIT_UP_ARROW='↑'
-			export PURE_GIT_DOWN_ARROW='↓'
-			source ${./prompt.zsh}
-
-			# print newline after command but not first line
-			new-line() {
-				if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
-					NEW_LINE_BEFORE_PROMPT=1
-				elif [ "$NEW_LINE_BEFORE_PROMPT" -eq 1 ]; then
-					echo ""
-				fi
-			}
-			autoload -Uz add-zsh-hook
-			add-zsh-hook precmd new-line
-
-			# redefine clear so it does not add a newline
-			alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 			# <--
 
 			# vi mode -->
