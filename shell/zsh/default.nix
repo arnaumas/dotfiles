@@ -10,13 +10,6 @@
 		"zsh/.inputrc".source = ./.inputrc;
 	};
 
-	# bat -->
-	programs.bat = {
-		enable = true;
-		config.theme = "ansi16";
-	};
-	# <--
-
 	# ripgrep -->
 	# replaces the raw rgconf + RIPGREP_CONFIG_PATH; hm writes the config file
 	# and points RIPGREP_CONFIG_PATH at it.
@@ -43,7 +36,7 @@
 	# zsh -->
 	programs.zsh = {
 		enable = true;
-		dotDir = ".config/zsh";                       # preserve ZDOTDIR layout
+		dotDir = "${config.xdg.configHome}/zsh";
 
 		autocd = true;
 		defaultKeymap = "viins";                      # vi mode (was `bindkey -v`)
@@ -60,14 +53,6 @@
 			ignoreAllDups = false;
 			ignoreSpace = false;
 			expireDuplicatesFirst = false;
-		};
-
-		shellAliases = {
-			cp = "cp -iv";
-			mv = "mv -iv";
-			rm = "rm -Ivr";
-			vim = "nvim";
-			python = "python3";
 		};
 
 		shellGlobalAliases = {
@@ -119,23 +104,9 @@
 			zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 		'';
 
-		# was ~/.zshenv (raw)
+		# GNUPGHOME here (.zshenv) so gpg finds it in non-login shells too
 		envExtra = ''
-			# move configuration files to ~/.config
-			export XDG_CONFIG_HOME="$HOME/.config"
-			export XDG_DATA_HOME="$HOME/.local/share"
-			export XDG_CACHE_HOME="$HOME/.cache"
-			export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
-			export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
-
-			export EDITOR="nvim"
-			export VISUAL="nvim"
-			export MANPAGER='nvim +Man!'
-			export MANWIDTH=999
-
-			export PYTHON_HISTORY="$XDG_CACHE_HOME/python/history"
-			export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
-
+			export GNUPGHOME="${config.xdg.configHome}/gnupg"
 			export HOMEBREW_NO_AUTO_UPDATE=1
 		'';
 
@@ -182,8 +153,6 @@
 			# <--
 
 			# aliases -->
-			# ll: hidden files, dir slashes, no total/DS_Store, no perms
-			alias ll"=ls -ohAF --color=always | sed '1d;/.DS_Store/d;s/^.\{11\}[[:space:]]*[[:digit:]]*[[:space:]]//g'"
 			mkd() {
 				mkdir -pv -- "$1" && cd -- "$1"
 			}
@@ -201,7 +170,6 @@
 			zstyle ':completion:*' list-colors \
 				'di=34' 'ln=35' 'so=32' 'pi=33' 'ex=31' \
 				'bd=34;46' 'cd=34;43' 'su=30;41' 'sg=30;46' 'tw=30;42' 'ow=30;43'
-			export LS_COLORS='rs=0:no=0:fi=0:di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
 
 			# cd: prefer real local dirs over $cdpath, and allow ../
 			zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack
