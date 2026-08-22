@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
 	home = {
-		# fzf, ripgrep, bat are installed by their programs.* modules in ./zsh
 		packages = with pkgs; [
 			tmux
 			fd
@@ -18,13 +17,12 @@
 	};
 
 	imports = [
+		./shell
 		./claude
 		./git
 		./ghostty
 		./sioyek
 		./svim
-		./tmux
 		./vim
-		./zsh
 	];
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>name</key><string>ansi16</string>
+  <key>settings</key><array>
+
+    <!-- globals: terminal default fg/bg (alpha 01) -->
+    <dict><key>settings</key><dict>
+      <key>background</key><string>#00000001</string>
+      <key>foreground</key><string>#00000001</string>
+      <key>caret</key><string>#04000000</string>
+      <key>lineHighlight</key><string>#0F000000</string>
+    </dict></dict>
+
+    <!-- comments: yellow italic (tonsky: comments carry meaning) -->
+    <dict><key>scope</key><string>comment, punctuation.definition.comment</string>
+      <key>settings</key><dict>
+        <key>foreground</key><string>#03000000</string>
+        <key>fontStyle</key><string>italic</string></dict></dict>
+
+    <!-- strings / numbers / chars: green -->
+    <dict><key>scope</key><string>string, constant.numeric, constant.character</string>
+      <key>settings</key><dict><key>foreground</key><string>#02000000</string></dict></dict>
+
+    <!-- escapes / special chars: cyan -->
+    <dict><key>scope</key><string>constant.character.escape, constant.other.placeholder</string>
+      <key>settings</key><dict><key>foreground</key><string>#06000000</string></dict></dict>
+
+    <!-- constants / booleans / enum members: magenta -->
+    <dict><key>scope</key><string>constant.language, constant.other, variable.other.constant, support.constant</string>
+      <key>settings</key><dict><key>foreground</key><string>#05000000</string></dict></dict>
+
+    <!-- definitions: blue (functions, classes, types, tags) -->
+    <dict><key>scope</key><string>entity.name.function, entity.name.class, entity.name.type, entity.name.tag, support.class</string>
+      <key>settings</key><dict><key>foreground</key><string>#04000000</string></dict></dict>
+
+    <!-- operators / punctuation / delimiters: dim grey -->
+    <dict><key>scope</key><string>keyword.operator, punctuation, meta.brace, meta.delimiter</string>
+      <key>settings</key><dict><key>foreground</key><string>#08000000</string></dict></dict>
+
+    <!-- keywords / storage / identifiers / types: default fg (unhighlighted) -->
+    <dict><key>scope</key><string>keyword, storage, storage.type, storage.modifier, variable, support.type, support.function</string>
+      <key>settings</key><dict><key>foreground</key><string>#00000001</string></dict></dict>
+
+    <!-- markup: headings/links blue, raw green, bold/italic attrs -->
+    <dict><key>scope</key><string>markup.heading, markup.underline.link</string>
+      <key>settings</key><dict>
+        <key>foreground</key><string>#04000000</string>
+        <key>fontStyle</key><string>bold</string></dict></dict>
+    <dict><key>scope</key><string>markup.raw, markup.inline.raw</string>
+      <key>settings</key><dict><key>foreground</key><string>#02000000</string></dict></dict>
+    <dict><key>scope</key><string>markup.bold</string>
+      <key>settings</key><dict><key>fontStyle</key><string>bold</string></dict></dict>
+    <dict><key>scope</key><string>markup.italic</string>
+      <key>settings</key><dict><key>fontStyle</key><string>italic</string></dict></dict>
+
+    <!-- diff -->
+    <dict><key>scope</key><string>markup.inserted</string>
+      <key>settings</key><dict><key>foreground</key><string>#02000000</string></dict></dict>
+    <dict><key>scope</key><string>markup.deleted</string>
+      <key>settings</key><dict><key>foreground</key><string>#01000000</string></dict></dict>
+    <dict><key>scope</key><string>markup.changed</string>
+      <key>settings</key><dict><key>foreground</key><string>#03000000</string></dict></dict>
+
+    <!-- errors / todo -->
+    <dict><key>scope</key><string>invalid, invalid.illegal</string>
+      <key>settings</key><dict><key>foreground</key><string>#01000000</string></dict></dict>
+
+  </array>
+</dict></plist>
