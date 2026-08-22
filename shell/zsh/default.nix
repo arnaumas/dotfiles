@@ -247,22 +247,14 @@
 			bindkey -M vicmd '^o' refs-widget
 			# <--
 
-			# prompt: pure -->
+			# prompt -->
 			fpath+=(${pkgs.pure-prompt}/share/zsh/site-functions)
+			autoload -Uz async && async
 			export PURE_PROMPT_SYMBOL='>'
 			export PURE_PROMPT_VICMD_SYMBOL='<'
 			export PURE_GIT_UP_ARROW='↑'
 			export PURE_GIT_DOWN_ARROW='↓'
-			autoload -U promptinit; promptinit
-			prompt pure
-
-			# override Pure colors to use the ANSI palette (dirty-git '*' defaults
-			# to a hardcoded 256-color; use palette yellow instead).
-			zstyle ':prompt:pure:git:dirty' color yellow
-			zstyle ':prompt:pure:git:branch' color default
-			zstyle ':prompt:pure:host' color 7
-			zstyle ':prompt:pure:user' color 7
-			zstyle ':prompt:pure:virtualenv' color 7
+			source ${./prompt.zsh}
 
 			# print newline after command but not first line
 			new-line() {

@@ -31,6 +31,7 @@ in
 			quick-terminal-position = "center";
 			quick-terminal-size = "30%,30%";
 
+			cursor-style = "bar";
 			cursor-color = "cell-foreground";
 			cursor-text = "cell-background";
 
