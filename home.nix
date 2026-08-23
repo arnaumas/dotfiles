@@ -23,7 +23,6 @@
 		./claude
 		./git
 		./ghostty
-		./sioyek
 		./svim
 		./vim
 	];

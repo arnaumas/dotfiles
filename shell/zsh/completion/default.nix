@@ -9,12 +9,8 @@
 
 		completionInit = ''
 			_comp_options+=(globdots)
-			autoload -Uz compinit
-			if [[ -n "$XDG_CACHE_HOME/zsh/zcompdump"(#qN.mh+24) ]]; then
-				compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
-			else
-				compinit -C -d "$XDG_CACHE_HOME/zsh/zcompdump"
-			fi
+			autoload -U compinit
+			compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
 			zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 		'';
 

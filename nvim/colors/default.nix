@@ -1,4 +1,4 @@
 {
-	colorscheme = "ansi";
-	extraFiles."colors/ansi.lua".source = ./hl_groups.lua;
+  colorscheme = "ansi";
+  extraFiles."colors/ansi.lua".source = ./hl_groups.lua;
 }

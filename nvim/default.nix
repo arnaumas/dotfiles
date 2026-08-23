@@ -1,8 +1,8 @@
 {
-	imports = [
-		./core
-		./plugins
-		./filetypes
-		./colors
-	];
+  imports = [
+    ./core
+    ./plugins
+    ./filetypes
+    ./colors
+  ];
 }

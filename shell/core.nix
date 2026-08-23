@@ -1,6 +1,8 @@
 { config, ... }:
 {
 	home = {
+		file.".editrc".source = ./.editrc;
+
 		sessionPath = [ "${config.home.homeDirectory}/.local/bin"];
 
 		sessionVariables = {
