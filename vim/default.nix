@@ -1,4 +1,4 @@
 { ... }:
 {
-	xdg.configFile."vim/vimrc".source = ./vimrc;
+  xdg.configFile."vim/vimrc".source = ./vimrc;
 }

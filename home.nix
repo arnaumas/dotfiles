@@ -1,29 +1,29 @@
 { pkgs, ... }:
 {
-	xdg.enable = true;
+  xdg.enable = true;
 
-	home = {
-		packages = with pkgs; [
-			tmux
-			fd
-		];
-	};
+  home = {
+    packages = with pkgs; [
+      tmux
+      fd
+    ];
+  };
 
-	programs = {
-		home-manager.enable = true;
+  programs = {
+    home-manager.enable = true;
 
     nixvim = {
-			enable = true;
-			imports = [ ./nvim ];
-		};
-	};
+      enable = true;
+      imports = [ ./nvim ];
+    };
+  };
 
-	imports = [
-		./shell
-		./claude
-		./git
-		./ghostty
-		./svim
-		./vim
-	];
+  imports = [
+    ./shell
+    ./claude
+    ./git
+    ./ghostty
+    ./svim
+    ./vim
+  ];
 }

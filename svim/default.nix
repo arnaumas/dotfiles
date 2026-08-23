@@ -1,4 +1,4 @@
 { ... }:
 {
-	xdg.configFile."svim/blacklist".source = ./blacklist;
+  xdg.configFile."svim/blacklist".source = ./blacklist;
 }

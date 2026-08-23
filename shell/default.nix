@@ -1,10 +1,10 @@
 { ... }: {
-	imports = [
-		./core.nix
-		./zsh
-		./tmux
-		./bat
-		./fzf.nix
-		./rg.nix
-	];
+  imports = [
+    ./core.nix
+    ./zsh
+    ./tmux
+    ./bat
+    ./fzf.nix
+    ./rg.nix
+  ];
 }
