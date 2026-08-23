@@ -1,14 +1,16 @@
 {
-  opts = {
-    # general
-    swapfile = false;
-    clipboard = "unnamedplus";
+  imports = [
+    ./lualine.nix
+    ./devicons.nix
+    ./notify.nix
+    ./fzf-lua.nix
+  ];
 
-    # ui
+  opts = {
     number = true;
     relativenumber = true;
-    linebreak = true; # wrap at word boundaries
-    breakindent = true; # keep indent on wrapped lines
+    linebreak = true;
+    breakindent = true;
     cursorline = true;
     scrolloff = 20;
     splitbelow = true;
@@ -26,35 +28,30 @@
     showmode = false;
     showcmd = false;
     shortmess = "ltToOCFscS";
-
-    # editing
-    expandtab = false;
-    shiftwidth = 2;
-    tabstop = 2;
-    autoindent = true;
-
     termguicolors = false;
-  };
-
-  globals = {
-    mapleader = " ";
-    maplocalleader = " "; # same as leader, matching the current config
-    have_nerd_font = true;
   };
 
   extraConfigLuaPre = builtins.readFile ./fold.lua;
 
-  autoCmd = [
-    {
-      event = [
-        "FileType"
-        "BufWinEnter"
-      ];
-      command = "setlocal foldtext=v:lua.make_foldtext()";
-    }
-  ];
-
   extraConfigLua = ''
     		pcall(function() require('vim._core.ui2').enable() end)
     	'';
+
+  autoGroups.restore_cursor = {
+    clear = true;
+  };
+
+  autoCmd = [
+    {
+      event = [ "FileType" "BufWinEnter" ];
+      command = "setlocal foldtext=v:lua.make_foldtext()";
+    }
+    {
+      event = [ "VimLeave" ];
+      group = "restore_cursor";
+      pattern = "*";
+      desc = "Restore cursor to pipe after exiting neovim";
+      callback.__raw = ''function() os.execute [[ echo -ne "\e[6 q" ]] end'';
+    }
+  ];
 }

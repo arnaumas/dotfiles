@@ -1,7 +1,6 @@
 {
   plugins.luasnip = {
     enable = true;
-    fromLua = [ { paths = ./.; } ];
     settings = {
       cut_selection_keys = "<Tab>";
       enable_autosnippets = true;
@@ -11,10 +10,7 @@
 
   keymaps = [
     {
-      mode = [
-        "i"
-        "s"
-      ];
+      mode = [ "i" "s" ];
       key = "<C-l>";
       options.silent = true;
       action.__raw = ''
@@ -25,10 +21,7 @@
         			'';
     }
     {
-      mode = [
-        "i"
-        "s"
-      ];
+      mode = [ "i" "s" ];
       key = "<C-h>";
       options.silent = true;
       action.__raw = ''
@@ -39,10 +32,7 @@
         			'';
     }
     {
-      mode = [
-        "i"
-        "s"
-      ];
+      mode = [ "i" "s" ];
       key = "<tab>";
       options.silent = true;
       action.__raw = ''
