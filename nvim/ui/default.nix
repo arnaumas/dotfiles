@@ -37,21 +37,17 @@
     		pcall(function() require('vim._core.ui2').enable() end)
     	'';
 
-  autoGroups.restore_cursor = {
-    clear = true;
-  };
-
   autoCmd = [
     {
       event = [ "FileType" "BufWinEnter" ];
       command = "setlocal foldtext=v:lua.make_foldtext()";
     }
-    {
-      event = [ "VimLeave" ];
-      group = "restore_cursor";
-      pattern = "*";
-      desc = "Restore cursor to pipe after exiting neovim";
-      callback.__raw = ''function() os.execute [[ echo -ne "\e[6 q" ]] end'';
-    }
+    # {
+      # event = [ "VimLeave" ];
+      # group = "restore_cursor";
+      # pattern = "*";
+      # desc = "Restore cursor to pipe after exiting neovim";
+      # callback.__raw = ''function() os.execute [[ echo -ne "\e[6 q" ]] end'';
+    # }
   ];
 }

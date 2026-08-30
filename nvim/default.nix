@@ -51,38 +51,14 @@
     {
       mode = "n";
       key = "<leader>q";
-      action = "<cmd>quitall<CR>";
-      options.desc = "[q]uit file";
+      action = "<CMD>if winnr('$')>1 |  close | else | quitall | endif<CR>";
+      options.desc = "close window";
     }
     {
       mode = "n";
       key = "<leader>Q";
       action = "<cmd>quit!<cr>";
       options.desc = "force [q]uit file";
-    }
-    {
-      mode = "n";
-      key = "<leader>bn";
-      action.__raw = "vim.cmd.bn";
-      options.desc = "[b]uffer [n]ext";
-    }
-    {
-      mode = "n";
-      key = "<leader>bp";
-      action.__raw = "vim.cmd.bp";
-      options.desc = "[b]uffer [p]revious";
-    }
-    {
-      mode = "n";
-      key = "<leader>bd";
-      action.__raw = "vim.cmd.bd";
-      options.desc = "[b]uffer [d]elete";
-    }
-    {
-      mode = "n";
-      key = "<leader>bs";
-      action.__raw = "vim.cmd.sp";
-      options.desc = "[b]uffer [s]plit";
     }
   ];
 }
