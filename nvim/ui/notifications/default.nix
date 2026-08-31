@@ -25,4 +25,6 @@
     '';
     desc = "mini.notify history";
   };
+
+  colors.extraLua = builtins.readFile ./highlights.lua;
 }

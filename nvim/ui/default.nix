@@ -1,8 +1,8 @@
 {
   imports = [
-    ./statusline.nix
+    ./statusline
+    ./notifications
     ./devicons.nix
-    ./notify.nix
   ];
 
   opts = {

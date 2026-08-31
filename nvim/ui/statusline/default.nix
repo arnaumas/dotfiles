@@ -163,4 +163,6 @@
         extensions = [ ];
       };
   };
+
+  colors.extraLua = builtins.readFile ./highlights.lua;
 }
