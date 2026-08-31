@@ -19,4 +19,6 @@
       options.desc = "LSP: show [d]iagnostic";
     }
   ];
+
+  colors.extraLua = builtins.readFile ./highlights.lua;
 }
