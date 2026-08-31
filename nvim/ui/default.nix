@@ -3,12 +3,12 @@
     ./lualine.nix
     ./devicons.nix
     ./notify.nix
-    ./fzf-lua.nix
   ];
 
   opts = {
     number = true;
     relativenumber = true;
+    numberwidth = 1;
     linebreak = true;
     breakindent = true;
     cursorline = true;
@@ -18,10 +18,8 @@
     smoothscroll = true;
     fillchars = {
       eob = " ";
-      fold = " ";
     };
     signcolumn = "no";
-    foldcolumn = "0";
     statuscolumn = "%{%v:lua.make_statuscolumn()%}";
     cmdheight = 0;
     cmdwinheight = 10;
@@ -31,17 +29,13 @@
     termguicolors = false;
   };
 
-  extraConfigLuaPre = builtins.readFile ./fold.lua;
+  extraConfigLuaPre = builtins.readFile ./statuscolumn.lua;
 
   extraConfigLua = ''
     		pcall(function() require('vim._core.ui2').enable() end)
     	'';
 
   autoCmd = [
-    {
-      event = [ "FileType" "BufWinEnter" ];
-      command = "setlocal foldtext=v:lua.make_foldtext()";
-    }
     # {
       # event = [ "VimLeave" ];
       # group = "restore_cursor";
