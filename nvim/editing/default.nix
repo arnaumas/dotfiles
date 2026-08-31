@@ -4,6 +4,7 @@
     ./snippets.nix
     ./mini.nix
     ./blink.nix
+    ./fold.nix
   ];
 
   opts = {
