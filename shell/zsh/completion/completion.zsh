@@ -40,6 +40,7 @@ zle -N tab-accept-or-complete
 bindkey -M viins '^I' tab-accept-or-complete
 
 # -- fzf-tab: the completion menu (known commands with a real completer)
+zstyle ':fzf-tab:*' fzf-bindings 'tab:accept' 'enter:toggle+down'
 zstyle ':fzf-tab:*' switch-group '^' '+'
 zstyle ':fzf-tab:*' continuous-trigger '/'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -p --color=always -- "$realpath" 2>/dev/null'

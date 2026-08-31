@@ -34,6 +34,7 @@ let
     "--no-separator"
     "--preview-border=line"
     "--preview-window=noinfo"
+    "--bind=tab:toggle+down,enter:accept"
   ];
 
   fzf = pkgs.symlinkJoin {
