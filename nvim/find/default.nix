@@ -24,42 +24,7 @@
           fzf_colors = false;
         };
       };
-      fzf_colors = {
-        fg = [
-          "fg"
-          "FzfLuaNormal"
-        ];
-        bg = [
-          "bg"
-          "FzfLuaNormal"
-        ];
-        query = [
-          "fg"
-          "FzfLuaNormal"
-        ];
-        "fg+" = [
-          "fg"
-          "PmenuSel"
-          "bold"
-        ];
-        "bg+" = [
-          "bg"
-          "PmenuSel"
-        ];
-        gutter = [
-          "bg"
-          "FzfLuaNormal"
-        ];
-        header = [
-          "fg"
-          "Pmenu"
-        ];
-        info = [
-          "fg"
-          "FzfLuaNormal"
-          "dim"
-        ];
-      };
+      fzf_colors = false;
       hls = {
         normal = "FzfLuaNormal";
         border = "FzfLuaNormal";
@@ -84,6 +49,7 @@
         };
         fzf_opts = {
           "--layout" = "default";
+          "--info" = "hidden";
         };
       };
       grep = {
@@ -162,4 +128,6 @@
       options.desc = "[f]ind in all buffer [l]ines";
     }
   ];
+
+  colors.extraLua = builtins.readFile ./highlights.lua;
 }
