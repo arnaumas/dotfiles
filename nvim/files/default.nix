@@ -62,4 +62,6 @@
       options.desc = "[e]xplore [z]sh config";
     }
   ];
+
+  colors.extraLua = builtins.readFile ./highlights.lua;
 }
