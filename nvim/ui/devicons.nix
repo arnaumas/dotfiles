@@ -5,8 +5,7 @@
       color_icons = false;
       default = true;
       override.default_icon = {
-        icon = "󰈔";
-        cterm_color = "0";
+        icon.__raw = ''"\u{f0214}"'';
         name = "Default";
       };
     };

@@ -1,6 +1,6 @@
 {
   imports = [
-    ./lualine.nix
+    ./statusline.nix
     ./devicons.nix
     ./notify.nix
   ];
@@ -34,14 +34,4 @@
   extraConfigLua = ''
     		pcall(function() require('vim._core.ui2').enable() end)
     	'';
-
-  autoCmd = [
-    # {
-      # event = [ "VimLeave" ];
-      # group = "restore_cursor";
-      # pattern = "*";
-      # desc = "Restore cursor to pipe after exiting neovim";
-      # callback.__raw = ''function() os.execute [[ echo -ne "\e[6 q" ]] end'';
-    # }
-  ];
 }

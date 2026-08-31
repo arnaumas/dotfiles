@@ -75,7 +75,7 @@ local groups = {
 	StlModeTerminal = { fg = dim_bg, bg = cyan,    bold = true },
 	-- tabs
 	StlTabActive   = { fg = fg, bg = bg, bold = true },
-	StlTabInactive = { fg = fg, bg = dim_bg },
+	StlTabInactive = { fg = dim_fg, bg = dim_bg },
 
 	-- syntax
 	Comment = { fg = yellow, italic = true },
