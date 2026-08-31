@@ -17,12 +17,12 @@
 
   userCommands.Notifications = {
     command.__raw = ''
-      			function()
-      				in_history = true
-      				require('mini.notify').show_history()
-      				in_history = false
-      			end
-      		'';
+      function()
+        _M.notify.in_history = true
+        require('mini.notify').show_history()
+        _M.notify.in_history = false
+      end
+    '';
     desc = "mini.notify history";
   };
 }

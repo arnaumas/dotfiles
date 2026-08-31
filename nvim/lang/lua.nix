@@ -8,7 +8,7 @@
       settings = {
         Lua = {
           runtime.version = "LuaJIT";
-          diagnostics.globals = [ "vim" "make_statuscolumn" "make_foldtext" ];
+          diagnostics.globals = [ "vim" "make_statuscolumn" "make_foldtext" "_M" ];
           workspace = {
             library.__raw = "vim.api.nvim_get_runtime_file('', true)";
             checkThirdParty = false;
