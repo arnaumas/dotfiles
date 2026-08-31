@@ -18,13 +18,13 @@
     {
       mode = "n";
       key = "o";
-      action = "o<esc>";
+      action = ''op<Esc><Cmd>silent!undojoin<CR>"_x<esc>'';
       options.desc = "[o]pen line";
     }
     {
       mode = "n";
       key = "O";
-      action = "O<esc>";
+      action = ''Op<Esc><Cmd>silent!undojoin<CR>"_x<esc>'';
       options.desc = "[o]pen line above";
     }
     {
