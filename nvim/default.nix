@@ -2,6 +2,7 @@
   imports = [
     ./editing
     ./ui
+    ./find
     ./files
     ./git
     ./lsp

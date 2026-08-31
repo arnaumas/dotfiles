@@ -1,4 +1,0 @@
-{
-  foldmethod = "marker";
-  foldmarker = " -->,<--";
-}

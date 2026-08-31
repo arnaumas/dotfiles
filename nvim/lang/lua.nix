@@ -8,7 +8,7 @@
       settings = {
         Lua = {
           runtime.version = "LuaJIT";
-          diagnostics.globals = [ "vim" "StatusColumn" "FoldText" ];
+          diagnostics.globals = [ "vim" "make_statuscolumn" "make_foldtext" ];
           workspace = {
             library.__raw = "vim.api.nvim_get_runtime_file('', true)";
             checkThirdParty = false;
@@ -19,7 +19,7 @@
     };
   };
 
-  files."after/ftplugin/lua.lua".localOpts = (import ./marker-fold.nix) // {
+  files."after/ftplugin/lua.lua".localOpts = {
     wrap = false;
     sidescrolloff = 12;
   };
