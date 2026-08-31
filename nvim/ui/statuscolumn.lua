@@ -23,11 +23,13 @@ local function number(hl, n, cells)
 	return ('%%#' .. hl .. '#%' .. cells .. 'd'):format(n)
 end
 
--- one cell after the number: a sign draws over the fold marker
-local function gutter_mark(lnum)
-	local text, hl = sign(lnum)
-	if text then return '%#' .. hl .. '#' .. (text:gsub('%s+$', '')) end
-	return fold_mark(lnum)
+local function number_field(hl, n, cells)
+	local text, sign_hl = sign(vim.v.lnum)
+	if text then
+		text = text:gsub('%s+$', '')
+		return string.rep(' ', cells - vim.fn.strdisplaywidth(text)) .. '%#' .. sign_hl .. '#' .. text
+	end
+	return number(hl, n, cells)
 end
 
 function _G.make_statuscolumn()
@@ -41,5 +43,5 @@ function _G.make_statuscolumn()
 	if vim.v.virtnum < 0 then return '' end
 	local cursor = vim.v.relnum == 0
 	local n = cursor and lnum or vim.v.relnum
-	return number(cursor and 'CursorLineNr' or 'LineNr', n, width) .. gutter_mark(lnum)
+	return number_field(cursor and 'CursorLineNr' or 'LineNr', n, width) .. fold_mark(lnum)
 end
