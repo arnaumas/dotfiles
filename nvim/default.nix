@@ -60,5 +60,29 @@
       action = "<cmd>quit!<cr>";
       options.desc = "force [q]uit file";
     }
+    {
+      mode = "n";
+      key = "<C-h>";
+      action = "<C-w>h";
+      options.desc = "focus window left";
+    }
+    {
+      mode = "n";
+      key = "<C-j>";
+      action = "<C-w>j";
+      options.desc = "focus window below";
+    }
+    {
+      mode = "n";
+      key = "<C-k>";
+      action = "<C-w>k";
+      options.desc = "focus window above";
+    }
+    {
+      mode = "n";
+      key = "<C-l>";
+      action = "<C-w>l";
+      options.desc = "focus window right";
+    }
   ];
 }
