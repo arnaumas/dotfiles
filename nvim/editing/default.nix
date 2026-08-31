@@ -51,4 +51,6 @@
       callback.__raw = "function() vim.highlight.on_yank() end";
     }
   ];
+
+  colors.extraLua = builtins.readFile ./highlights.lua;
 }
