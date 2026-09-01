@@ -21,6 +21,10 @@
           __unkeyed-1 = "location";
           padding = 1;
         };
+        macro = {
+          __unkeyed-1.__raw = ''function() local r = vim.fn.reg_recording(); return r == "" and "" or ("recording @" .. r) end'';
+          color = "DiagnosticInfo";
+        };
       in
       {
         options = {
@@ -93,6 +97,8 @@
               "CursorMoved"
               "CursorMovedI"
               "ModeChanged"
+              "RecordingEnter"
+              "RecordingLeave"
             ];
           };
         };
@@ -127,6 +133,7 @@
                 hint = "DiagnosticHint";
               };
             }
+            macro
             branch
             "filetype"
           ];
