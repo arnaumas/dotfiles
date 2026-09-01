@@ -18,8 +18,9 @@ for _, g in ipairs({ '@function', '@function.method', '@constructor' }) do link(
 link('@tag', 'Tag')
 for _, g in ipairs({
 	'@operator', '@punctuation.delimiter', '@punctuation.bracket', '@punctuation.special',
-	'@label', '@tag.delimiter', '@markup.list',
-}) do link(g, 'UiMuted') end
+	'@tag.delimiter',
+}) do link(g, 'Delimiter') end
+for _, g in ipairs({ '@label', '@markup.list' }) do link(g, 'UiMuted') end
 
 hl('@comment.error',   { fg = red,    bold = true })
 hl('@comment.warning', { fg = yellow, bold = true })

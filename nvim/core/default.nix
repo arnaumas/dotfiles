@@ -1,6 +1,6 @@
 {
   imports = [
-    # ./colors.nix
+    ./colorscheme.nix
   ];
 
   opts = {

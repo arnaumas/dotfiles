@@ -10,6 +10,6 @@
   config = {
     colorscheme = "ansi";
     extraFiles."colors/ansi.lua".text =
-      builtins.readFile ./ansi.lua + "\n" + config.colors.extraLua;
+      builtins.readFile ./highlights.lua + "\n" + config.colors.extraLua;
   };
 }

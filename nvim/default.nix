@@ -8,6 +8,6 @@
     ./git
     ./lsp
     ./lang
-    ./colors
+    # ./colors
   ];
 }

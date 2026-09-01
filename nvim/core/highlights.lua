@@ -8,7 +8,7 @@ local red_bg, green_bg, yellow_bg, blue_bg, magenta_bg, cyan_bg = 9, 10, 11, 12,
 local accent, accent_bg = green, green_bg
 local selection_fg, selection_bg = fg, bg
 
-function hl(group, s)
+local function hl(group, s)
 	vim.api.nvim_set_hl(0, group, {
 		ctermfg = s.fg, ctermbg = s.bg,
 		bold = s.bold, italic = s.italic,
@@ -16,7 +16,7 @@ function hl(group, s)
 		strikethrough = s.strike,
 	})
 end
-function link(from, to) vim.api.nvim_set_hl(0, from, { link = to }) end
+local function link(from, to) vim.api.nvim_set_hl(0, from, { link = to }) end
 
 hl('UiMuted',        { fg = dim_fg })
 hl('UiSurface',      { fg = fg,     bg = dim_bg })
@@ -50,8 +50,8 @@ hl('MatchParen', { fg = accent, bold = true, underline = true })
 
 link('Pmenu', 'UiSurfaceMuted')
 link('PmenuSel', 'UiSelected')
-hl('PmenuSbar',  'Pmenu')
-hl('PmenuThumb', 'Pmenu')
+link('PmenuSbar',  'Pmenu')
+link('PmenuThumb', 'Pmenu')
 hl('PmenuKind',  { fg = blue })
 hl('PmenuExtra', { fg = dim_fg })
 
@@ -90,7 +90,8 @@ for _, g in ipairs({ 'Boolean', 'Constant' }) do hl(g, { fg = magenta }) end
 hl('Function', { fg = blue })
 hl('Tag',      { fg = blue })
 hl('SpecialChar', { fg = cyan })
-for _, g in ipairs({ 'Operator', 'Special', 'Delimiter', 'Debug' }) do link(g, 'UiMuted') end
+hl('Delimiter', { fg = dim_fg })
+for _, g in ipairs({ 'Operator', 'Special', 'Debug' }) do link(g, 'Delimiter') end
 hl('Todo',       { fg = yellow, bold = true })
 hl('Error',      { fg = red })
 hl('Underlined', { fg = blue, underline = true })
