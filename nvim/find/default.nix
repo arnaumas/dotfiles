@@ -1,47 +1,76 @@
 {
   plugins.fzf-lua = {
     enable = true;
+    profile.__raw = "false";
     settings = {
-      # TODO: figure out how to make title disappear
       winopts = {
-        title = false;
-        border = [
-          ""
-          " "
-          ""
-          ""
-          ""
-          " "
-          ""
-          ""
-        ];
+        title = "";
+        title_flags = false;
+        border = [ "" "" "" " " "" "" "" " " ];
         preview = {
-          border = "border-top";
+          border = [ " " "─" " " " " "" "" "" " " ];
           title = false;
           scrollbar = false;
         };
-        treesitter = {
-          fzf_colors = false;
-        };
       };
-      fzf_colors = false;
+
+      fzf_colors.__raw = ''
+        {
+          true,
+          ["hl"]       = { "fg", "FzfLuaFzfMatch", "bold" },
+          ["hl+"]      = { "fg", "FzfLuaFzfMatch", "bold" },
+          ["bg+"]      = { "bg", "UiSelected" },
+          ["fg+"]      = { "fg", "UiSelected", "bold" },
+          ["marker"]   = { "fg", "FzfLuaFzfMatch", "bold" },
+          ["prompt"] = { "fg", "FzfLuaFzfPrompt", "regular" },
+        }
+      '';
+      fzf_opts = {
+        "--layout" = "reverse";
+
+        "--no-scrollbar" = true;
+        "--no-separator" = true;
+        "--info" = "hidden";
+
+        "--pointer" = " ";
+        "--marker" = ">";
+
+        "--cycle" = true;
+      };
+
       hls = {
         normal = "FzfLuaNormal";
         border = "FzfLuaNormal";
         preview_normal = "FzfLuaNormal";
         preview_border = "FzfLuaPreviewBorder";
-        buf_flag_cur = "PMenu";
       };
+
+      defaults = {
+        color_icons = false;
+      };
+
       files = {
         prompt = "files > ";
       };
+
+      grep = {
+        prompt = "grep > ";
+      };
+
+      helptags = {
+        prompt = "help > ";
+      };
+
+      highlights = {
+        prompt = "highlights > ";
+      };
+
       buffers = {
         prompt = "buffers > ";
         headers = false;
         winopts = {
           row = 1;
-          col = 0;
-          height = 5;
+          col = 3;
           width = 0.3;
           preview = {
             hidden = true;
@@ -49,28 +78,20 @@
         };
         fzf_opts = {
           "--layout" = "default";
-          "--info" = "hidden";
         };
       };
-      grep = {
-        prompt = "grep > ";
-      };
-      helptags = {
-        prompt = "help > ";
-      };
-      highlights = {
-        prompt = "highlights > ";
-      };
+
       blines = {
-        prompt = "all buffers > ";
+        prompt = "buffer > ";
         winopts = {
           preview = {
             hidden = true;
           };
         };
       };
+
       lines = {
-        prompt = "buffer > ";
+        prompt = "all buffers > ";
         winopts = {
           preview = {
             hidden = true;
@@ -94,7 +115,12 @@
     {
       mode = "n";
       key = "<leader>fb";
-      action.__raw = "require('fzf-lua').buffers";
+      action.__raw = ''
+        function()
+          local n = #vim.fn.getbufinfo({ buflisted = 1 })
+          require('fzf-lua').buffers({ winopts = { height = n + 1 } })
+        end
+      '';
       options.desc = "[f]ind in open [b]uffers";
     }
     {

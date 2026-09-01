@@ -27,6 +27,8 @@ for _, sev in ipairs({ 'Error', 'Warn', 'Info', 'Hint' }) do
 	end
 end
 
+hl('DiagnosticDeprecated', { underline = true })
+
 link('LspInlayHint', 'UiMuted')
 link('LspCodeLens', 'UiMuted')
 for _, g in ipairs({ 'LspReferenceText', 'LspReferenceRead', 'LspReferenceWrite' }) do
