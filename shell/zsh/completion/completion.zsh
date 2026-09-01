@@ -40,6 +40,7 @@ zle -N tab-accept-or-complete
 bindkey -M viins '^I' tab-accept-or-complete
 
 # -- fzf-tab: the completion menu (known commands with a real completer)
+zstyle ':fzf-tab:*' fzf-bindings-default 'btab:up' 'change:top' 'ctrl-space:toggle' 'bspace:backward-delete-char/eof' 'ctrl-h:backward-delete-char/eof'
 zstyle ':fzf-tab:*' fzf-bindings 'tab:accept' 'enter:toggle+down'
 zstyle ':fzf-tab:*' switch-group '^' '+'
 zstyle ':fzf-tab:*' continuous-trigger '/'
