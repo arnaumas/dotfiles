@@ -79,5 +79,7 @@
 
   extraFiles."after/syntax/tex.vim".source = ./tex.vim;
 
+  colors.extraLua = builtins.readFile ./highlights.lua;
+
   extraConfigLua = builtins.readFile ./notify-compilation.lua;
 }
