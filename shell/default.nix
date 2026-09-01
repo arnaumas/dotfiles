@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [
     ./core.nix
     ./zsh
@@ -7,4 +7,6 @@
     ./fzf.nix
     ./rg.nix
   ];
+
+  home.packages = [ pkgs.fd ];
 }

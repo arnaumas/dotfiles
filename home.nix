@@ -1,12 +1,6 @@
-{ pkgs, ... }:
+{ ... }:
 {
   xdg.enable = true;
-
-  home = {
-    packages = with pkgs; [
-      fd
-    ];
-  };
 
   programs = {
     home-manager.enable = true;
@@ -20,6 +14,7 @@
   imports = [
     ./shell
     ./claude
+    ./pi
     ./git
     ./ghostty
     ./svim
