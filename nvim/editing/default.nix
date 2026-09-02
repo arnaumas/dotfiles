@@ -11,7 +11,6 @@
     expandtab = false;
     shiftwidth = 2;
     tabstop = 2;
-    autoindent = true;
   };
 
   keymaps = [

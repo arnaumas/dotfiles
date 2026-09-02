@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       indent.enable = true;
-      highlight.enable = false;
+      highlight.enable = true;
     };
   };
 }
