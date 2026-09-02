@@ -46,19 +46,19 @@
     {
       mode = "n";
       key = "<leader>ed";
-      action.__raw = "function() require('oil').open_float('/Users/arnau/dotfiles') end";
+      action.__raw = "function() require('oil').open_float('/Users/arnau/home/dotfiles') end";
       options.desc = "[e]xplore [d]otfiles";
     }
     {
       mode = "n";
       key = "<leader>en";
-      action.__raw = "function() require('oil').open_float('/Users/arnau/dotfiles/nvim/.config/nvim') end";
+      action.__raw = "function() require('oil').open_float('/Users/arnau/home/dotfiles/nvim') end";
       options.desc = "[e]xplore [n]eovim config";
     }
     {
       mode = "n";
       key = "<leader>ez";
-      action.__raw = "function() require('oil').open_float('/Users/arnau/dotfiles/zsh/.config/zsh') end";
+      action.__raw = "function() require('oil').open_float('/Users/arnau/home/dotfiles/shell/zsh') end";
       options.desc = "[e]xplore [z]sh config";
     }
   ];
