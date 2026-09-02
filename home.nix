@@ -17,7 +17,6 @@
     ./pi
     ./git
     ./ghostty
-    ./svim
     ./vim
   ];
 }
