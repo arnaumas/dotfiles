@@ -1,6 +1,3 @@
--- these Nerd Font glyphs render 2 cells in the font; tell nvim so it reserves 2
--- (no overflow) and the sign pad math stays correct. sign codepoints mirror
--- lsp/diagnostics.lua -- keep the two in sync.
 vim.fn.setcellwidths({
 	{ 0xF00D, 0xF00D, 2 }, -- diagnostic error
 	{ 0xF071, 0xF071, 2 }, -- diagnostic warn
@@ -36,8 +33,6 @@ local function number(hl, n, cells)
 	return ('%%#' .. hl .. '#%' .. cells .. 'd'):format(n)
 end
 
--- render the number field: a diagnostic sign replaces the number (right-aligned
--- in the field), else the relative/absolute line number.
 local function num_field(lnum, width)
 	local text, sign_hl = sign(lnum)
 	if text then
@@ -70,9 +65,6 @@ function _G.make_statuscolumn()
 	return num_field(lnum, width) .. fold_mark(lnum, fc)
 end
 
--- fold cell is 2 wide when the visible window has folds (chevrons need the room),
--- else 1. cache per-window; make_statuscolumn reads it back. re-setting the option
--- forces nvim to recompute reserved width (a bare redraw won't).
 local function window_has_folds()
 	for l = vim.fn.line('w0'), vim.fn.line('w$') do
 		if vim.fn.foldlevel(l) > 0 then return true end

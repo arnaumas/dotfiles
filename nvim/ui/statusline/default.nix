@@ -23,7 +23,7 @@
         };
         macro = {
           __unkeyed-1.__raw = ''function() local r = vim.fn.reg_recording(); return r == "" and "" or ("recording @" .. r) end'';
-          color = "DiagnosticInfo";
+          color = "StlRecording";
         };
       in
       {
@@ -121,10 +121,10 @@
             {
               __unkeyed-1 = "diagnostics";
               symbols = {
-                error.__raw = ''"\u{f015a}%#StatusLine# "'';
-                warn.__raw = ''"\u{f002a}%#StatusLine# "'';
-                info.__raw = ''"\u{f02fd}%#StatusLine# "'';
-                hint.__raw = ''"\u{f0336}%#StatusLine# "'';
+                error.__raw = ''"\u{f00d}%#StatusLine#"'';
+                warn.__raw = ''"\u{f071}%#StatusLine#"'';
+                info.__raw = ''"\u{f129}%#StatusLine#"'';
+                hint.__raw = ''"\u{f128}%#StatusLine#"'';
               };
               diagnostics_color = {
                 error = "StlDiagnosticError";
