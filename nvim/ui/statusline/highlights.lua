@@ -7,5 +7,7 @@ for mode, color in pairs({
 	hl('StlMode' .. mode, { fg = dim_bg, bg = color, bold = true })
 end
 
-link('StlTabActive', 'UiSelected')
-link('StlTabInactive', 'UiSurfaceMuted')
+hl("StlDiagnosticError", {fg = red})
+hl("StlDiagnosticWarn", {fg = yellow})
+hl("StlDiagnosticInfo", {fg = blue})
+hl("StlDiagnosticHint", {fg = cyan})

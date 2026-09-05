@@ -121,16 +121,16 @@
             {
               __unkeyed-1 = "diagnostics";
               symbols = {
-                error.__raw = ''"\u{f015a} %#StatusLine#"'';
-                warn.__raw = ''"\u{f002a} %#StatusLine#"'';
-                info.__raw = ''"\u{f02fd} %#StatusLine#"'';
-                hint.__raw = ''"\u{f0336} %#StatusLine#"'';
+                error.__raw = ''"\u{f015a}%#StatusLine# "'';
+                warn.__raw = ''"\u{f002a}%#StatusLine# "'';
+                info.__raw = ''"\u{f02fd}%#StatusLine# "'';
+                hint.__raw = ''"\u{f0336}%#StatusLine# "'';
               };
               diagnostics_color = {
-                error = "DiagnosticError";
-                warn = "DiagnosticWarn";
-                info = "DiagnosticInfo";
-                hint = "DiagnosticHint";
+                error = "StlDiagnosticError";
+                warn = "StlDiagnosticWarn";
+                info = "StlDiagnosticInfo";
+                hint = "StlDiagnosticHint";
               };
             }
             macro

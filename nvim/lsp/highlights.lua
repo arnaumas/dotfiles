@@ -14,11 +14,11 @@ link('@lsp.type.string', 'String')
 link('@lsp.type.number', 'Number')
 link('@lsp.type.comment', 'Comment')
 
-hl('DiagnosticError', { fg = red })
-hl('DiagnosticWarn',  { fg = yellow })
-hl('DiagnosticInfo',  { fg = blue })
-hl('DiagnosticHint',  { fg = cyan })
-hl('DiagnosticOk',    { fg = green })
+hl('DiagnosticError', { fg = red, bg = red_bg })
+hl('DiagnosticWarn',  { fg = yellow, bg = yellow_bg })
+hl('DiagnosticInfo',  { fg = blue, bg = blue_bg })
+hl('DiagnosticHint',  { fg = cyan, bg = cyan_bg })
+hl('DiagnosticOk',    { fg = green, bg = green_bg })
 
 for _, sev in ipairs({ 'Error', 'Warn', 'Info', 'Hint' }) do
 	hl('DiagnosticUnderline' .. sev, { undercurl = true })
