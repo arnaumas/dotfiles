@@ -6,7 +6,7 @@
   ];
 
   opts = {
-    number = true;
+    number = false;
     relativenumber = true;
     numberwidth = 1;
     linebreak = true;
