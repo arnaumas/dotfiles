@@ -15,9 +15,14 @@ end
 
 local function asymptote_compile()
 	vim.cmd.update({ mods = { silent = true } })
+	vim.notify('asy: compiling ' .. vim.fn.expand('%:t'), vim.log.levels.INFO)
 	vim.cmd.make({ mods = { silent = true } })
 	vim.cmd.cwindow()
-	if asymptote_errors() > 0 then return end
-	vim.notify('asy: compiled')
+	local errs = asymptote_errors()
+	if errs > 0 then
+		vim.notify(('asy: failed (%d qf entries)'):format(errs), vim.log.levels.ERROR)
+		return
+	end
+	vim.notify('asy: compiled', vim.log.levels.INFO)
 	if not vim.b.asy_viewed then asymptote_view() end
 end
