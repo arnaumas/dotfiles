@@ -16,7 +16,7 @@ function _M.notify.format(notif)
 	local n = _M.notify
 	local msg = notif.msg
 	if n.in_history then
-		msg = vim.fn.strftime('%H:%M:%S', math.floor(notif.ts_update)) .. ' ' .. msg
+		msg = vim.fn.strftime('%H:%M:%S', math.floor(notif.ts_update)) .. msg
 	end
 	local dot = n.dot[notif.level] or n.dot.INFO
 	local res = dot .. ' ' .. msg

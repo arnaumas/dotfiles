@@ -121,10 +121,10 @@
             {
               __unkeyed-1 = "diagnostics";
               symbols = {
-                error.__raw = ''"\u{F00D} %#StatusLine#"'';
-                warn.__raw = ''"\u{F071} %#StatusLine#"'';
-                info.__raw = ''"\u{F05A} %#StatusLine#"'';
-                hint.__raw = ''"\u{F05B} %#StatusLine#"'';
+                error.__raw = ''"\u{F057}%#StatusLine#"'';
+                warn.__raw = ''"\u{F071}%#StatusLine#"'';
+                info.__raw = ''"\u{F05A}%#StatusLine#"'';
+                hint.__raw = ''"\u{F05B}%#StatusLine#"'';
               };
               diagnostics_color = {
                 error = "StlDiagnosticError";
@@ -155,10 +155,10 @@
             {
               __unkeyed-1 = "diagnostics";
               symbols = {
-                error.__raw = ''"\u{F00D} "'';
-                warn.__raw = ''"\u{F071} "'';
-                info.__raw = ''"\u{F05A} "'';
-                hint.__raw = ''"\u{F05B} "'';
+                error.__raw = ''"\u{F057}"'';
+                warn.__raw = ''"\u{F071}"'';
+                info.__raw = ''"\u{F05A}"'';
+                hint.__raw = ''"\u{F05B}"'';
               };
               colored = false;
             }
