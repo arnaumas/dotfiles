@@ -121,10 +121,10 @@
             {
               __unkeyed-1 = "diagnostics";
               symbols = {
-                error.__raw = ''"\u{f00d}%#StatusLine#"'';
-                warn.__raw = ''"\u{f071}%#StatusLine#"'';
-                info.__raw = ''"\u{f129}%#StatusLine#"'';
-                hint.__raw = ''"\u{f128}%#StatusLine#"'';
+                error.__raw = ''"\u{F00D} %#StatusLine#"'';
+                warn.__raw = ''"\u{F071} %#StatusLine#"'';
+                info.__raw = ''"\u{F05A} %#StatusLine#"'';
+                hint.__raw = ''"\u{F05B} %#StatusLine#"'';
               };
               diagnostics_color = {
                 error = "StlDiagnosticError";
@@ -155,11 +155,12 @@
             {
               __unkeyed-1 = "diagnostics";
               symbols = {
-                error.__raw = ''"\u{f015a} %#StatusLineNC#"'';
-                warn.__raw = ''"\u{f002a} %#StatusLineNC#"'';
-                info.__raw = ''"\u{f02fd} %#StatusLineNC#"'';
-                hint.__raw = ''"\u{f0336} %#StatusLineNC#"'';
+                error.__raw = ''"\u{F00D} "'';
+                warn.__raw = ''"\u{F071} "'';
+                info.__raw = ''"\u{F05A} "'';
+                hint.__raw = ''"\u{F05B} "'';
               };
+              colored = false;
             }
             branch
             "filetype"

@@ -1,12 +1,3 @@
-vim.fn.setcellwidths({
-	{ 0xF00D, 0xF00D, 2 }, -- diagnostic error
-	{ 0xF071, 0xF071, 2 }, -- diagnostic warn
-	{ 0xF128, 0xF128, 2 }, -- diagnostic hint
-	{ 0xF129, 0xF129, 2 }, -- diagnostic info
-	{ 0xF460, 0xF460, 2 }, -- fold closed chevron
-	{ 0xF47C, 0xF47C, 2 }, -- fold start chevron
-})
-
 local function sign(lnum)
 	local best
 	local marks = vim.api.nvim_buf_get_extmarks(0, -1, { lnum - 1, 0 }, { lnum - 1, -1 },

@@ -1,4 +1,4 @@
-{
+{ lib, ... } : {
   imports = [
     ./statusline
     ./notifications
@@ -29,7 +29,7 @@
     termguicolors = false;
   };
 
-  extraConfigLuaPre = builtins.readFile ./statuscolumn.lua;
+  extraConfigLuaPre = lib.concatMapStringsSep "\n" builtins.readFile [ ./cellwidths.lua ./statuscolumn.lua ];
 
   extraConfigLua = ''
     		pcall(function() require('vim._core.ui2').enable() end)
