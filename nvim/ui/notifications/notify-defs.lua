@@ -19,7 +19,7 @@ function _M.notify.format(notif)
 		msg = vim.fn.strftime('%H:%M:%S', math.floor(notif.ts_update)) .. msg
 	end
 	local dot = n.dot[notif.level] or n.dot.INFO
-	local res = dot .. ' ' .. msg
+	local res = dot .. msg
 	n.line_hl[vim.split(res, '\n')[1]] = { hl = n.dot_hl[notif.level] or n.dot_hl.INFO, len = #dot }
 	return res
 end
