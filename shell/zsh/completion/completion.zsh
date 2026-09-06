@@ -49,8 +49,20 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview \
 # -- fzf-completion: fd-backed deep completion (FZF_DEEP_CMDS + unknown cmds)
 export FZF_COMPLETION_TRIGGER=
 export FZF_COMPLETION_OPTS='--ansi --height=40%'
-_fzf_compgen_path() { fd --strip-cwd-prefix --hidden --follow --color=always --exclude .git }
-_fzf_compgen_dir()  { fd --strip-cwd-prefix --type d --hidden --follow --color=always --exclude .git }
+_fzf_compgen_path() {
+	if [[ $1 == . ]]; then
+		fd --strip-cwd-prefix --hidden --follow --color=always --exclude .git
+	else
+		fd --hidden --follow --color=always --exclude .git . "$1"
+	fi
+}
+_fzf_compgen_dir() {
+	if [[ $1 == . ]]; then
+		fd --type d --strip-cwd-prefix --hidden --follow --color=always --exclude .git
+	else
+		fd --type d --hidden --follow --color=always --exclude .git . "$1"
+	fi
+}
 _fzf_comprun() {
 	local command=$1; shift
 	case "$command" in
