@@ -9,6 +9,7 @@
       fold_enabled = 1;
       indent_on_ampersands = 1;
       indent_tikz_commands = 0;
+      syntax_enabled = 0;
       syntax_conceal = {
         math_symbols = 0;
       };
@@ -77,9 +78,9 @@
       	'';
   };
 
-  extraFiles."after/syntax/tex.vim".source = ./tex.vim;
+  extraFiles."after/queries/latex/highlights.scm".source = ./highlights/highlights.scm;
 
-  colors.extraLua = builtins.readFile ./highlights.lua;
+  colors.extraLua = builtins.readFile ./highlights/highlights.lua;
 
-  extraConfigLua = builtins.readFile ./notify-compilation.lua;
+  extraConfigLua = builtins.readFile ./notify-compilation.lua + "\n" + builtins.readFile ./setup.lua;
 }
