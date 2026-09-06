@@ -38,3 +38,60 @@ function _G.tex_indent()
 	if _G.tex_in_verbatim(vim.v.lnum) then return -1 end
 	return vim.fn.VimtexIndentExpr()
 end
+
+-- math text object (im/am), padding-preserving inner
+local function line_len(row)
+	return #(vim.api.nvim_buf_get_lines(0, row, row + 1, false)[1] or '')
+end
+
+local function char_at(row, col)
+	local line = vim.api.nvim_buf_get_lines(0, row, row + 1, false)[1] or ''
+	return line:sub(col + 1, col + 1)
+end
+
+local function fwd_ws(row, col, erow, ecol)
+	while row < erow or (row == erow and col < ecol) do
+		if col >= line_len(row) then
+			row, col = row + 1, 0
+		elseif char_at(row, col):match('%s') then
+			col = col + 1
+		else
+			break
+		end
+	end
+	return row, col
+end
+
+local function bwd_ws(row, col, srow, scol)
+	while row > srow or (row == srow and col > scol) do
+		if col <= 0 then
+			row, col = row - 1, line_len(row - 1)
+		elseif char_at(row, col - 1):match('%s') then
+			col = col - 1
+		else
+			break
+		end
+	end
+	return row, col
+end
+
+function _G.tex_math_textobj(ai)
+	local pos = vim.api.nvim_win_get_cursor(0)
+	local node = enclosing(pos[1] - 1, pos[2], math_types)
+	if not node then return '<esc>' end
+	local sr, sc, er, ec
+	if ai == 'a' then
+		sr, sc, er, ec = node:range()
+	else
+		local n = node:child_count()
+		if n < 2 then return '<esc>' end
+		local _, _, fsr, fsc = node:child(0):range()
+		local lsr, lsc = node:child(n - 1):range()
+		sr, sc = fwd_ws(fsr, fsc, lsr, lsc)
+		er, ec = bwd_ws(lsr, lsc, sr, sc)
+	end
+	if sr > er or (sr == er and sc >= ec) then return '<esc>' end
+	vim.api.nvim_buf_set_mark(0, '<', sr + 1, sc, {})
+	vim.api.nvim_buf_set_mark(0, '>', er + 1, ec - 1, {})
+	return 'gv'
+end

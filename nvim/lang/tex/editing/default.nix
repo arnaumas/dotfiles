@@ -21,6 +21,26 @@
         key = "o";
         action = "g$a<cr><esc>";
       }
+      {
+        mode = [ "x" "o" ];
+        key = "im";
+        action.__raw = "function() return _G.tex_math_textobj('i') end";
+        options = {
+          buffer = true;
+          expr = true;
+          replace_keycodes = true;
+        };
+      }
+      {
+        mode = [ "x" "o" ];
+        key = "am";
+        action.__raw = "function() return _G.tex_math_textobj('a') end";
+        options = {
+          buffer = true;
+          expr = true;
+          replace_keycodes = true;
+        };
+      }
       # { mode = [ "n" "o" "v" ]; key = "j"; action = "gj"; options = { silent = true; buffer = true; }; }
       # { mode = [ "n" "o" "v" ]; key = "k"; action = "gk"; options = { silent = true; buffer = true; }; }
       # { mode = [ "n" "o" "v" ]; key = "0"; action = "g0"; options = { silent = true; buffer = true; }; }
