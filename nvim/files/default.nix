@@ -1,4 +1,6 @@
 {
+  imports = [ ./highlights.nix ];
+
   plugins.oil = {
     enable = true;
     settings = {
@@ -63,5 +65,4 @@
     }
   ];
 
-  colors.extraLua = builtins.readFile ./highlights.lua;
 }

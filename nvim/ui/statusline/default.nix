@@ -1,4 +1,6 @@
 {
+  imports = [ ./highlights.nix ];
+
   plugins.lualine = {
     enable = true;
     settings =
@@ -79,7 +81,10 @@
             statusline = [ ];
             winbar = [ ];
           };
-          ignore_focus = [ "oil" "fzf" ];
+          ignore_focus = [
+            "oil"
+            "fzf"
+          ];
           always_divide_middle = true;
           globalstatus = false;
           refresh = {
@@ -172,5 +177,4 @@
       };
   };
 
-  colors.extraLua = builtins.readFile ./highlights.lua;
 }

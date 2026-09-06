@@ -5,6 +5,7 @@
     ./mini.nix
     ./blink.nix
     ./fold.nix
+    ./highlights.nix
   ];
 
   opts = {
@@ -27,12 +28,18 @@
       options.desc = "[o]pen line above";
     }
     {
-      mode = [ "n" "x" ];
+      mode = [
+        "n"
+        "x"
+      ];
       key = "K";
       action = "i<cr><esc>";
     }
     {
-      mode = [ "n" "x" ];
+      mode = [
+        "n"
+        "x"
+      ];
       key = "u";
       action = "<CMD>silent undo<CR>";
     }
@@ -50,6 +57,4 @@
       callback.__raw = "function() vim.highlight.on_yank() end";
     }
   ];
-
-  colors.extraLua = builtins.readFile ./highlights.lua;
 }

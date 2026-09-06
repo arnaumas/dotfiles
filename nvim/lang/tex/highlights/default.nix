@@ -1,7 +1,7 @@
 {
-  extraFiles."after/queries/latex/highlights.scm".source = ./highlights.scm;
+  imports = [ ./highlights.nix ];
 
-  colors.extraLua = builtins.readFile ./highlights.lua;
+  extraFiles."after/queries/latex/highlights.scm".source = ./highlights.scm;
 
   extraConfigLua = builtins.readFile ./queries.lua;
 }

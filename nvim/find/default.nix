@@ -1,4 +1,6 @@
 {
+  imports = [ ./highlights.nix ];
+
   plugins.fzf-lua = {
     enable = true;
     profile.__raw = "false";
@@ -6,9 +8,27 @@
       winopts = {
         title = "";
         title_flags = false;
-        border = [ "" "" "" " " "" "" "" " " ];
+        border = [
+          ""
+          ""
+          ""
+          " "
+          ""
+          ""
+          ""
+          " "
+        ];
         preview = {
-          border = [ " " "─" " " " " "" "" "" " " ];
+          border = [
+            " "
+            "─"
+            " "
+            " "
+            ""
+            ""
+            ""
+            " "
+          ];
           title = false;
           scrollbar = false;
         };
@@ -154,6 +174,4 @@
       options.desc = "[f]ind in all buffer [l]ines";
     }
   ];
-
-  colors.extraLua = builtins.readFile ./highlights.lua;
 }

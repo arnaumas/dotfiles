@@ -1,4 +1,6 @@
 {
+  imports = [ ./highlights.nix ];
+
   plugins.mini = {
     modules.notify = {
       content.format.__raw = "_M.notify.format";
@@ -26,5 +28,4 @@
     desc = "mini.notify history";
   };
 
-  colors.extraLua = builtins.readFile ./highlights.lua;
 }

@@ -1,4 +1,6 @@
 {
+  imports = [ ./highlights.nix ];
+
   lsp.keymaps = [
     {
       mode = "n";
@@ -21,6 +23,4 @@
   ];
 
   extraConfigLua = builtins.readFile ./diagnostics.lua;
-
-  colors.extraLua = builtins.readFile ./highlights.lua;
 }

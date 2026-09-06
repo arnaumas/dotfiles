@@ -1,6 +1,8 @@
 {
   imports = [
+    ./palette.nix
     ./colorscheme.nix
+    ./highlights.nix
   ];
 
   opts = {
@@ -21,13 +23,19 @@
       options.desc = "clear highlights";
     }
     {
-      mode = [ "n" "x" ];
+      mode = [
+        "n"
+        "x"
+      ];
       key = "<leader>r";
       action = "q";
       options.desc = "[r]ecord macro";
     }
     {
-      mode = [ "n" "x" ];
+      mode = [
+        "n"
+        "x"
+      ];
       key = "q";
       action = "<nop>";
     }
