@@ -3,7 +3,6 @@
     enable = true;
     settings = {
       view_method = "sioyek";
-      view_sioyek_exe = "/Applications/sioyek.app/Contents/MacOS/sioyek";
       quickfix_open_on_warning = 0;
       log_ignore = [
         "Compilation completed"
