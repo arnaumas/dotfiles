@@ -4,7 +4,7 @@
     ./zsh
     ./tmux
     ./bat
-    ./fzf.nix
+    ./fzf
     ./rg.nix
   ];
 

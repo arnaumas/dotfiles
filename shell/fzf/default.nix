@@ -66,4 +66,7 @@ in
       file = "share/fzf-tab/fzf-tab.plugin.zsh";
     }
   ];
+
+  # provider widget + fzf-tab/fzf-completion config; the base binds Tab to it
+  programs.zsh.initContent = lib.mkAfter (builtins.readFile ./completion.zsh);
 }

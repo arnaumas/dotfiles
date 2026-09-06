@@ -11,9 +11,8 @@ _zsh_autosuggest_strategy_unique_completion() {
 	[[ "$suggestion" == "$1" ]] && unset suggestion
 }
 
-# -- <Tab>: accept the suggestion if shown, else route to fzf-tab / fzf-completion -->
+# <Tab>: accept suggestion if shown, else the completion provider, else native
 ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(tab-accept-or-complete)
-typeset -ga FZF_DEEP_CMDS=(vim nvim vi cd)
 
 tab-accept-or-complete() {
 	if [[ -n "$POSTDISPLAY" ]]; then
@@ -23,55 +22,17 @@ tab-accept-or-complete() {
 		return
 	fi
 
-	local words=(${(z)LBUFFER}) cmd
-	cmd=$words[1]
-
-	if (( ${#words} <= 1 )) && [[ ${LBUFFER[-1]} != ' ' ]]; then
-		zle fzf-tab-complete; return
-	fi
-
-	if (( ${FZF_DEEP_CMDS[(Ie)$cmd]} )) || [[ -z $_comps[$cmd] || $_comps[$cmd] == _default ]]; then
-		zle fzf-completion
+	# COMPLETION_PROVIDER is a widget name claimed by whatever provider is loaded
+	if [[ -n "$COMPLETION_PROVIDER" ]] && (( $+widgets[$COMPLETION_PROVIDER] )); then
+		zle "$COMPLETION_PROVIDER"
 	else
-		zle fzf-tab-complete
+		zle expand-or-complete
 	fi
 }
 zle -N tab-accept-or-complete
 bindkey -M viins '^I' tab-accept-or-complete
 
-# -- fzf-tab: the completion menu (known commands with a real completer)
-zstyle ':fzf-tab:*' switch-group '^' '+'
-zstyle ':fzf-tab:*' continuous-trigger '/'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -p --color=always -- "$realpath" 2>/dev/null'
-zstyle ':fzf-tab:complete:*:*' fzf-preview \
-	'[[ -d "$realpath" ]] && ls -p --color=always -- "$realpath" 2>/dev/null || bat --color=always --style=plain --theme=ansi16 -- "$realpath" 2>/dev/null || true'
-
-# -- fzf-completion: fd-backed deep completion (FZF_DEEP_CMDS + unknown cmds)
-export FZF_COMPLETION_TRIGGER=
-export FZF_COMPLETION_OPTS='--ansi --height=40%'
-_fzf_compgen_path() {
-	if [[ $1 == . ]]; then
-		fd --strip-cwd-prefix --hidden --follow --color=always --exclude .git
-	else
-		fd --hidden --follow --color=always --exclude .git . "$1"
-	fi
-}
-_fzf_compgen_dir() {
-	if [[ $1 == . ]]; then
-		fd --type d --strip-cwd-prefix --hidden --follow --color=always --exclude .git
-	else
-		fd --type d --hidden --follow --color=always --exclude .git . "$1"
-	fi
-}
-_fzf_comprun() {
-	local command=$1; shift
-	case "$command" in
-		cd) fzf --preview 'ls -p --color=always -- {} 2>/dev/null' "$@" ;;
-		*)  fzf --preview '[[ -d {} ]] && ls -p --color=always -- {} 2>/dev/null || bat --color=always --style=plain -- {} 2>/dev/null || true' "$@" ;;
-	esac
-}
-
-# -- zsh completion matching + colors (feeds the fzf-tab menu)
+# zsh completion matching + colors
 # tried in order, each only if the previous found nothing; fuzzy last
 zstyle ':completion:*' matcher-list \
 	'' \
