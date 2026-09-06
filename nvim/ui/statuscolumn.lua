@@ -9,14 +9,30 @@ local function sign(lnum)
 	if best then return best.sign_text, best.sign_hl_group or 'SignColumn' end
 end
 
+-- true if a fold begins at lnum; v:lnum == lnum during statuscolumn eval.
+local function fold_start(lnum)
+	local cur = vim.fn.foldlevel(lnum)
+	if cur == 0 then return false end
+	local prev = lnum == 1 and 0 or vim.fn.foldlevel(lnum - 1)
+	if cur > prev then return true end
+	if cur < prev then return false end
+	local fm = vim.wo.foldmethod
+	if fm == 'expr' then
+		local ok, v = pcall(vim.fn.eval, vim.wo.foldexpr)
+		return ok and type(v) == 'string' and v:sub(1, 1) == '>'
+	elseif fm == 'marker' then
+		local open = vim.split(vim.wo.foldmarker, ',')[1]
+		return open ~= '' and vim.fn.getline(lnum):find(open, 1, true) ~= nil
+	end
+	return false
+end
+
 -- fold marks only; a sign (if any) replaces the number, not this cell.
 local function fold_mark(lnum, fc)
 	if fc < 2 then return '%#FoldColumn#' .. string.rep(' ', fc) end
 	if vim.fn.foldlevel(lnum) == 0 then return '%#FoldColumn#  ' end
 	if vim.fn.foldclosed(lnum) ~= -1 then return '%#FoldColumn#\u{F460}' end
-	if lnum == 1 or vim.fn.foldlevel(lnum) > vim.fn.foldlevel(lnum - 1) then
-		return '%#FoldColumn#\u{F47C}'
-	end
+	if fold_start(lnum) then return '%#FoldColumn#\u{F47C}' end
 	return '%#FoldColumn#\u{23B9} '
 end
 
