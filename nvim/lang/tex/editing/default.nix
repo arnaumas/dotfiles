@@ -40,7 +40,16 @@
     '';
   };
 
-  extraFiles."after/queries/latex/folds.scm".source = ./folds.scm;
-
-  extraConfigLua = builtins.readFile ./setup.lua + "\n" + builtins.readFile ./folds.lua;
+  extraConfigLua =
+    builtins.readFile ./setup.lua
+    + "\n"
+    + builtins.readFile ./folds.lua
+    + "\n"
+    + ''
+      vim.treesitter.query.set('latex', 'folds', [==[
+    ''
+    + builtins.readFile ./folds.scm
+    + ''
+      ]==])
+    '';
 }
