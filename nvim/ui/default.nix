@@ -27,6 +27,7 @@
     showcmd = false;
     shortmess = "ltToOCFscS";
     termguicolors = false;
+    guicursor = "n-v-c-sm:block,i-ci-ve-t:ver25,r-cr-o:hor20";
   };
 
   extraConfigLuaPre = lib.concatMapStringsSep "\n" builtins.readFile [ ./cellwidths.lua ./statuscolumn.lua ];
