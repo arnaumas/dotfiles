@@ -40,6 +40,6 @@
     ./completion
     ./syntax.nix
     ./history.nix
-    ./vi.nix
+    ./input
   ];
 }
