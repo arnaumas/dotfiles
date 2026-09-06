@@ -1,7 +1,8 @@
 ---@diagnostic disable: undefined-global
 
-hl('@operator.math', { fg = green })
+hl('@operator.math', { fg = blue })
 link('@markup.math', 'Normal')
+hl('@markup.math.symbol', { fg = fg })
 hl('@punctuation.math', { fg = magenta })
 hl('@markup.link.tex', { fg = cyan })
 hl('@markup.link.path', { fg = cyan, underline = true })

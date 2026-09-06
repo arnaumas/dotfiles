@@ -10,6 +10,21 @@
 (subscript
   "_" @operator.math)
 
+((command_name) @markup.math.symbol
+  (#in-math? @markup.math.symbol)
+  (#set! "priority" 105)
+  (#any-of? @markup.math.symbol
+    "\\alpha" "\\beta" "\\gamma" "\\delta" "\\epsilon" "\\varepsilon" "\\zeta" "\\eta"
+    "\\theta" "\\vartheta" "\\iota" "\\kappa" "\\lambda" "\\mu" "\\nu" "\\xi" "\\pi"
+    "\\varpi" "\\rho" "\\varrho" "\\sigma" "\\varsigma" "\\tau" "\\upsilon" "\\phi"
+    "\\varphi" "\\chi" "\\psi" "\\omega"
+    "\\Gamma" "\\Delta" "\\Theta" "\\Lambda" "\\Xi" "\\Pi" "\\Sigma" "\\Upsilon"
+    "\\Phi" "\\Psi" "\\Omega"
+    "\\nabla" "\\partial" "\\infty" "\\emptyset" "\\varnothing" "\\ell" "\\hbar"
+    "\\Re" "\\Im" "\\aleph" "\\wp" "\\forall" "\\exists" "\\nexists" "\\top" "\\bot"
+    "\\angle" "\\triangle" "\\square" "\\prime" "\\surd" "\\flat" "\\natural" "\\sharp"
+    "\\cdots" "\\ldots" "\\vdots" "\\ddots" "\\dots" "\\dagger" "\\ddagger"))
+
 (inline_formula
   [
     "$"
@@ -82,6 +97,9 @@
 
 ((command_name) @punctuation.backslash
   (#first-char! @punctuation.backslash)
+  (#set! "priority" 200))
+((command_name) @punctuation.backslash
+  (#eq? @punctuation.backslash "\\\\")
   (#set! "priority" 200))
 ((_
   command: _ @punctuation.backslash)
