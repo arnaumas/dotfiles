@@ -7,7 +7,7 @@
       root_markers = [ ".latexmkrc" ".git" ];
       settings = {
         texlab = {
-          diagnostics.ignoredPatterns = [ "Command terminated with space" ];
+          diagnostics.ignoredPatterns = [ "Command terminated with space" "Unused label" ];
           chktex = {
             onOpenAndSave = true;
             onEdit = false;
