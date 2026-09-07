@@ -9,8 +9,7 @@ let
     "--colors=line:none"
     "--colors=line:fg:white"
     "--colors=column:none"
-    "--colors=column:fg:black"
-    "--colors=column:style:intense"
+    "--colors=column:fg:white"
   ];
 
   ripgrep = pkgs.symlinkJoin {

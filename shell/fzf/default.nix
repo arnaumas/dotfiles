@@ -67,6 +67,10 @@ in
     }
   ];
 
-  # provider widget + fzf-tab/fzf-completion config; the base binds Tab to it
-  programs.zsh.initContent = lib.mkAfter (builtins.readFile ./completion.zsh);
+  programs.zsh.initContent = lib.mkAfter (
+    lib.concatMapStringsSep "\n" builtins.readFile [
+      ./completion.zsh
+      ./live-rg.zsh
+    ]
+  );
 }
