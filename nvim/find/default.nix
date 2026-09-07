@@ -177,4 +177,9 @@
       options.desc = "[f]ind in all buffer [l]ines";
     }
   ];
+
+  plugins.lualine.settings = {
+    extensions = [ "fzf" ];
+    ignore_focus = [ "fzf" ];
+  };
 }

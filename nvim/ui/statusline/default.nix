@@ -81,10 +81,6 @@
             statusline = [ ];
             winbar = [ ];
           };
-          ignore_focus = [
-            "oil"
-            "fzf"
-          ];
           always_divide_middle = true;
           globalstatus = false;
           refresh = {
@@ -172,8 +168,6 @@
           ];
           lualine_z = [ location ];
         };
-
-        extensions = [ ];
       };
   };
 
