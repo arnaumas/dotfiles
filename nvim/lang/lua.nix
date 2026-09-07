@@ -10,7 +10,13 @@
           runtime.version = "LuaJIT";
           diagnostics.globals = [ "vim" "make_statuscolumn" "make_foldtext" "_M" ];
           workspace = {
-            library.__raw = "vim.api.nvim_get_runtime_file('', true)";
+            # exclude built config dir (duplicate-set-field on _G.* assets)
+            library.__raw = ''
+              vim.tbl_filter(
+                function(p) return not vim.startswith(p, vim.fn.stdpath("config")) end,
+                vim.api.nvim_get_runtime_file("", true)
+              )
+            '';
             checkThirdParty = false;
           };
           telemetry.enable = false;
