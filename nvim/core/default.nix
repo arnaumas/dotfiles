@@ -7,6 +7,7 @@
 
   opts = {
     swapfile = false;
+    report = 9999;
   };
 
   globals = {
@@ -62,6 +63,8 @@
       action = "<cmd>quit!<cr>";
       options.desc = "force [q]uit file";
     }
+
+    # splits
     {
       mode = "n";
       key = "<C-h>";
@@ -85,6 +88,38 @@
       key = "<C-l>";
       action = "<C-w>l";
       options.desc = "focus window right";
+    }
+    {
+      mode = "n";
+      key = "<C-w>v";
+      action = "<C-w>v<cmd>silent! buffer next<CR>";
+      options.desc = "split vertically";
+    }
+    {
+      mode = "n";
+      key = "<C-w>s";
+      action = "<C-w>s<cmd>silent! buffer next<CR>";
+      options.desc = "split horizontally";
+    }
+
+    # buffers
+    {
+      mode = "n";
+      key = "<leader>bn";
+      action = "<CMD>buffer next<CR>";
+      options.desc = "open next buffer";
+    }
+    {
+      mode = "n";
+      key = "<leader>bp";
+      action = "<CMD>buffer previous<CR>";
+      options.desc = "open previous buffer";
+    }
+    {
+      mode = "n";
+      key = "<leader>bd";
+      action = "<CMD>buffer delete<CR>";
+      options.desc = "delete buffer";
     }
   ];
 }
