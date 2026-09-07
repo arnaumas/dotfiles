@@ -88,8 +88,8 @@ find/
   highlights.nix       FzfLua* groups
 
 files/
-  default.nix          oil float file explorer + <leader>e{f,d,n,z} explore maps (open dotfiles / nvim / zsh dirs)
-  highlights.nix       Oil* groups
+  default.nix          nvim-tree left-sidebar file explorer + <leader>e{f,d,n,z} explore maps (open dotfiles / nvim / zsh dirs)
+  highlights.nix       NvimTree* groups
 
 git/
   default.nix          mini.git + <leader>gc (commit) / <leader>ga (diff --cached) maps

@@ -1,17 +1,28 @@
-# oil.nvim highlights.
-{ palette, ... }:
+# nvim-tree highlights.
+{ lib, palette, hl, ... }:
 {
-  colors.groups = {
-    OilDir.link = "Directory";
-    OilDirIcon.link = "Directory";
-    OilHidden.link = "UiMuted";
-    OilLinkTarget.link = "UiMuted";
-    OilCursorLine.link = "UiSelected";
-    OilLink.fg = palette.cyan;
-    OilCreate.fg = palette.green;
-    OilDelete.fg = palette.red;
-    OilMove.fg = palette.yellow;
-    OilCopy.fg = palette.cyan;
-    OilChange.fg = palette.yellow;
-  };
+  colors.groups = lib.mkMerge [
+    {
+      NvimTreeFolderName.link = "Directory";
+      NvimTreeFolderIcon.link = "Directory";
+      NvimTreeOpenedFolderName.link = "Directory";
+      NvimTreeEmptyFolderName.link = "Directory";
+      NvimTreeRootFolder.link = "UiAccent";
+      NvimTreeIndentMarker.link = "UiMuted";
+      NvimTreeCursorLine.link = "UiSelected";
+      NvimTreeSymlink.fg = palette.magenta;
+      NvimTreeExecFile.fg = palette.red;
+      NvimTreeSpecialFile.link = "Normal";
+      NvimTreeOpenedHl.link = "UiAccent";
+    }
+    (hl.linkTo "UiMuted" [
+      "NvimTreeGitDirtyIcon"
+     "NvimTreeGitStagedIcon"
+     "NvimTreeGitNewIcon"
+     "NvimTreeGitDeletedIcon"
+     "NvimTreeGitRenamedIcon"
+     "NvimTreeGitMergeIcon"
+     "NvimTreeGitIgnoredIcon"
+    ])
+  ];
 }

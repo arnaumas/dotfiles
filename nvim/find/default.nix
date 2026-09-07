@@ -53,7 +53,7 @@
         "--info" = "hidden";
 
         "--pointer" = " ";
-        "--marker" = ">";
+        "--marker" = "> ";
 
         "--cycle" = true;
       };
@@ -180,6 +180,6 @@
 
   plugins.lualine.settings = {
     extensions = [ "fzf" ];
-    ignore_focus = [ "fzf" ];
+    options.ignore_focus = [ "fzf" ];
   };
 }
