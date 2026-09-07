@@ -26,7 +26,10 @@ local function collect(kind)
 	return out
 end
 
-local function run(items, prompt, fmt)
+local PREVIEW_COLS = 60
+
+local function run(items, prompt, fmt, o)
+	o = o or {}
 	local lines = {}
 	local width = 0
 	for i, e in ipairs(items) do
@@ -36,12 +39,37 @@ local function run(items, prompt, fmt)
 	end
 
 	local status = vim.o.laststatus > 0 and 1 or 0
-	local win_w = math.min(width + 4, vim.o.columns - 4)
 	local win_h = vim.o.lines - vim.o.cmdheight - status
+	local list_w = width + 6
+	local room = vim.o.columns - 4
+	local win_w = math.min(list_w, room)
+
+	local preview, extend
+	if o.previewer then
+		if list_w + PREVIEW_COLS <= room then
+			win_w = list_w + PREVIEW_COLS
+			extend = true
+		end
+		preview = {
+			hidden = true,
+			layout = 'horizontal',
+			horizontal = 'right:' .. PREVIEW_COLS,
+			border = { '', '', '', '', '', '', '', '│' },
+			winopts = { number = false },
+		}
+	end
 
 	require('fzf-lua').fzf_exec(lines, {
 		prompt = prompt,
-		winopts = { row = 0, col = 0, width = win_w, height = win_h },
+		previewer = o.previewer,
+		winopts = {
+			row = 0,
+			col = 0,
+			width = win_w,
+			height = win_h,
+			toggle_behavior = extend and 'extend' or nil,
+			preview = preview,
+		},
 		fzf_opts = {
 			['--ansi'] = true,
 			['--delimiter'] = '\\t',
@@ -54,6 +82,7 @@ local function run(items, prompt, fmt)
 				if idx and items[idx] then jump(items[idx]) end
 			end,
 		},
+		_items = items,
 	})
 end
 
@@ -133,6 +162,45 @@ local function ref_group(prefix)
 	return 'TexRefOther'
 end
 
+-- enclosing \begin{...}...\end{...} block around the label
+local ENV = { math_environment = true, generic_environment = true }
+
+local function env_lines(e)
+	if not (e.file and e.line) then return nil end
+	local flines = vim.fn.readfile(e.file)
+	if #flines == 0 then return nil end
+	local ok, parser = pcall(vim.treesitter.get_string_parser, table.concat(flines, '\n'), 'latex')
+	if not ok or not parser then return nil end
+	local root = parser:parse()[1]:root()
+	local row = math.max((tonumber(e.line) or 1) - 1, 0)
+	local col = math.max(((flines[row + 1] or ''):find('\\label') or 1) - 1, 0)
+	local node = root:named_descendant_for_range(row, col, row, col + 1)
+	while node and not ENV[node:type()] do node = node:parent() end
+	if not node then
+		return vim.list_slice(flines, math.max(row - 1, 0) + 1, math.min(row + 5, #flines))
+	end
+	local sr, _, er = node:range()
+	return vim.list_slice(flines, sr + 1, er + 1)
+end
+
+local env_previewer = require('fzf-lua.previewer.builtin').base:extend()
+
+function env_previewer:new(o, opts)
+	env_previewer.super.new(self, o, opts)
+	return self
+end
+
+function env_previewer:populate_preview_buf(entry_str)
+	if not self.win or not self.win:validate_preview() then return end
+	local idx = tonumber((entry_str or ''):match('^(%d+)\t'))
+	local e = idx and self.opts._items[idx]
+	local buf = self:get_tmp_buffer()
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, (e and env_lines(e)) or { '' })
+	self:set_preview_buf(buf)
+	pcall(vim.treesitter.start, buf, 'latex')
+	self.win:update_preview_scrollbar()
+end
+
 function _G.tex_labels_fzf()
 	local items = {}
 	for _, e in ipairs(collect('label')) do
@@ -149,7 +217,9 @@ function _G.tex_labels_fzf()
 		local prefix, rest = title:match('^(%a+)(:.*)$')
 		if not prefix then return title, title end
 		return title, paint(ref_group(prefix), prefix) .. rest
-	end)
+	end, {
+		previewer = { _ctor = function() return env_previewer end },
+	})
 end
 
 -- todo

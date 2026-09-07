@@ -58,6 +58,9 @@
         "--cycle" = true;
       };
 
+      keymap.builtin."<C-o>" = "toggle-preview";
+
+      # pickers
       hls = {
         normal = "FzfLuaNormal";
         border = "FzfLuaNormal";
