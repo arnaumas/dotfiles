@@ -49,14 +49,22 @@ local function run(items, prompt, fmt, o)
 		if list_w + PREVIEW_COLS <= room then
 			win_w = list_w + PREVIEW_COLS
 			extend = true
+			preview = {
+				hidden = true,
+				layout = 'horizontal',
+				horizontal = 'right:' .. PREVIEW_COLS,
+				border = { '', '', '', '', '', '', '', '│' },
+				winopts = { number = false },
+			}
+		else
+			preview = {
+				hidden = true,
+				layout = 'vertical',
+				vertical = 'down:50%',
+				border = { '', '─', '', '', '', '', '', '' },
+				winopts = { number = false },
+			}
 		end
-		preview = {
-			hidden = true,
-			layout = 'horizontal',
-			horizontal = 'right:' .. PREVIEW_COLS,
-			border = { '', '', '', '', '', '', '', '│' },
-			winopts = { number = false },
-		}
 	end
 
 	require('fzf-lua').fzf_exec(lines, {
