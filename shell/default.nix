@@ -5,7 +5,7 @@
     ./tmux
     ./bat
     ./fzf
-    ./rg.nix
+    ./rg
   ];
 
   home.packages = [ pkgs.fd ];
