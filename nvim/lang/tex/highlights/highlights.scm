@@ -23,7 +23,7 @@
     "\\nabla" "\\partial" "\\infty" "\\emptyset" "\\varnothing" "\\ell" "\\hbar"
     "\\Re" "\\Im" "\\aleph" "\\wp" "\\forall" "\\exists" "\\nexists" "\\top" "\\bot"
     "\\angle" "\\triangle" "\\square" "\\prime" "\\surd" "\\flat" "\\natural" "\\sharp"
-    "\\cdots" "\\ldots" "\\vdots" "\\ddots" "\\dots" "\\dagger" "\\ddagger"))
+    "\\cdots" "\\ldots" "\\vdots" "\\ddots" "\\dots" "\\dagger" "\\ddagger" "\\R" "\\N"))
 
 (inline_formula
   [
