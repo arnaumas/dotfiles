@@ -5,5 +5,6 @@
     ./highlights
     ./editing
     ./snippets
+    ./find
   ];
 }
