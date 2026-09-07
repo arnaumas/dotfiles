@@ -92,13 +92,13 @@
     {
       mode = "n";
       key = "<C-w>v";
-      action = "<C-w>v<cmd>silent! buffer next<CR>";
+      action = "<C-w>v<cmd>silent! bnext<CR>";
       options.desc = "split vertically";
     }
     {
       mode = "n";
       key = "<C-w>s";
-      action = "<C-w>s<cmd>silent! buffer next<CR>";
+      action = "<C-w>s<cmd>silent! bnext<CR>";
       options.desc = "split horizontally";
     }
 
@@ -106,19 +106,19 @@
     {
       mode = "n";
       key = "<leader>bn";
-      action = "<CMD>buffer next<CR>";
+      action = "<CMD>bnext<CR>";
       options.desc = "open next buffer";
     }
     {
       mode = "n";
       key = "<leader>bp";
-      action = "<CMD>buffer previous<CR>";
+      action = "<CMD>bprevious<CR>";
       options.desc = "open previous buffer";
     }
     {
       mode = "n";
       key = "<leader>bd";
-      action = "<CMD>buffer delete<CR>";
+      action = "<CMD>b delete<CR>";
       options.desc = "delete buffer";
     }
   ];
