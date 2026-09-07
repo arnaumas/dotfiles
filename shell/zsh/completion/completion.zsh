@@ -8,7 +8,7 @@ _zsh_autosuggest_capture_postcompletion() {
 # an untouched buffer means nothing was inserted
 _zsh_autosuggest_strategy_unique_completion() {
 	_zsh_autosuggest_strategy_completion "$@"
-	[[ "$suggestion" == "$1"* ]] || unset suggestion
+	[[ "$suggestion" == "$1" ]] && unset suggestion
 }
 
 # <Tab>: accept suggestion if shown, else the completion provider, else native

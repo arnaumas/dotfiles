@@ -3,7 +3,7 @@
   programs.zsh = {
     autosuggestion = {
       enable = true;
-      highlight = "fg=7";
+      highlight = "fg=white";
       strategy = [ ];
     };
 
