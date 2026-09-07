@@ -3,9 +3,9 @@
     ./core.nix
     ./zsh
     ./tmux
-    ./bat
     ./fzf
     ./rg
+    ./bat
   ];
 
   home.packages = [ pkgs.fd ];
