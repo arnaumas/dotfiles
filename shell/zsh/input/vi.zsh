@@ -7,7 +7,7 @@ beam-cursor() { echo -ne '\e[6 q' }
 block-cursor() { echo -ne '\e[2 q' }
 function switch-cursor () {
 	case $KEYMAP in
-		vicmd) block-cursor;;
+		vicmd|viopp|visual) block-cursor;;
 		viins|main) beam-cursor;;
 	esac
 }
