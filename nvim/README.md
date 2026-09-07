@@ -33,6 +33,15 @@ Groups live in a `highlights.nix` per concern (`colors.groups = { … }`, wired 
 diagnostics in `lsp/`, and so on. Links resolve by name at runtime, so contribution order is
 irrelevant. Prefer `link` to a `Ui*` unit or a fundamental group over literal slots.
 
+The 16 ANSI slots are shared across the whole environment: nvim (`core/palette.nix`),
+zsh-syntax-highlighting (`shell/zsh/syntax.nix`), fzf (`shell/fzf.nix`), fzf-tab, bat
+(`shell/bat/ansi16.tmTheme`), and the pure prompt all hardcode slots 0–15 and inherit hex
+transitively from the running terminal. Only GUIs that need hex read the `theme` arg directly:
+ghostty (`ghostty/default.nix`, via `programs.ghostty.themes`), plus jankyborders and sioyek in
+`~/home`. Change a color in `themes/edge-vague.nix` and the slot consumers follow automatically.
+Highlighting philosophy follows tonsky.me/blog/syntax-highlighting: color only what carries meaning
+(comments yellow not grey, punctuation greyed).
+
 ## Tree
 
 ```
@@ -50,9 +59,9 @@ core/
 editing/
   default.nix          editing opts (expandtab OFF, shiftwidth/tabstop 2, autoindent); o/O/K/u maps; yank highlight
   treesitter.nix       grammars; highlight.enable = false, indent.enable = true
-  snippets.nix         LuaSnip engine (autosnippets, Tab cut-key) + <Tab>/<C-l>/<C-h> expand/jump maps
+  snippets.nix         LuaSnip engine (autosnippets, Tab cut-key) + <Tab>/<S-Tab> expand-or-jump maps
   mini.nix             mini.ai + mini.pairs + mini.surround
-  blink.nix            EMPTY stub (blink.cmp not ported); imported but declares nothing
+  blink.nix            blink.cmp completion menu (luasnip snippet preset; auto_show gated on <=5 lsp items)
   fold.nix             foldcolumn 0 + fold fillchar + foldtext autocmd
   fold.lua             make_foldtext() (marker-fold text)
   highlights.nix       treesitter @capture highlight groups
@@ -111,6 +120,11 @@ lang/                  one module per language; each bundles LSP server + ftplug
   `cmd` and expected on PATH (Homebrew). Completion capabilities are injected by nixvim.
 - **LaTeX is the design target**: vimtex previews via **sioyek**; keep the Overleaf-style intent
   (LSP + snippets, minimal menu noise).
+- **Completion**: blink shows the menu; it auto-opens only for in-scope LSP symbols when the list is
+  short (`auto_show` counts `source_id == "lsp"` items, requires `#items <= 5`), so `.`-triggered
+  members pop while broad lists (tex `\`) stay closed. `<C-x>` forces it open, `<C-j>`/`<C-k>`
+  select, `<C-y>` accept, `<C-e>` cancel. Snippets are LuaSnip's, driven by `<Tab>`
+  (expand-or-jump-forward, else a literal Tab) / `<S-Tab>` (jump back) — decoupled from the menu.
 - **Window nav** (`<C-hjkl>`) is overridden by `shell/tmux/nav.nix` when tmux is enabled, giving
   seamless nvim ↔ tmux pane movement.
 - "Running" a change = rebuild (home-manager switch, or `nix build .#`). `nix flake check` evaluates

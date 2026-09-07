@@ -3,6 +3,7 @@
     ./core
     ./editing
     ./ui
+    ./completion
     ./find
     ./files
     ./git

@@ -3,14 +3,20 @@
 Personal dotfiles as a **home-manager module set** (no stow). Exposes `homeModules.default`
 (the whole tree) and standalone `homeConfigurations` via `flake.nix`. Normally consumed by the
 `~/home` composition (`~/home/flake.nix`), which adds `desktop-env`, `refs`, a `darwin` config, and
-the `themes/` palette. Design bias: **lean, first-party, minimal dependencies**; the center of
-gravity is a Neovim environment for LaTeX writing. See `CLAUDE.md` for the full rationale and
-`ROADMAP.md` for planned work.
+the `themes/` palette. Design bias: **lean and modular** — a purpose-built config with only what's
+needed, split per concern, not a wholesale distro or plugin-manager framework (not anti-dependency).
+The center of gravity is a Neovim environment for LaTeX writing. See `CLAUDE.md` for the full
+rationale and `ROADMAP.md` for planned work.
 
 ## Wiring
 
 `home.nix` imports `shell`, `claude`, `pi`, `git`, `ghostty`, `svim`, `vim`; nvim is wired via
 `programs.nixvim.imports = [ ./nvim ]`. The `theme` arg (hex palette) is passed in from `~/home`.
+
+Modules render config three ways: **typed program options** (`programs.zsh`, `programs.tmux`,
+`programs.fzf`, `programs.bat`, `programs.ghostty`, `programs.nixvim`); **`xdg.configFile."<app>/…".source`**
+for verbatim files without an HM module (`git`, `svim`, `vim`, `claude/`); and **`home.file` /
+`home.packages`** for `$HOME` dotfiles and bare packages (`pi`, `fd`, wrapped `rg`).
 
 ## Packages (each has its own README)
 

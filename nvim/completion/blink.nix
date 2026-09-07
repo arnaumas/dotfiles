@@ -5,7 +5,12 @@
     settings = {
       snippets.preset = "luasnip";
 
-      completion.menu.auto_show.__raw = "function(_, items) return #items <= 5 end";
+      # automatically show blink menu if the suggestion is unique
+      completion.menu.auto_show.__raw = ''
+        function(_, items)
+        	return #items <= 1
+        end
+      '';
 
       keymap = {
         preset = "none";
@@ -17,6 +22,18 @@
       };
     };
   };
+
+  extraConfigLuaPost = ''
+    do
+    	local list = require("blink.cmp.completion.list")
+    	local menu = require("blink.cmp.completion.windows.menu")
+    	list.show_emitter:on(function(event)
+    		if not menu.auto_show.enabled(event.context, event.items) then
+    			menu.close()
+    		end
+    	end)
+    end
+  '';
 
   colors.groups = {
     BlinkCmpMenu.link = "UiSurface";
