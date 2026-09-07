@@ -13,7 +13,7 @@ function switch-cursor () {
 }
 zle -N switch-cursor
 zle -N beam-cursor
-add-zle-hook-widget zle-keymap-select switch-cursor
+add-zle-hook-widget zle-line-pre-redraw switch-cursor
 add-zle-hook-widget zle-line-init beam-cursor
 add-zsh-hook preexec beam-cursor
 
