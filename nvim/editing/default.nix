@@ -1,11 +1,9 @@
 {
   imports = [
     ./treesitter.nix
-    ./snippets.nix
-    ./mini.nix
-    ./blink.nix
     ./fold.nix
     ./highlights.nix
+    ./mini.nix
   ];
 
   opts = {
