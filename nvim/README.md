@@ -59,12 +59,15 @@ core/
 editing/
   default.nix          editing opts (expandtab OFF, shiftwidth/tabstop 2, autoindent); o/O/K/u maps; yank highlight
   treesitter.nix       grammars; highlight.enable = false, indent.enable = true
-  snippets.nix         LuaSnip engine (autosnippets, Tab cut-key) + <Tab>/<S-Tab> expand-or-jump maps
   mini.nix             mini.ai + mini.pairs + mini.surround
-  blink.nix            blink.cmp completion menu (luasnip snippet preset; auto_show gated on <=5 lsp items)
   fold.nix             foldcolumn 0 + fold fillchar + foldtext autocmd
   fold.lua             make_foldtext() (marker-fold text)
   highlights.nix       treesitter @capture highlight groups
+
+completion/
+  default.nix          imports (blink + snippets)
+  blink.nix            blink.cmp menu (luasnip preset); auto_show gated on <=5 items + hide-on-grow hook; <C-x/j/k/y/e> keys
+  snippets.nix         LuaSnip engine (autosnippets, Tab cut-key) + <Tab>/<S-Tab> expand-or-jump maps
 
 ui/
   default.nix          UI opts (number/relativenumber, cursorline, scrolloff 20, cmdheight 0, termguicolors OFF,
@@ -120,10 +123,14 @@ lang/                  one module per language; each bundles LSP server + ftplug
   `cmd` and expected on PATH (Homebrew). Completion capabilities are injected by nixvim.
 - **LaTeX is the design target**: vimtex previews via **sioyek**; keep the Overleaf-style intent
   (LSP + snippets, minimal menu noise).
-- **Completion**: blink shows the menu; it auto-opens only for in-scope LSP symbols when the list is
-  short (`auto_show` counts `source_id == "lsp"` items, requires `#items <= 5`), so `.`-triggered
-  members pop while broad lists (tex `\`) stay closed. `<C-x>` forces it open, `<C-j>`/`<C-k>`
-  select, `<C-y>` accept, `<C-e>` cancel. Snippets are LuaSnip's, driven by `<Tab>`
+- **Completion**: blink shows the menu; it auto-opens only when the list is short (`auto_show`
+  requires `#items <= 5`, source-agnostic), so a narrowed set pops while broad lists (tex `\`) stay
+  closed. `auto_show` gates only the *initial* open, so an `extraConfigLuaPost` hook re-runs the gate
+  on every async list update and hides the menu when it grows past the threshold (reusing
+  `menu.auto_show.enabled`, which `<C-x>` force-show sets to always-true, so a forced menu is never
+  auto-closed). Sources are blink defaults: buffer stays an LSP/path fallback (runs only when they
+  return nothing), so completion is LSP-first with buffer as backup. `<C-x>` forces the menu open,
+  `<C-j>`/`<C-k>` select, `<C-y>` accept, `<C-e>` cancel. Snippets are LuaSnip's, driven by `<Tab>`
   (expand-or-jump-forward, else a literal Tab) / `<S-Tab>` (jump back) — decoupled from the menu.
 - **Window nav** (`<C-hjkl>`) is overridden by `shell/tmux/nav.nix` when tmux is enabled, giving
   seamless nvim ↔ tmux pane movement.
