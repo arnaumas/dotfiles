@@ -1,4 +1,7 @@
+{ pkgs, ... }:
 {
+  extraPackages = [ pkgs.texlab ];
+
   lsp.servers.texlab = {
     enable = true;
     config = {

@@ -1,4 +1,7 @@
+{ pkgs, ... }:
 {
+  extraPackages = [ pkgs.lua-language-server ];
+
   lsp.servers.lua_ls = {
     enable = true;
     config = {
