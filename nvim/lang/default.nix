@@ -2,6 +2,7 @@
   imports = [
     ./nix.nix
     ./lua.nix
+    ./python.nix
     ./zsh
     ./help.nix
     ./tex
