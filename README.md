@@ -42,5 +42,5 @@ for verbatim files without an HM module (`git`, `svim`, `vim`, `claude/`); and *
 
 - `nix flake check` — evaluates the module set + a headless zsh startup check + the nvim check.
 - Format `.nix` with `nixfmt`; lint with `statix` / `deadnix`.
-- Indentation: **hard tabs**, `shiftwidth=2`, except `*.nix` = 2 spaces (`.editorconfig`, `root =
-  true`).
+- Indentation: **hard tabs**, `shiftwidth=2` (global `opts` in `nvim/editing/default.nix`), except
+  `*.nix` = 2 spaces (`expandtab` ftplugin in `nvim/lang/nix.nix`).

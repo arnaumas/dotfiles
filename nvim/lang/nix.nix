@@ -10,4 +10,6 @@
       root_markers = [ "flake.nix" ".git" ];
     };
   };
+
+  files."after/ftplugin/nix.lua".localOpts.expandtab = true;
 }
