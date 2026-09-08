@@ -19,6 +19,7 @@
           " "
         ];
         preview = {
+          layout = "vertical";
           border = [
             " "
             "─"
