@@ -1,4 +1,4 @@
-{ theme, lib, ... }:
+{ theme, lib, fontFamily ? null, ... }:
 
 let
   light = theme.light;
@@ -30,7 +30,6 @@ in
     package = null;
 
     settings = {
-      font-family = "Geist Mono";
       font-size = 12;
       font-feature = [
         "-calt"
@@ -60,7 +59,8 @@ in
       macos-titlebar-proxy-icon = "hidden";
       window-padding-x = 4;
       window-padding-y = "10,2";
-    };
+    }
+    // lib.optionalAttrs (fontFamily != null) { font-family = fontFamily; };
 
     themes = {
       light = {
