@@ -1,24 +1,5 @@
 {
-  imports = [ ../core ];
-
-  opts = {
-    termguicolors = false;
-    number = false;
-    relativenumber = true;
-    numberwidth = 1;
-    cursorline = true;
-    scrolloff = 20;
-    linebreak = true;
-    breakindent = true;
-    showmode = false;
-    laststatus = 2;
-    cmdheight = 0;
-    ruler = false;
-    shortmess = "sS";
-    fillchars = {
-      eob = " ";
-    };
-  };
+  imports = [ ../core ../ui/core.nix ];
 
   autoGroups.highlight-yank = {
     clear = true;
