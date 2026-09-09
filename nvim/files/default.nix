@@ -1,7 +1,6 @@
 {
   imports = [ ./highlights.nix ];
 
-
   plugins.nvim-tree = {
     enable = true;
     settings = {
@@ -15,13 +14,14 @@
       view = {
         side = "left";
         width = 30;
+				signcolumn = "no";
       };
       renderer = {
         group_empty = true;
         highlight_opened_files = "name";
         root_folder_label = false;
         icons = {
-          git_placement = "signcolumn";
+          git_placement = "after";
           glyphs.git = {
             untracked = "○";
             unstaged = "◉";
@@ -48,8 +48,10 @@
   };
 
   plugins.lualine.settings = {
-    extensions = [ "nvim-tree" ];
-    options.ignore_focus = [ "NvimTree" ];
+    options = {
+      disabled_filetypes.statusline = [ "NvimTree" ];
+      ignore_focus = [ "NvimTree" ];
+    };
   };
 
   keymaps = [
@@ -79,14 +81,16 @@
     }
   ];
 
-  extraConfigLua = ''
-    do
-      local api = require('nvim-tree.api')
-      api.events.subscribe(api.events.Event.TreeRendered, function(data)
-        if data.winnr and vim.api.nvim_win_is_valid(data.winnr) then
-          vim.wo[data.winnr].statuscolumn = ""
-        end
-      end)
-    end
-  '';
+  autoCmd = [
+    {
+      event = [ "BufWinEnter" ];
+      pattern = [ "NvimTree_*" ];
+      callback.__raw = ''
+      function()
+				vim.opt_local.statuscolumn = ""
+        vim.opt_local.fillchars:append({ vert = "▌" })
+			end
+      '';
+    }
+  ];
 }

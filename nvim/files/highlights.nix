@@ -3,26 +3,33 @@
 {
   colors.groups = lib.mkMerge [
     {
-      NvimTreeFolderName.link = "Directory";
-      NvimTreeFolderIcon.link = "Directory";
-      NvimTreeOpenedFolderName.link = "Directory";
-      NvimTreeEmptyFolderName.link = "Directory";
+      NvimTreeNormal.link = "UiSurface";
+      NvimTreeEnOfBuffer.link = "NvimTreeNormal";
       NvimTreeRootFolder.link = "UiAccent";
       NvimTreeIndentMarker.link = "UiMuted";
       NvimTreeCursorLine.link = "UiSelected";
+      NvimTreeStatusLine.link = "NvimTreeNormal";
+      NvimTreeStatuslineNC.link = "NvimTreeNormal";
+			NvimTreeWinseparator.fg = palette.dim_bg;
       NvimTreeSymlink.fg = palette.magenta;
       NvimTreeExecFile.fg = palette.red;
-      NvimTreeSpecialFile.link = "Normal";
+      NvimTreeSpecialFile.link = "NvimTreeNormal";
       NvimTreeOpenedHl.link = "UiAccent";
     }
+    (hl.linkTo "Directory" [
+      "NvimTreeFolderName"
+      "NvimTreeFolderIcon"
+      "NvimTreeOpenedFolderName"
+      "NvimTreeEmptyFolderName"
+    ])
     (hl.linkTo "UiMuted" [
       "NvimTreeGitDirtyIcon"
-     "NvimTreeGitStagedIcon"
-     "NvimTreeGitNewIcon"
-     "NvimTreeGitDeletedIcon"
-     "NvimTreeGitRenamedIcon"
-     "NvimTreeGitMergeIcon"
-     "NvimTreeGitIgnoredIcon"
+      "NvimTreeGitStagedIcon"
+      "NvimTreeGitNewIcon"
+      "NvimTreeGitDeletedIcon"
+      "NvimTreeGitRenamedIcon"
+      "NvimTreeGitMergeIcon"
+      "NvimTreeGitIgnoredIcon"
     ])
   ];
 }
