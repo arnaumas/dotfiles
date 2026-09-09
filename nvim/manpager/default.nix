@@ -1,19 +1,6 @@
 {
   imports = [ ../core ../ui/core.nix ];
 
-  autoGroups.highlight-yank = {
-    clear = true;
-  };
-
-  autoCmd = [
-    {
-      event = [ "TextYankPost" ];
-      group = "highlight-yank";
-      desc = "Highlight when yanking (copying) text";
-      callback.__raw = "function() vim.highlight.on_yank() end";
-    }
-  ];
-
   # man ergonomics, buffer-local so they win over core's global maps.
   files."after/ftplugin/man.lua".keymaps = [
     {

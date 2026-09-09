@@ -26,4 +26,18 @@
   extraConfigLua = ''
     		pcall(function() require('vim._core.ui2').enable() end)
     	'';
+  
+  autoGroups.highlight-yank = {
+    clear = true;
+  };
+
+  autoCmd = [
+    {
+      event = [ "TextYankPost" ];
+      group = "highlight-yank";
+      desc = "Highlight when yanking (copying) text";
+      callback.__raw = "function() vim.highlight.on_yank() end";
+    }
+  ];
+  
 }
