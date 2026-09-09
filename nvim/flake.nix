@@ -40,11 +40,22 @@
         programs.nixvim.imports = [ ./. ];
       };
 
-      # standalone system agnostic neovim package
+      # manpager standalone binary wired as $MANPAGER
+      homeModules.manpager =
+        { pkgs, ... }:
+        {
+          home.sessionVariables.MANPAGER = "${self.packages.${pkgs.system}.manpager}/bin/nvim +Man!";
+        };
+
+      # standalone system agnostic neovim packages
       packages = forEach (system: {
         default = nixvim.legacyPackages.${system}.makeNixvimWithModule {
           pkgs = pkgsFor system;
           module = ./.;
+        };
+        manpager = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+          pkgs = pkgsFor system;
+          module = ./manpager;
         };
       });
 

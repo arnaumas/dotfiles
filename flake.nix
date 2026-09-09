@@ -55,6 +55,7 @@
         imports = [
           ./home.nix
           nvim.homeModules.default
+          nvim.homeModules.manpager
         ];
       };
 

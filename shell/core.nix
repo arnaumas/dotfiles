@@ -8,7 +8,6 @@
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      MANPAGER = "nvim +Man!";
       MANWIDTH = "999";
       PYTHON_HISTORY = "${config.xdg.cacheHome}/python/history";
       LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
