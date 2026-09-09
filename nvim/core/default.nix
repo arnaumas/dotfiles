@@ -63,6 +63,12 @@
       action = "<cmd>quit!<cr>";
       options.desc = "force [q]uit file";
     }
+    {
+      mode = "n";
+      key = "<leader>Lc";
+      action = "<cmd> luafile $MYVIMRC<cr>";
+      options.desc = "source init.lua";
+    }
 
     # splits
     {
@@ -118,7 +124,7 @@
     {
       mode = "n";
       key = "<leader>bd";
-      action = "<CMD>b delete<CR>";
+      action = "<CMD>bd<CR>";
       options.desc = "delete buffer";
     }
   ];
