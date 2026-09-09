@@ -2,6 +2,7 @@
 {
   home.file = {
     ".cache/zsh/.keep".text = "";
+    ".local/state/zsh/.keep".text = "";
   };
 
   programs.zsh = {

@@ -2,7 +2,7 @@
 {
   programs.zsh = {
     history = {
-      path = "${config.xdg.cacheHome}/zsh/history";
+      path = "${config.xdg.stateHome}/zsh/history";
       size = 10000000;
       save = 10000000;
       share = false;
