@@ -20,8 +20,7 @@
       rm = "rm -Ivr";
       python = "python3";
       vim = "nvim";
-      L = "tmux capture-pane -pS -32768 | less -+F -+X";
-      ll = "ls -ohAF --color=always | sed '1d;/.DS_Store/d;s/^.\\{11\\}[[:space:]]*[[:digit:]]*[[:space:]]//g'";
+      ll = "ls -ohAF --color=always | sort -k1r | sed '1d;/.DS_Store/d;s/^.\\{11\\}[[:space:]]*[[:digit:]]*[[:space:]]//g'";
     };
   };
 
