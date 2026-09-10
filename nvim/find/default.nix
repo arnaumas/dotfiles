@@ -92,8 +92,12 @@
       buffers = {
         prompt = "buffers > ";
         headers = false;
+        ignore_current_buffer = true;
+        no_term_buffers = true;
+        sort_last_used = true;
         winopts = {
-          row = 1;
+          relative = "win";
+          row = 2;
           col = 3;
           width = 0.3;
           preview = {
@@ -141,8 +145,28 @@
       key = "<leader>fb";
       action.__raw = ''
         function()
-          local n = #vim.fn.getbufinfo({ buflisted = 1 })
-          require('fzf-lua').buffers({ winopts = { height = n + 1 } })
+          local cur = vim.api.nvim_get_current_buf()
+          local bufs = vim.tbl_filter(
+            function(b) return b.bufnr ~= cur end,
+            vim.fn.getbufinfo({ buflisted = 1 })
+          )
+          local w, maxnr = 0, 0
+          for _, b in ipairs(bufs) do
+            local name = vim.fn.fnamemodify(b.name, ":.")
+            if name == "" then name = "[No Name]" end
+            w = math.max(w, vim.fn.strwidth(name))
+            maxnr = math.max(maxnr, b.bufnr)
+          end
+          local height = #bufs + 1
+          local row = vim.api.nvim_win_get_height(0) - height
+          if row <= 1 then row = 0 end
+          require('fzf-lua').buffers({
+            winopts = {
+              row = row,
+              height = height,
+              width = w + 16 + #tostring(maxnr),
+            },
+          })
         end
       '';
       options.desc = "[f]ind in open [b]uffers";
