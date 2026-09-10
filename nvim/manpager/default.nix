@@ -28,65 +28,58 @@
 
   plugins.lualine = {
     enable = true;
-    settings = {
-      options = {
-        icons_enabled = false;
-        globalstatus = false;
-        theme = {
-          normal = {
-            a = "StatusLine";
-            b = "StatusLine";
-            c = "StatusLine";
-          };
-          inactive = {
-            a = "StatusLineNC";
-            b = "StatusLineNC";
-            c = "StatusLineNC";
-          };
+    settings = 
+      let
+        filename = {
+          __unkeyed-1 = "filename";
+          path = 0;
+          file_status = false;
         };
-        component_separators = {
-          left = "";
-          right = "";
+        location = {
+          __unkeyed-1 = "location";
+          padding = 1;
         };
-        section_separators = {
-          left = "";
-          right = "";
-        };
-      };
-      sections = {
-        lualine_a = {
-          __empty = null;
-        };
-        lualine_b = {
-          __empty = null;
-        };
-        lualine_c = [
-          {
-            __unkeyed-1 = "filename";
-            path = 0;
-            color = "UiSelected";
-            symbols = {
-              modified = "";
-              readonly = "";
-              unnamed = "[No Name]";
-              newfile = "";
+      in {
+        options = {
+          icons_enabled = false;
+          globalstatus = false;
+          theme = {
+            normal = {
+              a = "UiSelected";
+              b = "UiSelected";
+              c = "UiSelected";
             };
-          }
-        ];
-        lualine_x = {
-          __empty = null;
+            inactive = {
+              a = "StatusLineNC";
+              b = "StatusLineNC";
+              c = "StatusLineNC";
+            };
+          };
+          component_separators = {
+            left = "";
+            right = "";
+          };
+          section_separators = {
+            left = "";
+            right = "";
+          };
         };
-        lualine_y = {
-          __empty = null;
+        sections = {
+          lualine_a = [ filename ];
+          lualine_b = { __empty = null; };
+          lualine_c = { __empty = null; };
+          lualine_x = { __empty = null; };
+          lualine_y = { __empty = null; };
+          lualine_z = [ location ];
         };
-        lualine_z = [
-          {
-            __unkeyed-1 = "location";
-            padding = 1;
-            color = "UiSelected";
-          }
-        ];
+        inactive_sections = {
+          lualine_a = [ filename ];
+          lualine_b = { __empty = null; };
+          lualine_c = { __empty = null; };
+          lualine_x = { __empty = null; };
+          lualine_y = { __empty = null; };
+          lualine_z = [ location ];
+        };
       };
-    };
   };
 }
