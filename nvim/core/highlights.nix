@@ -1,7 +1,3 @@
-# Core highlight groups: the Ui* surface units + the fundamental editor UI,
-# generic syntax and generic diff groups every other concern links into.
-# Rendering machinery, the palette and the hl helpers live alongside in
-# colorscheme.nix / palette.nix.
 {
   lib,
   palette,
