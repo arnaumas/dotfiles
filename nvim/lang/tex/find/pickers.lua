@@ -26,8 +26,6 @@ local function collect(kind)
 	return out
 end
 
-local PREVIEW_COLS = 60
-
 local function run(items, prompt, fmt, o)
 	o = o or {}
 	local lines = {}
@@ -38,45 +36,41 @@ local function run(items, prompt, fmt, o)
 		lines[#lines + 1] = string.format('%d\t%s', i, painted)
 	end
 
-	local status = vim.o.laststatus > 0 and 1 or 0
-	local win_h = vim.o.lines - vim.o.cmdheight - status
-	local list_w = width + 6
-	local room = vim.o.columns - 4
-	local win_w = math.min(list_w, room)
+	local room = math.min(vim.o.columns - 4, 50)
+	local win_w = math.min(width + 6, room)
 
-	local preview, extend
+	local preview
 	if o.previewer then
-		if list_w + PREVIEW_COLS <= room then
-			win_w = list_w + PREVIEW_COLS
-			extend = true
-			preview = {
-				hidden = true,
-				layout = 'horizontal',
-				horizontal = 'right:' .. PREVIEW_COLS,
-				border = { '', '', '', '', '', '', '', '│' },
-				winopts = { number = false },
-			}
-		else
-			preview = {
-				hidden = true,
-				layout = 'vertical',
-				vertical = 'down:50%',
-				border = { '', '─', '', '', '', '', '', '' },
-				winopts = { number = false },
-			}
-		end
+		preview = {
+			hidden = true,
+			layout = 'vertical',
+			vertical = 'down:50%',
+			border = { '', '─', '', '', '', '', '', '' },
+			winopts = { number = false },
+		}
 	end
 
 	require('fzf-lua').fzf_exec(lines, {
 		prompt = prompt,
 		previewer = o.previewer,
 		winopts = {
-			row = 0,
-			col = 0,
-			width = win_w,
-			height = win_h,
-			toggle_behavior = extend and 'extend' or nil,
+			split = 'topleft ' .. win_w .. 'vnew',
+			border = 'none',
+			toggle_behavior = o.previewer and 'extend' or nil,
 			preview = preview,
+			on_create = function(e)
+				local w = e.winid
+				vim.wo[w].number = false
+				vim.wo[w].relativenumber = false
+				vim.wo[w].statuscolumn = ''
+				vim.wo[w].signcolumn = 'no'
+				vim.wo[w].fillchars = 'eob: ,vert:▌'
+				vim.wo[w].winhl = (vim.wo[w].winhl ~= '' and vim.wo[w].winhl .. ',' or '')
+					.. 'StatusLine:FzfLuaNormal,StatusLineNC:FzfLuaNormal,WinSeparator:FzfLuaWinSeparator'
+				vim.schedule(function()
+					if vim.api.nvim_win_is_valid(w) then vim.wo[w].statusline = ' ' end
+				end)
+			end,
 		},
 		fzf_opts = {
 			['--ansi'] = true,

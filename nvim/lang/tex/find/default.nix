@@ -31,6 +31,8 @@
   ];
 
   colors.groups = {
+    FzfLuaWinSeparator.fg = palette.dim_bg;
+
     TexRefEq = { fg = palette.cyan; bold = true; };
     TexRefFig = { fg = palette.magenta; bold = true; };
     TexRefTab = { fg = palette.blue; bold = true; };
