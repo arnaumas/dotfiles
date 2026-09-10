@@ -5,68 +5,64 @@
     enable = true;
     settings =
       let
-        mkFilename = color: {
-          __unkeyed-1 = "filename";
-          path = 1;
-          color = color;
-          symbols = {
-            modified = "[+]";
-            readonly = "[-]";
-            unnamed = "[No Name]";
-          };
-        };
-        branch = {
-          __unkeyed-1 = "branch";
-          icon.__raw = ''"\u{e725}"'';
-        };
-        location = {
-          __unkeyed-1 = "location";
-          padding = 1;
-        };
-        macro = {
+        mode = { __unkeyed-1 = "mode"; fmt.__raw = "function(s) return (s:gsub('(%a)%a*', '%1')) end"; };
+        filename = { __unkeyed-1 = "filename"; path = 1; };
+        branch = { __unkeyed-1 = "branch"; icon.__raw = ''"\u{e725}"''; };
+        location = { __unkeyed-1 = "location"; padding = 1; };
+        recording = {
           __unkeyed-1.__raw = ''function() local r = vim.fn.reg_recording(); return r == "" and "" or ("recording @" .. r) end'';
           color = "StlRecording";
         };
+        diagnostics = {
+          __unkeyed-1 = "diagnostics";
+          symbols = {
+            error.__raw = ''"\u{F057}"'';
+            warn.__raw = ''"\u{F071}"'';
+            info.__raw = ''"\u{F05A}"'';
+            hint.__raw = ''"\u{F05B}"'';
+          };
+          colored = false;
+        };
+
       in
       {
         options = {
           icons_enabled = true;
-          # theme maps lualine sections to our custom Stl* highlight groups.
           theme = {
             normal = {
               a = "StlModeNormal";
-              b = "StatusLine";
+              b = "StlTabActive";
               c = "StatusLine";
             };
             insert = {
               a = "StlModeInsert";
-              b = "StatusLine";
+              b = "StlTabActive";
               c = "StatusLine";
             };
             visual = {
               a = "StlModeVisual";
-              b = "StatusLine";
+              b = "StlTabActive";
               c = "StatusLine";
             };
             replace = {
               a = "StlModeReplace";
-              b = "StatusLine";
+              b = "StlTabActive";
               c = "StatusLine";
             };
             command = {
               a = "StlModeCommand";
-              b = "StatusLine";
+              b = "StlTabActive";
               c = "StatusLine";
             };
             terminal = {
               a = "StlModeTerminal";
-              b = "StatusLine";
+              b = "StlTabActive";
               c = "StatusLine";
             };
             inactive = {
-              a = "StatusLineNC";
-              b = "StatusLineNC";
-              c = "StatusLineNC";
+              a = "StlTabInactive";
+              b = "StlTabInactive";
+              c = "StlTabInactive";
             };
           };
           component_separators = {
@@ -76,10 +72,6 @@
           section_separators = {
             left = "";
             right = "";
-          };
-          disabled_filetypes = {
-            statusline = [ ];
-            winbar = [ ];
           };
           always_divide_middle = true;
           globalstatus = false;
@@ -105,67 +97,20 @@
         };
 
         sections = {
-          lualine_a = [
-            {
-              __unkeyed-1 = "mode";
-              fmt.__raw = "function(s) return (s:gsub('(%a)%a*', '%1')) end";
-            }
-          ];
-          lualine_b = {
-            __empty = null;
-          };
-          lualine_c = [ (mkFilename "StlTabActive") ];
-          lualine_x = {
-            __empty = null;
-          };
-          lualine_y = [
-            {
-              __unkeyed-1 = "diagnostics";
-              symbols = {
-                error.__raw = ''"\u{F057}%#StatusLine#"'';
-                warn.__raw = ''"\u{F071}%#StatusLine#"'';
-                info.__raw = ''"\u{F05A}%#StatusLine#"'';
-                hint.__raw = ''"\u{F05B}%#StatusLine#"'';
-              };
-              diagnostics_color = {
-                error = "StlDiagnosticError";
-                warn = "StlDiagnosticWarn";
-                info = "StlDiagnosticInfo";
-                hint = "StlDiagnosticHint";
-              };
-            }
-            macro
-            branch
-            "filetype"
-          ];
+          lualine_a = [ mode ];
+          lualine_b = [ filename ];
+          lualine_c = { __empty = null; };
+          lualine_x = [ diagnostics recording branch "filetype" ];
+          lualine_y = { __empty = null; };
           lualine_z = [ location ];
         };
 
         inactive_sections = {
-          lualine_a = {
-            __empty = null;
-          };
-          lualine_b = {
-            __empty = null;
-          };
-          lualine_c = [ (mkFilename "StlTabInactive") ];
-          lualine_x = {
-            __empty = null;
-          };
-          lualine_y = [
-            {
-              __unkeyed-1 = "diagnostics";
-              symbols = {
-                error.__raw = ''"\u{F057}"'';
-                warn.__raw = ''"\u{F071}"'';
-                info.__raw = ''"\u{F05A}"'';
-                hint.__raw = ''"\u{F05B}"'';
-              };
-              colored = false;
-            }
-            branch
-            "filetype"
-          ];
+          lualine_a = { __empty = null; };
+          lualine_b = [ filename ];
+          lualine_c = { __empty = null; };
+          lualine_x = { __empty = null; };
+          lualine_y = [ branch "filetype" ];
           lualine_z = [ location ];
         };
       };
