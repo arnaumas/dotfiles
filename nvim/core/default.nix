@@ -53,9 +53,15 @@
     }
     {
       mode = "n";
-      key = "<leader>q";
-      action = "<CMD>if winnr('$')>1 |  close | else | quitall | endif<CR>";
+      key = "<leader>x";
+      action = "<CMD>if winnr('$')>1 | close | else | quitall | endif<CR>";
       options.desc = "close window";
+    }
+    {
+      mode = "n";
+      key = "<leader>q";
+      action = "<cmd>quitall<cr>";
+      options.desc = "[q]uit";
     }
     {
       mode = "n";
