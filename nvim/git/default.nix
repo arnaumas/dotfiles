@@ -1,5 +1,5 @@
 {
-  plugins.mini.modules.git = { };
+  plugins.mini-git = { };
 
   keymaps = [
     {

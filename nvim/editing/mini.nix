@@ -1,12 +1,10 @@
 {
-  plugins.mini = {
-    enable = true;
-    modules = {
-      ai = { };
-      pairs = { };
-      surround = {
-        silent = true;
-      };
+  plugins = {
+    mini-ai.enable = true;
+    mini-pairs.enable = true;
+    mini-surround = {
+      enable = true;
+      settings.silent = true;
     };
   };
 }

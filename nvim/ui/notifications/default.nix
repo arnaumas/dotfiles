@@ -1,8 +1,8 @@
 {
   imports = [ ./highlights.nix ];
 
-  plugins.mini = {
-    modules.notify = {
+  plugins.mini-notify = {
+    settings = {
       content.format.__raw = "_M.notify.format";
       window = {
         config = {
