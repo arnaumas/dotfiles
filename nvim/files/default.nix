@@ -16,6 +16,7 @@
         width = 30;
 				signcolumn = "no";
       };
+      actions.open_file.window_picker.enable = false;
       renderer = {
         group_empty = true;
         highlight_opened_files = "name";
@@ -88,7 +89,7 @@
       callback.__raw = ''
       function()
 				vim.opt_local.statuscolumn = ""
-        vim.opt_local.fillchars:append({ vert = "▌" })
+        vim.opt_local.fillchars = "eob: ,vert:▌"
 			end
       '';
     }
