@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./core.nix
+    ./readline
     ./less.nix
     ./zsh
     ./tmux
