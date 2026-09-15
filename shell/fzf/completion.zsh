@@ -12,6 +12,7 @@ fzf-dispatch() {
 
 	if (( ${FZF_DEEP_CMDS[(Ie)$cmd]} )) || [[ -z $_comps[$cmd] || $_comps[$cmd] == _default ]]; then
 		zle fzf-completion
+		[[ $LBUFFER == *'\~'* ]] && LBUFFER=${LBUFFER//'\~'/'~'}
 	else
 		zle fzf-tab-complete
 	fi
@@ -27,25 +28,27 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview \
 
 # fzf-completion: fd-backed deep completion
 export FZF_COMPLETION_TRIGGER=
-export FZF_COMPLETION_OPTS='--ansi --height=40%'
+export FZF_COMPLETION_OPTS='--ansi --height=20'
 _fzf_compgen_path() {
 	if [[ $1 == . ]]; then
 		fd --strip-cwd-prefix --hidden --follow --color=always --exclude .git
 	else
-		fd --hidden --follow --color=always --exclude .git . "$1"
+		fd --hidden --follow --color=always --exclude .git . "$1" | sed "s|$HOME|~|"
 	fi
 }
 _fzf_compgen_dir() {
 	if [[ $1 == . ]]; then
 		fd --type d --strip-cwd-prefix --hidden --follow --color=always --exclude .git
 	else
-		fd --type d --hidden --follow --color=always --exclude .git . "$1"
+		fd --type d --hidden --follow --color=always --exclude .git . "$1" | sed "s|$HOME|~|"
+
 	fi
 }
 _fzf_comprun() {
 	local command=$1; shift
 	case "$command" in
-		cd) fzf --preview 'ls -p --color=always -- {} 2>/dev/null' "$@" ;;
-		*)  fzf --preview '[[ -d {} ]] && ls -p --color=always -- {} 2>/dev/null || bat --color=always --style=plain -- {} 2>/dev/null || true' "$@" ;;
+		cd) fzf --height=20 --exit-0 --preview 'p={}; ls -p --color=always -- "${p/#\~/$HOME}" 2>/dev/null' "$@" ;;
+		*)  fzf --height=20 --exit-0 --preview 'p={}; [[ -d "${p/#\~/$HOME}" ]] && ls -p --color=always -- "${p/#\~/$HOME}" 2>/dev/null \
+			|| bat --color=always --style=plain -- "${p/#\~/$HOME}" 2>/dev/null || true' "$@" ;;
 	esac
 }
