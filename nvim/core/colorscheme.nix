@@ -1,11 +1,3 @@
-# The `ansi` colorscheme machinery: the `colors.groups` option, the renderer
-# that turns it into colors/ansi.lua, and the group-building helpers exposed to
-# every module as the `hl` arg. The groups themselves live in per-concern
-# highlights.nix files (core's own in ./highlights.nix).
-#
-# `termguicolors` is OFF (ui/), so groups carry integer `fg`/`bg` = ANSI slots
-# 0-15 (from `palette`), emitted as `ctermfg`/`ctermbg`. Links resolve by name
-# at runtime, so contribution order is irrelevant.
 { lib, config, ... }:
 let
   luaStr = s: ''"'' + s + ''"'';
