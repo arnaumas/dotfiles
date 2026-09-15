@@ -18,7 +18,7 @@
       cp = "cp -iv";
       mv = "mv -iv";
       rm = "rm -Ivr";
-      python = "python3";
+      python = "python3 -q";
       vim = "nvim";
       ll = "ls -ohAF --color=always | sort -k1r | sed '1d;/.DS_Store/d;s/^.\\{11\\}[[:space:]]*[[:digit:]]*[[:space:]]//g'";
     };
