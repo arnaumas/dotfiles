@@ -38,9 +38,9 @@ _fzf_compgen_path() {
 }
 _fzf_compgen_dir() {
 	if [[ $1 == . ]]; then
-		fd --type d --strip-cwd-prefix --hidden --follow --color=always --exclude .git
+		fd --type d --max-depth 5 --strip-cwd-prefix --hidden --follow --color=always --exclude .git
 	else
-		fd --type d --hidden --follow --color=always --exclude .git . "$1" | sed "s|$HOME|~|"
+		fd --type d --max-depth 5 --hidden --follow --color=always --exclude .git . "$1" | sed "s|$HOME|~|"
 
 	fi
 }
