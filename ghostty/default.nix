@@ -1,4 +1,4 @@
-{ theme, lib, fontFamily ? null, ... }:
+{ theme, ... }:
 
 let
   light = theme.light;
@@ -26,22 +26,8 @@ in
 {
   programs.ghostty = {
     enable = true;
-
     package = null;
-
     settings = {
-      font-size = 12;
-      font-feature = [
-        "-calt"
-        "-liga"
-        "-dlig"
-        "+kern"
-      ];
-      font-thicken = true;
-      font-thicken-strength = 60;
-      adjust-underline-position = 3;
-      adjust-cell-height = -1;
-
       theme = "light:light,dark:dark";
 
       quick-terminal-position = "center";
@@ -59,8 +45,7 @@ in
       macos-titlebar-proxy-icon = "hidden";
       window-padding-x = 4;
       window-padding-y = "10,2";
-    }
-    // lib.optionalAttrs (fontFamily != null) { font-family = fontFamily; };
+    };
 
     themes = {
       light = {
