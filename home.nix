@@ -13,10 +13,11 @@
 
   imports = [
     ./shell
+    ./kitty
+    ./ghostty
+    ./git
+    ./vim
     ./claude
     ./pi
-    ./git
-    ./ghostty
-    ./vim
   ];
 }
