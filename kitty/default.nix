@@ -39,7 +39,6 @@ in
     settings = {
       font_size = 12;
       disable_ligatures = "always"; # TODO check font_features
-      macos_thicken_font = "0.25"; # TODO eyeball later
       cursor_shape = "beam";
       cursor_text_color = "background";
       confirm_os_window_close = 0;
@@ -49,11 +48,6 @@ in
       draw_minimal_borders = "yes";
       window_border_width = "1pt";
     };
-
-    extraConfig = ''
-      modify_font underline_position 3
-      modify_font cell_height -1px
-    '';
   };
 
   xdg.configFile = {
