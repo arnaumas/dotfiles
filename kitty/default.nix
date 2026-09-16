@@ -8,8 +8,8 @@ let
     "foreground ${t.uiFg}"
     "background ${t.termBg}"
     "selection_background ${t.uiBg}"
-    "selection_foreground ${light.uiFg}"
-    "cursor ${t.uiFg}"
+    "selection_foreground ${t.uiFg}"
+    "cursor none"
     "active_border_color ${t.grey}"
     "inactive_border_color ${t.grey}"
     "color0 ${t.black or t.white}"
@@ -40,9 +40,8 @@ in
       font_size = 12;
       disable_ligatures = "always"; # TODO check font_features
       cursor_shape = "beam";
-      cursor_text_color = "background";
       confirm_os_window_close = 0;
-      window_padding_width = "10 4 2 4";
+      window_padding_width = "4 4 2 4";
       hide_window_decorations = "titlebar-only";
       enabled_layouts = "splits,stack";
       draw_minimal_borders = "yes";
