@@ -6,6 +6,7 @@
     sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
     sessionVariables = {
+      LANG = "en_US.UTF-8";
       EDITOR = "nvim";
       VISUAL = "nvim";
       MANWIDTH = "999";
