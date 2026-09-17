@@ -28,5 +28,35 @@
       key = "u";
       action = "<CMD>silent undo<CR>";
     }
+    {
+      mode = [ "n" "v" ];
+      key = "u";
+      action = "<CMD>silent undo<CR>";
+    }
+    # system clipboard yanking and pasting
+    {
+      mode = [ "n" "x" ];
+      key = "gy";
+      action = ''"+y'';
+      options.desc = "yank into system clipboard";
+    }
+    {
+      mode = [ "n" "x" ];
+      key = "gY";
+      action = ''"+Y'';
+      options.desc = "yank until EOL into system clipboard";
+    }
+    {
+      mode = [ "n" "x" ];
+      key = "gp";
+      action = ''"+p'';
+      options.desc = "paste from system clipboard";
+    }
+    {
+      mode = [ "n" "x" ];
+      key = "gP";
+      action = ''"+P'';
+      options.desc = "paste above from system clipboard";
+    }
   ];
 }
