@@ -1,6 +1,6 @@
 {
   imports = [
-    ./nix.nix
+    ./nix
     ./lua.nix
     ./python.nix
     ./zsh
