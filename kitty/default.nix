@@ -9,7 +9,11 @@ let
     "background ${t.termBg}"
     "selection_background ${t.uiBg}"
     "selection_foreground ${t.uiFg}"
-    "cursor none"
+    "active_tab_foreground ${t.uiFg}"
+    "active_tab_background ${t.uiBg}"
+    "inactive_tab_foreground ${t.dimUiFg}"
+    "inactive_tab_background ${t.uiDimBg}"
+    "tab_bar_background ${t.uiDimBg}"
     "active_border_color ${t.grey}"
     "inactive_border_color ${t.grey}"
     "color0 ${t.black or t.white}"
@@ -28,9 +32,10 @@ let
     "color13 ${t.magentaBg}"
     "color14 ${t.cyanBg}"
     "color15 ${t.greyBg}"
+    "cursor none"
   ] + "\n";
-in
-{
+  
+in {
   programs.kitty = {
     enable = true;
 
@@ -41,11 +46,32 @@ in
       disable_ligatures = "always"; # TODO check font_features
       cursor_shape = "beam";
       confirm_os_window_close = 0;
-      window_padding_width = "4 4 2 4";
+      window_margin_width = "2 3 4";
       hide_window_decorations = "titlebar-only";
       enabled_layouts = "splits,stack";
       draw_minimal_borders = "yes";
       window_border_width = "1pt";
+      tab_bar_edge = "bottom";
+      tab_bar_align = "left";
+      tab_bar_style = "separator";
+      tab_separator = "";
+      tab_title_template = " {index}: {title}{' Z' if layout_name == 'stack' else ''} ";
+      active_tab_font_style = "bold";
+      inactive_tab_font_style = "normal";
+    };
+    
+    keybindings = {
+      "ctrl+a>t" = "new_tab_with_cwd";
+      "ctrl+a>n" = "next_tab";
+      "ctrl+a>p" = "previous_tab";
+      "ctrl+a>s" = "launch --location=hsplit --cwd=current";
+      "ctrl+a>v" = "launch --location=vsplit --cwd=current";
+      "ctrl+a>x" = "close_window";
+      "ctrl+a>q" = "close_tab";
+      "ctrl+a>z" = "toggle_layout stack";
+      "ctrl+a>plus" = "resize_window taller 3";
+      "ctrl+a>minus" = "resize_window shorter 3";
+      "ctrl+a>enter" = "show_scrollback";
     };
   };
 
