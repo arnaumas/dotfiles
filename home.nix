@@ -13,7 +13,7 @@
 
   imports = [
     ./shell
-    ./kitty
+    ./wezterm
     ./ghostty
     ./git
     ./vim
