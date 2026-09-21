@@ -5,6 +5,7 @@ let
     background = p.termBg;
     selection_fg = p.uiFg;
     selection_bg = p.uiBg;
+    split = p.grey;
     ansi = [ (p.black or p.white) p.red p.green p.yellow p.blue p.magenta p.cyan p.grey ];
     brights = [ (p.blackBg or p.whiteBg) p.redBg p.greenBg p.yellowBg p.blueBg p.magentaBg p.cyanBg p.greyBg ];
   };
