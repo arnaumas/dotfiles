@@ -5,7 +5,6 @@
   programs.tmux = {
     enable = true;
     sensibleOnTop = false;
-    prefix = "C-a";
     baseIndex = 1;
     keyMode = "vi";
     escapeTime = 0;
