@@ -17,23 +17,19 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixvim,
-      ...
-    }:
+    { self, nixpkgs, nixvim, ... }:
     let
       lib = nixpkgs.lib;
       systems = [
         "aarch64-darwin"
         "x86_64-linux"
       ];
+      
       forEach = lib.genAttrs systems;
+      
       pkgsFor = system: nixpkgs.legacyPackages.${system};
 
-    in
-    {
+    in {
       # home-manager submodule
       homeModules.default = {
         imports = [ nixvim.homeModules.nixvim ];
@@ -47,6 +43,16 @@
           home.sessionVariables.MANPAGER = "${self.packages.${pkgs.system}.manpager}/bin/nvim +Man!";
         };
 
+      # zle editor standalone binary wired to edit-command-line and fc
+      homeModules.zle =
+        { pkgs, ... }:
+        {
+          home.sessionVariables.FCEDIT = "${self.packages.${pkgs.system}.zle}/bin/nvim";
+          programs.zsh.initContent = ''
+            zstyle :zle:edit-command-line editor ${self.packages.${pkgs.system}.zle}/bin/nvim
+          '';
+        };
+
       # standalone system agnostic neovim packages
       packages = forEach (system: {
         default = nixvim.legacyPackages.${system}.makeNixvimWithModule {
@@ -56,6 +62,10 @@
         manpager = nixvim.legacyPackages.${system}.makeNixvimWithModule {
           pkgs = pkgsFor system;
           module = ./manpager;
+        };
+        zle = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+          pkgs = pkgsFor system;
+          module = ./zle;
         };
       });
 

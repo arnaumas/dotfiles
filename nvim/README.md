@@ -45,7 +45,8 @@ Highlighting philosophy follows tonsky.me/blog/syntax-highlighting: color only w
 ## Tree
 
 ```
-flake.nix              standalone nixvim flake (nix build/run .#, checks.nvim)
+flake.nix              standalone nixvim flake (nix build/run .#, checks.nvim); extra packages +
+                       home modules: manpager ($MANPAGER), zle (edit-command-line zstyle + $FCEDIT)
 flake.lock             plugin version pins
 default.nix            imports list only
 lz-n.nix               lazy-load placeholder — NOT imported anywhere
@@ -117,6 +118,11 @@ lang/                  one module per language; each bundles LSP server + ftplug
                        capture groups in highlights/highlights.nix + math imaps +
                        snippets/tex.lua + compile-notify; the design target
   asy/                 asymptote ftplugin: makeprg + <leader>ll compile / <leader>lv view + compile-notify
+
+zle/                   standalone line editor for edit-command-line / fc, NOT imported by default.nix
+  default.nix          core + editing/core + ui/core + lang/zsh; zsh grammar only; no statusline,
+                       blue `> ` per line via statuscolumn; q writes and quits
+  highlights.nix       MatchParen, ZlePrompt
 ```
 
 ## Notes

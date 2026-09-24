@@ -20,7 +20,12 @@ add-zsh-hook preexec beam-cursor
 bindkey -M vicmd "k" up-line-or-beginning-search
 bindkey -M vicmd "j" down-line-or-beginning-search
 
-autoload edit-command-line; zle -N edit-command-line
+autoload edit-command-line
+_edit-command-line() {
+	local -x ZLE_NAMES="${(k)aliases} ${(k)functions:#_*}"
+	edit-command-line
+}
+zle -N edit-command-line _edit-command-line
 bindkey '^e' edit-command-line
 bindkey -M vicmd '^[[3~' vi-delete-char
 bindkey -M visual '^[[3~' vi-delete

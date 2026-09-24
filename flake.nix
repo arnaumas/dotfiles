@@ -56,6 +56,7 @@
           ./home.nix
           nvim.homeModules.default
           nvim.homeModules.manpager
+          nvim.homeModules.zle
         ];
       };
 
