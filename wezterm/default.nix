@@ -3,5 +3,6 @@
     ./core
     ./splits
     ./tabs
+    ./buffer
   ];
 }
