@@ -5,7 +5,7 @@
     window_padding = {
       left = "0.5cell";
       right = "0";
-      bottom = "2px";
+      bottom = "0";
     };
   };
 }
