@@ -10,8 +10,9 @@ rationale and `ROADMAP.md` for planned work.
 
 ## Wiring
 
-`home.nix` imports `shell`, `claude`, `pi`, `git`, `ghostty`, `svim`, `vim`; nvim is wired via
-`programs.nixvim.imports = [ ./nvim ]`. The `theme` arg (hex palette) is passed in from `~/home`.
+`home.nix` imports `shell`, `claude`, `pi`, `git`, `ghostty`, `wezterm`, `svim`, `vim`; nvim is
+wired via `programs.nixvim.imports = [ ./nvim ]`. The `theme` arg (hex palette) is passed in from
+`~/home`.
 
 Modules render config three ways: **typed program options** (`programs.zsh`, `programs.tmux`,
 `programs.fzf`, `programs.bat`, `programs.ghostty`, `programs.nixvim`); **`xdg.configFile."<app>/…".source`**
@@ -25,11 +26,12 @@ for verbatim files without an HM module (`git`, `svim`, `vim`, `claude/`); and *
 | `nvim/` | nixvim flake — the LaTeX-focused editor | [nvim/README.md](nvim/README.md) |
 | `shell/` | zsh + tmux + fzf + rg + bat + core env | [shell/README.md](shell/README.md) |
 | `shell/zsh/` | zsh config (prompt, completion, vi, syntax, history) | [shell/zsh/README.md](shell/zsh/README.md) |
-| `shell/tmux/` | tmux config + seamless nvim/pane nav | [shell/tmux/README.md](shell/tmux/README.md) |
+| `shell/tmux/` | tmux config, for ssh and persistence | [shell/tmux/README.md](shell/tmux/README.md) |
 | `git/` | git config + global ignore | [git/README.md](git/README.md) |
 | `claude/` | Claude Code config, statusline, skills | [claude/README.md](claude/README.md) |
 | `pi/` | pi coding agent + ANSI theme | [pi/README.md](pi/README.md) |
 | `ghostty/` | ghostty terminal (typed opts + themes) | [ghostty/README.md](ghostty/README.md) |
+| `wezterm/` | wezterm terminal: tabs, splits, nvim nav | [wezterm/README.md](wezterm/README.md) |
 
 ## Kept but minimal / unwired
 
