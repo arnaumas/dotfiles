@@ -37,6 +37,7 @@ in {
       background = "termBg";
       selection_fg = "uiFg";
       selection_bg = "uiBg";
+      cursor_border = "grey";
     };
     colorSchemes = lib.mapAttrs (_: p: base p // render p) {
       dotfiles-light = theme.light;
