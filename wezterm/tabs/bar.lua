@@ -35,15 +35,15 @@ wezterm.on('format-tab-title', function(tab, _, _, _, _, max_width)
 end)
 
 wezterm.on('update-status', function(win)
-	win:set_left_status(win:leader_is_active() and wezterm.format {
+	local session = win:active_workspace()
+	local prefix = win:leader_is_active() and wezterm.format {
 		{ Background = { Color = c.prefix } },
 		{ Text = ' ' },
-	} or '')
-	local session = win:active_workspace()
-	win:set_right_status(session ~= 'default' and wezterm.format {
+	} or ''
+	win:set_right_status((session ~= 'default' and wezterm.format {
 		{ Attribute = { Intensity = 'Bold' } },
 		{ Foreground = { Color = c.session.fg } },
 		{ Background = { Color = c.session.bg } },
 		{ Text = ' ' .. session .. ' ' },
-	} or '')
+	} or '') .. prefix)
 end)
