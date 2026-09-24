@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [ ./highlights.nix ];
-  
+
   extraPackages = [ pkgs.nixd ];
 
   lsp.servers.nixd = {

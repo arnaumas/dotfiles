@@ -12,6 +12,7 @@
       "@function.builtin"
       "@function.method.call"
       "@keyword"
+      "@keyword.operator"
       "@conditional"
       "@repeat"
       "@variable"
@@ -45,6 +46,11 @@
     (hl.linkTo "UiMuted" [
       "@label"
       "@markup.list"
+    ])
+    (hl.withFg palette.magenta [
+      "@keyword.conditional"
+      "@keyword.repeat"
+      "@keyword.return"
     ])
     {
       "@comment".link = "Comment";
