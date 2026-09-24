@@ -19,9 +19,12 @@ completion/
   completion.zsh  completion zstyles / menu behavior
 syntax.nix        zsh-syntax-highlighting (main + brackets); ANSI slot styles
                   (commands=4, strings=2, comment=3, path=underline, brackets greyed)
-vi.nix            vi keymap (viins default, KEYTIMEOUT=1); beam/block cursor switching per mode;
-                  j/k history search in vicmd; ^e edit-command-line (wrapped to export
-                  ZLE_NAMES = aliases + functions for the zle nvim); delete-key binds
+input/
+  default.nix     viins default keymap; sources vi.zsh + expand.zsh
+  vi.zsh          KEYTIMEOUT=1; beam/block cursor switching per mode; j/k history search in vicmd;
+                  ^e edit-command-line (wrapped to export ZLE_NAMES = aliases + functions for the
+                  zle nvim); delete-key binds
+  expand.zsh      rationalise-dot: typing `...` expands to `../..`
 prompt/
   default.nix     pure-prompt (fpath from pkgs.pure-prompt); prompt symbols (> / <), git arrows;
                   clear alias resets NEW_LINE_BEFORE_PROMPT
