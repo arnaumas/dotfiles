@@ -25,7 +25,7 @@ splits/
   nvim-nav.lua    _G.pane_nav(dir): wincmd, then hop panes at a window edge
   ui.nix          split divider colour, underline thickness, inactive panes undimmed
 tabs/
-  navigation.nix  leader t new tab, n/p cycle, q close
+  navigation.nix  leader t new tab, n/p cycle, 1-9 jump, 0 last, q close
   bar.nix         plain tab bar at the bottom, tab/session/prefix colours
   bar.lua         tab titles (index, title or cwd, zoom flag), workspace and prefix marker
 ```

@@ -26,7 +26,7 @@ end
 wezterm.on('format-tab-title', function(tab, _, _, _, _, max_width)
 	local pane = tab.active_pane
 	local zoom = pane.is_zoomed and ' Z' or ''
-	local text = ' ' .. tab.tab_index .. ': ' .. name(pane) .. zoom .. ' '
+	local text = ' ' .. (tab.tab_index + 1) .. ': ' .. name(pane) .. zoom .. ' '
 	text = wezterm.truncate_right(text, max_width)
 	if tab.is_active then
 		return { { Attribute = { Intensity = 'Bold' } }, { Text = text } }
