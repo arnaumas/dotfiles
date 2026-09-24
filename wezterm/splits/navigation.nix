@@ -27,8 +27,6 @@ in
       (lead "W" { ActivatePaneDirection = "Prev"; })
       (lead "i" { EmitEvent = "pane-grow"; })
       (lead "u" { EmitEvent = "pane-shrink"; })
-      (lead "r" { RotatePanes = "Clockwise"; })
-      (lead "R" { RotatePanes = "CounterClockwise"; })
       (lead "z" "TogglePaneZoomState")
     ]
     ++ map nav [ "h" "j" "k" "l" ];

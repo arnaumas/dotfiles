@@ -32,6 +32,11 @@ in {
     };
     keys = [
       {
+        key = "r";
+        mods = "LEADER";
+        action = "ReloadConfiguration";
+      }
+      {
         key = "a";
         mods = "LEADER|CTRL";
         action.SendKey = {
