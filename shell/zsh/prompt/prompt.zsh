@@ -86,6 +86,8 @@ _p_render() {
 	[[ -n $VIRTUAL_ENV ]] && venv="%F{7}${VIRTUAL_ENV:t}%f "
 	PROMPT="${preprompt}"$'\n'"${venv}"'%F{blue}${_p_symbol}%f '
 	PROMPT2='%F{blue}${_p_symbol}%f '
+	PROMPT=$'%{\e]133;P;k=i\a%}'$PROMPT$'%{\e]133;B\a%}'
+	PROMPT2=$'%{\e]133;P;k=s\a%}'$PROMPT2$'%{\e]133;B\a%}'
 }
 
 # async git fetch
