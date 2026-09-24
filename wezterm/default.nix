@@ -1,8 +1,6 @@
 {
   imports = [
-    ./core.nix
+    ./core
     ./splits
-    ./theme.nix
-    ./ui.nix
   ];
 }
