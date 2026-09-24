@@ -132,7 +132,7 @@ lang/                  one module per language; each bundles LSP server + ftplug
   return nothing), so completion is LSP-first with buffer as backup. `<C-x>` forces the menu open,
   `<C-j>`/`<C-k>` select, `<C-y>` accept, `<C-e>` cancel. Snippets are LuaSnip's, driven by `<Tab>`
   (expand-or-jump-forward, else a literal Tab) / `<S-Tab>` (jump back) — decoupled from the menu.
-- **Window nav** (`<C-hjkl>`) is overridden by `shell/tmux/nav.nix` when tmux is enabled, giving
-  seamless nvim ↔ tmux pane movement.
+- **Window nav** (`<C-hjkl>`) is overridden by `wezterm/splits/nvim.nix` when wezterm is enabled,
+  giving seamless nvim ↔ wezterm pane movement.
 - "Running" a change = rebuild (home-manager switch, or `nix build .#`). `nix flake check` evaluates
   the module and boots nvim headless. See `../CLAUDE.md` for the full design rationale.

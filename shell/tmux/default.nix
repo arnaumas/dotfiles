@@ -1,7 +1,5 @@
 { ... }:
 {
-  imports = [ ./nav.nix ];
-
   programs.tmux = {
     enable = true;
     sensibleOnTop = false;
