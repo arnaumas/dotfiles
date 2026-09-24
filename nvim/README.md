@@ -59,7 +59,6 @@ core/
 editing/
   default.nix          editing opts (expandtab OFF, shiftwidth/tabstop 2, autoindent); o/O/K/u maps; yank highlight
   treesitter.nix       grammars; highlight.enable = false, indent.enable = true
-  mini.nix             mini.ai + mini.pairs + mini.surround
   fold.nix             foldcolumn 0 + fold fillchar + foldtext autocmd
   fold.lua             make_foldtext() (marker-fold text)
   highlights.nix       treesitter @capture highlight groups

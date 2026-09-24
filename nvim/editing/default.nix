@@ -4,6 +4,5 @@
     ./treesitter.nix
     ./fold.nix
     ./highlights.nix
-    ./mini.nix
   ];
 }

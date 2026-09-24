@@ -59,4 +59,13 @@
       options.desc = "paste above from system clipboard";
     }
   ];
+  
+  plugins = {
+    mini-ai.enable = true;
+    mini-pairs.enable = true;
+    mini-surround = {
+      enable = true;
+      settings.silent = true;
+    };
+  };
 }
