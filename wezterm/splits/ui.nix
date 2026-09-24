@@ -1,6 +1,6 @@
 {
   programs.wezterm = {
-    colors.split = "grey";
+    colors.split = "uiDimBg";
     settings = {
       underline_thickness = "1pt";
       inactive_pane_hsb = {
