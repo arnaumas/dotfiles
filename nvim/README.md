@@ -102,7 +102,10 @@ lang/                  one module per language; each bundles LSP server + ftplug
   nix.nix              nixd (ships WITH nvim via extraPackages — self-contained); root markers flake.nix/.git
   lua.nix              lua_ls (on PATH) + lua ftplugin (nowrap, sidescrolloff)
   help.nix             help ftplugin: q closes, <cr> follows tag, <bs> pops
-  zsh/                 zsh ftplugin + zshFunction highlight (highlights.nix)
+  zsh/                 zsh ftplugin + treesitter highlights mirroring zsh-syntax-highlighting
+                       (highlights.nix + after/queries/zsh/highlights.scm): commands blue, path-like
+                       args underlined, rest plain; unknown commands plain via #not-command?
+                       (commands.lua: zsh builtins/reswords, $ZLE_NAMES, executable())
   tex/                 vimtex (sioyek preview, syntax_enabled=0, fold_enabled=0) + texlab (on PATH) +
                        treesitter latex highlighting + detection: setup.lua overrides
                        vimtex#syntax#in_mathzone with a treesitter check (feeds imaps), i$/a$ via
