@@ -51,7 +51,6 @@ in
       "LineNrBelow"
       "FoldColumn"
       "WinSeparator"
-      "VertSplit"
       "NonText"
       "Whitespace"
       "SpecialKey"
@@ -60,6 +59,7 @@ in
       "MsgSeparator"
     ])
     {
+      VertSplit.fg = p.bg;
       CursorLine.bg = p.dim_bg;
       CursorLineNr.link = "UiAccent";
       CursorColumn.bg = p.dim_bg;
