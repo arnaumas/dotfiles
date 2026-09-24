@@ -24,7 +24,7 @@ for verbatim files without an HM module (`git`, `svim`, `vim`, `claude/`); and *
 | Package | What | README |
 |---|---|---|
 | `nvim/` | nixvim flake — the LaTeX-focused editor | [nvim/README.md](nvim/README.md) |
-| `shell/` | zsh + tmux + fzf + rg + bat + core env | [shell/README.md](shell/README.md) |
+| `shell/` | zsh + tmux + fzf + rg + bat + readline + core env | [shell/README.md](shell/README.md) |
 | `shell/zsh/` | zsh config (prompt, completion, vi, syntax, history) | [shell/zsh/README.md](shell/zsh/README.md) |
 | `shell/tmux/` | tmux config, for ssh and persistence | [shell/tmux/README.md](shell/tmux/README.md) |
 | `git/` | git config + global ignore | [git/README.md](git/README.md) |

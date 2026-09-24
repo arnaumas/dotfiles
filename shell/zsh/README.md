@@ -11,7 +11,7 @@ default.nix       enable, dotDir = ~/.config/zsh, autocd, `...`/`....` dir alias
                   initContent: mkd() cd-helper, unbind ^H/^J/^K/^L for pane nav,
                   ^B clear-screen (viins + vicmd); imports the rest;
                   ensures ~/.cache/zsh exists
-history.nix       10M-line history at $XDG_CACHE_HOME/zsh/history, no sharing/dedup;
+history.nix       10M-line history at $XDG_STATE_HOME/zsh/history, no sharing/dedup;
                   up/down-line-or-beginning-search bound to arrow keys
 completion/
   default.nix     autosuggestion (fg=7, unique_completion strategy, async);
@@ -33,7 +33,8 @@ prompt/
 
 ## Notes
 
-- XDG-first: caches under `$XDG_CACHE_HOME`, `ZDOTDIR = ~/.config/zsh`.
+- XDG-first: `ZDOTDIR = ~/.config/zsh`, regenerable caches (compinit dump) under `$XDG_CACHE_HOME`,
+  durable history under `$XDG_STATE_HOME`.
 - Plugins are **nix-managed, flake-locked** (no plugin manager): autosuggestion + syntax-highlighting
   via first-class HM options, fzf-tab via `programs.zsh.plugins` (declared in `shell/fzf.nix`), pure
   from `pkgs.pure-prompt`.
