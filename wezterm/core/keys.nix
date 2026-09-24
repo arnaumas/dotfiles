@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
   inherit (lib) mkOption types;
   mod = "NONE|SUPER|CMD|CTRL|SHIFT|ALT|OPT|LEADER";
@@ -16,19 +16,14 @@ let
       };
     };
   };
-in
-{
+in {
   options.programs.wezterm.keys = mkOption {
     type = types.listOf keyType;
     default = [ ];
   };
 
   config.programs.wezterm = {
-    enable = true;
-    package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.emptyDirectory else pkgs.wezterm;
-    enableZshIntegration = false;
     settings = {
-      window_close_confirmation = "NeverPrompt";
       leader = {
         key = "a";
         mods = "CTRL";

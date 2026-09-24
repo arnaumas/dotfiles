@@ -1,6 +1,6 @@
 {
   programs.wezterm.settings = {
-    enable_tab_bar = false;
+    window_close_confirmation = "NeverPrompt";
     window_decorations = "RESIZE";
     window_padding = {
       left = "0.5cell";
