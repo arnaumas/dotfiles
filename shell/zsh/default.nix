@@ -39,7 +39,7 @@
     ./completion
     ./syntax.nix
     ./history.nix
-    ./lastout.nix
+    # ./lastout.nix
     ./input
   ];
 }
