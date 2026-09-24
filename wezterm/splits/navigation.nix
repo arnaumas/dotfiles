@@ -18,7 +18,7 @@ in
       (lead "s" { SplitPane.direction = "Down"; })
       (lead "v" { SplitPane.direction = "Right"; })
       (lead "c" close)
-      (lead "q" close)
+      (lead "x" close)
       (lead "h" { ActivatePaneDirection = "Left"; })
       (lead "j" { ActivatePaneDirection = "Down"; })
       (lead "k" { ActivatePaneDirection = "Up"; })
