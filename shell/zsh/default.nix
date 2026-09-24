@@ -34,6 +34,10 @@
       bindkey -r ^K
       bindkey -r ^L
       bindkey -r ^H
+
+      # keybinds: clear screen
+      bindkey ^B clear-screen
+      bindkey -M vicmd ^B clear-screen
     '';
   };
 }

@@ -8,7 +8,8 @@ compinit + plugin sourcing (needed so custom keybinds win over fzf-tab's).
 
 ```
 default.nix       enable, dotDir = ~/.config/zsh, autocd, `...`/`....` dir aliases;
-                  initContent: mkd() cd-helper, unbind ^H/^J/^K/^L for pane nav; imports the rest;
+                  initContent: mkd() cd-helper, unbind ^H/^J/^K/^L for pane nav,
+                  ^B clear-screen (viins + vicmd); imports the rest;
                   ensures ~/.cache/zsh exists
 history.nix       10M-line history at $XDG_CACHE_HOME/zsh/history, no sharing/dedup;
                   up/down-line-or-beginning-search bound to arrow keys
