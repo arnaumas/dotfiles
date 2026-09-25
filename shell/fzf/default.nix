@@ -71,6 +71,7 @@ in
     lib.concatMapStringsSep "\n" builtins.readFile [
       ./completion.zsh
       ./live-rg.zsh
+      ./ctrl-t.zsh
     ]
   );
 }
